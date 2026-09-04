@@ -678,7 +678,7 @@ body {
   border: 1px solid #e2e8f0;
   border-radius: 13px;
   padding: 13px 16px;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
 
 .fire-popup-details div {
@@ -705,6 +705,20 @@ body {
   text-align: right;
 }
 
+/* Map inside fire popup */
+.fire-popup-map-wrap {
+  margin-bottom: 18px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #fecaca;
+}
+
+.fire-popup-map {
+  width: 100%;
+  height: 200px;
+  background: #e8eef5;
+}
+
 #acknowledgeFire {
   width: 100%;
   padding: 14px 20px;
@@ -715,4 +729,199 @@ body {
   font-size: 15px;
   font-weight: 900;
   cursor: pointer;
-  transition: transform 0.15s ease, opacity 0.15s 
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+}
+
+#acknowledgeFire:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(220, 38, 38, 0.25);
+}
+
+#acknowledgeFire:active {
+  transform: scale(0.98);
+}
+
+body.fire-active {
+  overflow: hidden;
+}
+
+/* ---------- Animations ---------- */
+@keyframes statusPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes alarmPulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.65;
+  }
+}
+
+@keyframes firePopupIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes firePulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+
+/* ---------- Responsive — Tablet ---------- */
+@media (max-width: 850px) {
+  .topbar {
+    padding: 13px 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    flex-basis: 100%;
+  }
+
+  .device-status {
+    flex: 1;
+  }
+
+  .last-update {
+    text-align: right;
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Responsive — Mobile ---------- */
+@media (max-width: 600px) {
+  .container {
+    width: min(100% - 24px, 1180px);
+    padding-top: 20px;
+  }
+
+  .topbar {
+    padding: 12px 14px;
+    min-height: auto;
+  }
+
+  .brand-title {
+    font-size: 17px;
+  }
+
+  .brand-subtitle {
+    font-size: 11px;
+  }
+
+  .device-status {
+    font-size: 12px;
+  }
+
+  .last-update {
+    font-size: 11px;
+  }
+
+  .main-status {
+    padding: 22px;
+    gap: 15px;
+  }
+
+  .status-value {
+    font-size: 29px;
+  }
+
+  .status-text {
+    font-size: 15px;
+  }
+
+  .status-description {
+    font-size: 12px;
+  }
+
+  .sensor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .map-container {
+    height: 260px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .info-card {
+    padding: 15px;
+  }
+
+  .sequence {
+    padding: 17px;
+  }
+
+  .fire-popup-box {
+    padding: 27px 20px;
+  }
+
+  .fire-popup-title {
+    font-size: 29px;
+  }
+
+  .fire-popup-icon {
+    font-size: 56px;
+  }
+
+  .fire-popup-map {
+    height: 160px;
+  }
+
+  .footer {
+    padding: 20px 14px;
+  }
+}
+
+/* ---------- Very Small Screens ---------- */
+@media (max-width: 390px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .device-status {
+    flex-basis: 100%;
+  }
+
+  .last-update {
+    flex-basis: 100%;
+    text-align: left;
+  }
+
+  .main-status {
+    padding: 19px;
+  }
+
+  .status-value {
+    font-size: 26px;
+  }
+}
