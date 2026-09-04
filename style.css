@@ -204,7 +204,6 @@ body {
   box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.25);
 }
 
-/* Custom Leaflet marker styles */
 .leaflet-marker-icon.sf-marker {
   background: transparent;
   border: none;
@@ -716,109 +715,4 @@ body {
   font-size: 15px;
   font-weight: 900;
   cursor: pointer;
-  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
-}
-
-#acknowledgeFire:hover {
-  opacity: 0.92;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 15px rgba(220, 38, 38, 0.25);
-}
-
-#acknowledgeFire:active {
-  transform: scale(0.98);
-}
-
-/* ---------- Fire Active Page Effect ---------- */
-body.fire-active {
-  overflow: hidden;
-}
-
-/* ---------- Animations ---------- */
-@keyframes statusPulse {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.12);
-    opacity: 0.75;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes alarmPulse {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.65;
-  }
-}
-
-@keyframes firePopupIn {
-  from {
-    opacity: 0;
-    transform: scale(0.85);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes firePulse {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.12);
-  }
-}
-
-/* ---------- Responsive — Tablet ---------- */
-@media (max-width: 850px) {
-  .topbar {
-    padding: 13px 20px;
-    gap: 15px;
-    flex-wrap: wrap;
-  }
-
-  .brand {
-    flex-basis: 100%;
-  }
-
-  .device-status {
-    flex: 1;
-  }
-
-  .last-update {
-    text-align: right;
-  }
-
-  .info-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-/* ---------- Responsive — Mobile ---------- */
-@media (max-width: 600px) {
-  .container {
-    width: min(100% - 24px, 1180px);
-    padding-top: 20px;
-  }
-
-  .topbar {
-    padding: 12px 14px;
-    min-height: auto;
-  }
-
-  .brand-title {
-    font-size: 17px;
-  }
-
-  .brand-subtitle {
-    font-size: 11px;
+  transition: transform 0.15s ease, opacity 0.15s 
