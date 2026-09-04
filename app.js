@@ -15,8 +15,8 @@ const DEFAULT_GAS_THRESHOLD = 1600;
 const DEFAULT_FIRE_THRESHOLD = 5000; // 5 kΩ
 
 /* Default map coordinates (change to your real location) */
-const DEFAULT_LAT = 28.6139;
-const DEFAULT_LNG = 77.2090;
+const DEFAULT_LAT = 15.855881303189477;
+const DEFAULT_LNG = 74.57802140000477;
 const DEFAULT_ZOOM = 16;
 
 let previousFireState = false;
