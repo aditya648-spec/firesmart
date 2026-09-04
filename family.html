@@ -1,902 +1,507 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#0f172a"
+  >
 
   <title>Family Members - Smart Fire Guardian</title>
+
+
+  <!-- Main Website Style -->
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+
+  <!-- Leaflet -->
 
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+  >
+
 
   <style>
-    * {
-      box-sizing: border-box;
+
+    .family-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 25px 18px 50px;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #222;
+
+    .family-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
     }
 
-    .header {
-      background: #111827;
+
+    .family-title {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+
+    .family-subtitle {
+      margin-top: 5px;
+      opacity: 0.7;
+    }
+
+
+    .back-button {
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      background: #0f172a;
       color: white;
-      padding: 20px;
-      text-align: center;
+      display: inline-block;
     }
 
-    .header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
 
-    .container {
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 20px;
-    }
-
-    .card {
+    .family-form-card {
       background: white;
       border-radius: 14px;
       padding: 22px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
     }
 
-    .card h2 {
-      margin-top: 0;
+
+    .family-form-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 18px;
     }
 
-    label {
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+
+    .form-group label {
       display: block;
-      margin-top: 14px;
+      font-weight: 600;
       margin-bottom: 6px;
-      font-weight: bold;
     }
 
-    input,
-    select {
+
+    .form-group input,
+    .form-group select {
       width: 100%;
+      box-sizing: border-box;
       padding: 12px;
-      border: 1px solid #ccd3dd;
+      border: 1px solid #d1d5db;
       border-radius: 8px;
       font-size: 15px;
     }
 
-    button {
+
+    .location-box {
+      border: 1px dashed #9ca3af;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 15px;
+    }
+
+
+    #locationStatus,
+    #homeLocationStatus {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+
+    .family-button {
       border: none;
       border-radius: 8px;
-      padding: 12px 18px;
-      font-size: 15px;
+      padding: 11px 16px;
       cursor: pointer;
-      margin-top: 15px;
-    }
-
-    .location-btn {
-      background: #2563eb;
-      color: white;
-      width: 100%;
-    }
-
-    .save-btn {
-      background: #16a34a;
-      color: white;
-      width: 100%;
-    }
-
-    .cancel-btn {
-      background: #6b7280;
-      color: white;
-      width: 100%;
-    }
-
-    .location-info {
-      margin-top: 12px;
-      padding: 12px;
-      background: #f1f5f9;
-      border-radius: 8px;
       font-size: 14px;
-    }
-
-    #mapPicker {
-      height: 400px;
-      width: 100%;
-      border-radius: 12px;
-      margin-top: 15px;
-      display: none;
-    }
-
-    .picker-instruction {
-      display: none;
-      margin-top: 12px;
-      padding: 12px;
-      background: #fff7ed;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    .member {
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 12px;
-    }
-
-    .member strong {
-      font-size: 17px;
-    }
-
-    .primary {
-      color: #16a34a;
-      font-weight: bold;
-    }
-
-    .delete-btn {
-      background: #dc2626;
-      color: white;
+      font-weight: 600;
       margin-right: 8px;
+      margin-bottom: 8px;
     }
 
-    .primary-btn {
-      background: #2563eb;
+
+    #selectLocation,
+    #selectHomeLocation {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+
+    #saveFamilyMember,
+    #saveMember {
+      background: #0f172a;
       color: white;
     }
 
-    .message {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      display: none;
+
+    #cancelEdit {
+      background: #e5e7eb;
+      color: #111827;
     }
 
-    .success {
-      background: #dcfce7;
-      color: #166534;
+
+    .members-card {
+      background: white;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
     }
 
-    .error {
-      background: #fee2e2;
-      color: #991b1b;
+
+    .members-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 18px;
     }
+
+
+    .family-member-card {
+      background: #f8fafc;
+    }
+
 
     @media (max-width: 600px) {
-      .container {
-        margin: 10px auto;
-        padding: 12px;
+
+      .family-page {
+        padding: 18px 12px 40px;
       }
 
-      #mapPicker {
-        height: 350px;
+      .family-title {
+        font-size: 23px;
       }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <div class="header">
-    <h1>👨‍👩‍👧 Family Members</h1>
-  </div>
 
-  <div class="container">
+  <!-- =====================================================
+       TOP BAR
+       ===================================================== -->
 
-    <!-- ADD FAMILY MEMBER -->
-    <div class="card">
+  <header class="topbar">
 
-      <h2>Add Family Member</h2>
+    <div class="brand-area">
 
-      <label for="name">Name</label>
-      <input
-        type="text"
-        id="name"
-        placeholder="Enter name"
-      >
-
-      <label for="relation">Relationship</label>
-      <select id="relation">
-        <option value="">Select relationship</option>
-        <option value="Father">Father</option>
-        <option value="Mother">Mother</option>
-        <option value="Brother">Brother</option>
-        <option value="Sister">Sister</option>
-        <option value="Son">Son</option>
-        <option value="Daughter">Daughter</option>
-        <option value="Husband">Husband</option>
-        <option value="Wife">Wife</option>
-        <option value="Grandfather">Grandfather</option>
-        <option value="Grandmother">Grandmother</option>
-        <option value="Other">Other</option>
-      </select>
-
-      <label for="phone">Phone Number</label>
-      <input
-        type="tel"
-        id="phone"
-        placeholder="Enter phone number"
-      >
-
-      <button
-        class="location-btn"
-        id="selectLocationBtn"
-      >
-        📍 Select Home Location
-      </button>
-
-      <div
-        class="picker-instruction"
-        id="pickerInstruction"
-      >
-        📍 <strong>Tap on the map</strong> to select this family member's actual home location.
+      <div class="brand-icon">
+        🔥
       </div>
 
-      <div id="mapPicker"></div>
 
-      <div
-        class="location-info"
-        id="locationInfo"
-      >
-        No home location selected
+      <div>
+
+        <div class="brand-title">
+          Smart Fire Guardian
+        </div>
+
+
+        <div class="brand-subtitle">
+          Family Emergency Management
+        </div>
+
       </div>
 
-      <button
-        class="cancel-btn"
-        id="cancelLocationBtn"
-        style="display:none;"
-      >
-        Cancel Location Selection
-      </button>
+    </div>
 
-      <button
-        class="save-btn"
-        id="saveBtn"
-      >
-        💾 Save Family Member
-      </button>
+  </header>
 
-      <div id="message" class="message"></div>
+
+
+  <!-- =====================================================
+       FAMILY PAGE
+       ===================================================== -->
+
+  <main class="family-page">
+
+
+    <!-- HEADER -->
+
+    <div class="family-header">
+
+      <div>
+
+        <div class="family-title">
+          👨‍👩‍👧 Family Members
+        </div>
+
+
+        <div class="family-subtitle">
+          Add family contacts and their home locations
+        </div>
+
+      </div>
+
+
+      <a
+        href="index.html"
+        class="back-button"
+      >
+        ← Dashboard
+      </a>
 
     </div>
 
 
-    <!-- REGISTERED MEMBERS -->
-    <div class="card">
 
-      <h2>Registered Family Members</h2>
+    <!-- ===================================================
+         ADD FAMILY MEMBER
+         =================================================== -->
 
-      <div id="membersList">
+    <section class="family-form-card">
+
+
+      <div class="family-form-title">
+        Add Family Member
+      </div>
+
+
+
+      <form id="familyForm">
+
+
+        <!-- NAME -->
+
+        <div class="form-group">
+
+          <label for="name">
+            Name
+          </label>
+
+
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Enter name"
+            required
+          >
+
+        </div>
+
+
+
+        <!-- RELATION -->
+
+        <div class="form-group">
+
+          <label for="relation">
+            Relationship
+          </label>
+
+
+          <select
+            id="relation"
+            name="relation"
+          >
+
+            <option value="">
+              Select relationship
+            </option>
+
+            <option value="Father">
+              Father
+            </option>
+
+            <option value="Mother">
+              Mother
+            </option>
+
+            <option value="Brother">
+              Brother
+            </option>
+
+            <option value="Sister">
+              Sister
+            </option>
+
+            <option value="Son">
+              Son
+            </option>
+
+            <option value="Daughter">
+              Daughter
+            </option>
+
+            <option value="Husband">
+              Husband
+            </option>
+
+            <option value="Wife">
+              Wife
+            </option>
+
+            <option value="Grandfather">
+              Grandfather
+            </option>
+
+            <option value="Grandmother">
+              Grandmother
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+
+          </select>
+
+        </div>
+
+
+
+        <!-- PHONE -->
+
+        <div class="form-group">
+
+          <label for="phone">
+            Phone Number
+          </label>
+
+
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            placeholder="Enter phone number"
+            required
+          >
+
+        </div>
+
+
+
+        <!-- HOME LOCATION -->
+
+        <div class="location-box">
+
+
+          <strong>
+            🏠 Home Location
+          </strong>
+
+
+          <div
+            id="locationStatus"
+          >
+            No home location selected
+          </div>
+
+
+          <button
+            id="selectLocation"
+            class="family-button"
+            type="button"
+          >
+            🗺️ Select Home Location
+          </button>
+
+
+        </div>
+
+
+
+        <!-- SAVE -->
+
+        <button
+          id="saveFamilyMember"
+          class="family-button"
+          type="submit"
+        >
+          Save Family Member
+        </button>
+
+
+        <!-- CANCEL EDIT -->
+
+        <button
+          id="cancelEdit"
+          class="family-button"
+          type="button"
+          style="display:none;"
+        >
+          Cancel Edit
+        </button>
+
+
+      </form>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         REGISTERED MEMBERS
+         =================================================== -->
+
+    <section class="members-card">
+
+
+      <div class="members-title">
+        Registered Members
+      </div>
+
+
+      <div
+        id="familyList"
+      >
+
         Loading family members...
+
       </div>
 
-    </div>
 
-  </div>
+    </section>
 
 
-  <script type="module">
+  </main>
 
-    import { db } from "./firebase-config.js";
 
-    import {
-      ref,
-      push,
-      set,
-      onValue,
-      remove,
-      update
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-
-    // ==========================================
-    // CONFIGURATION
-    // ==========================================
-
-    const DEVICE_ID = "SF-003";
-
-    const familyRef = ref(
-      db,
-      `familyMembers/${DEVICE_ID}`
-    );
-
-
-    // ==========================================
-    // VARIABLES
-    // ==========================================
-
-    let map = null;
-    let selectedMarker = null;
-
-    let selectedLatitude = null;
-    let selectedLongitude = null;
-
-    let selectingLocation = false;
-
-
-    // ==========================================
-    // ELEMENTS
-    // ==========================================
-
-    const selectLocationBtn =
-      document.getElementById("selectLocationBtn");
-
-    const cancelLocationBtn =
-      document.getElementById("cancelLocationBtn");
-
-    const mapPicker =
-      document.getElementById("mapPicker");
-
-    const pickerInstruction =
-      document.getElementById("pickerInstruction");
-
-    const locationInfo =
-      document.getElementById("locationInfo");
-
-    const saveBtn =
-      document.getElementById("saveBtn");
-
-    const membersList =
-      document.getElementById("membersList");
-
-    const message =
-      document.getElementById("message");
-
-
-    // ==========================================
-    // SHOW MESSAGE
-    // ==========================================
-
-    function showMessage(text, type) {
-
-      message.textContent = text;
-
-      message.className =
-        "message " + type;
-
-      message.style.display = "block";
-
-      setTimeout(() => {
-        message.style.display = "none";
-      }, 4000);
-    }
-
-
-    // ==========================================
-    // START MAP PICKER
-    // ==========================================
-
-    selectLocationBtn.addEventListener(
-      "click",
-      () => {
-
-        selectingLocation = true;
-
-        mapPicker.style.display = "block";
-
-        pickerInstruction.style.display = "block";
-
-        cancelLocationBtn.style.display = "block";
-
-        selectLocationBtn.style.display = "none";
-
-
-        // Default map location
-        // Belagavi area
-
-        const defaultLat =
-          15.855881303189477;
-
-        const defaultLng =
-          74.57802140000477;
-
-
-        if (!map) {
-
-          map = L.map("mapPicker")
-            .setView(
-              [defaultLat, defaultLng],
-              13
-            );
-
-
-          L.tileLayer(
-            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            {
-              maxZoom: 19,
-              attribution:
-                "&copy; OpenStreetMap contributors"
-            }
-          ).addTo(map);
-
-
-          // ======================================
-          // TAP MAP
-          // ======================================
-
-          map.on(
-            "click",
-            function(e) {
-
-              if (!selectingLocation) {
-                return;
-              }
-
-              selectedLatitude =
-                e.latlng.lat;
-
-              selectedLongitude =
-                e.latlng.lng;
-
-
-              // Remove old marker
-
-              if (selectedMarker) {
-                map.removeLayer(
-                  selectedMarker
-                );
-              }
-
-
-              // Add new marker
-
-              selectedMarker =
-                L.marker([
-                  selectedLatitude,
-                  selectedLongitude
-                ])
-                .addTo(map);
-
-
-              selectedMarker.bindPopup(
-                "🏠 Family Home<br>" +
-                selectedLatitude.toFixed(6) +
-                ", " +
-                selectedLongitude.toFixed(6)
-              ).openPopup();
-
-
-              locationInfo.innerHTML =
-                "🏠 <strong>Home Location Selected</strong><br>" +
-                "Latitude: " +
-                selectedLatitude.toFixed(6) +
-                "<br>" +
-                "Longitude: " +
-                selectedLongitude.toFixed(6);
-
-
-              showMessage(
-                "Home location selected. Now click Save Family Member.",
-                "success"
-              );
-
-            }
-          );
-
-        }
-
-
-        // Important for Leaflet when map
-        // was initially hidden
-
-        setTimeout(() => {
-          map.invalidateSize();
-        }, 200);
-
-      }
-    );
-
-
-    // ==========================================
-    // CANCEL LOCATION
-    // ==========================================
-
-    cancelLocationBtn.addEventListener(
-      "click",
-      () => {
-
-        selectingLocation = false;
-
-        selectedLatitude = null;
-        selectedLongitude = null;
-
-
-        if (selectedMarker) {
-
-          map.removeLayer(
-            selectedMarker
-          );
-
-          selectedMarker = null;
-        }
-
-
-        mapPicker.style.display = "none";
-
-        pickerInstruction.style.display = "none";
-
-        cancelLocationBtn.style.display = "none";
-
-        selectLocationBtn.style.display = "block";
-
-
-        locationInfo.textContent =
-          "No home location selected";
-
-      }
-    );
-
-
-    // ==========================================
-    // SAVE FAMILY MEMBER
-    // ==========================================
-
-    saveBtn.addEventListener(
-      "click",
-      async () => {
-
-        const name =
-          document.getElementById("name")
-            .value
-            .trim();
-
-        const relation =
-          document.getElementById("relation")
-            .value;
-
-        const phone =
-          document.getElementById("phone")
-            .value
-            .trim();
-
-
-        // Validation
-
-        if (!name) {
-
-          showMessage(
-            "Please enter the family member name.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        if (!relation) {
-
-          showMessage(
-            "Please select the relationship.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        if (!phone) {
-
-          showMessage(
-            "Please enter the phone number.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        if (
-          selectedLatitude === null ||
-          selectedLongitude === null
-        ) {
-
-          showMessage(
-            "Please select the family member's home location on the map.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        try {
-
-          const newMemberRef =
-            push(familyRef);
-
-
-          await set(
-            newMemberRef,
-            {
-              name: name,
-              relation: relation,
-              phone: phone,
-
-              latitude:
-                selectedLatitude,
-
-              longitude:
-                selectedLongitude,
-
-              isPrimary: false
-            }
-          );
-
-
-          showMessage(
-            "Family member saved successfully! ✅",
-            "success"
-          );
-
-
-          // Clear form
-
-          document.getElementById("name")
-            .value = "";
-
-          document.getElementById("relation")
-            .value = "";
-
-          document.getElementById("phone")
-            .value = "";
-
-
-          selectedLatitude = null;
-          selectedLongitude = null;
-
-          selectingLocation = false;
-
-
-          if (selectedMarker) {
-
-            map.removeLayer(
-              selectedMarker
-            );
-
-            selectedMarker = null;
-          }
-
-
-          mapPicker.style.display = "none";
-
-          pickerInstruction.style.display =
-            "none";
-
-          cancelLocationBtn.style.display =
-            "none";
-
-          selectLocationBtn.style.display =
-            "block";
-
-
-          locationInfo.textContent =
-            "No home location selected";
-
-
-        } catch (error) {
-
-          console.error(
-            "Firebase save error:",
-            error
-          );
-
-          showMessage(
-            "Could not save family member: " +
-            error.message,
-            "error"
-          );
-
-        }
-
-      }
-    );
-
-
-    // ==========================================
-    // LOAD FAMILY MEMBERS
-    // ==========================================
-
-    onValue(
-      familyRef,
-      (snapshot) => {
-
-        const data =
-          snapshot.val();
-
-
-        membersList.innerHTML = "";
-
-
-        if (!data) {
-
-          membersList.innerHTML =
-            "<p>No family members registered yet.</p>";
-
-          return;
-        }
-
-
-        Object.entries(data)
-          .forEach(
-            ([id, member]) => {
-
-              const div =
-                document.createElement("div");
-
-              div.className =
-                "member";
-
-
-              const primaryText =
-                member.isPrimary
-                  ? '<span class="primary">⭐ Primary Contact</span>'
-                  : "";
-
-
-              div.innerHTML = `
-
-                <strong>
-                  ${member.name || "Unknown"}
-                </strong>
-
-                ${primaryText}
-
-                <br>
-
-                Relationship:
-                ${member.relation || "-"}
-
-                <br>
-
-                Phone:
-                ${member.phone || "-"}
-
-                <br>
-
-                🏠 Home:
-                ${
-                  member.latitude !== undefined
-                    ? Number(member.latitude).toFixed(6)
-                    : "-"
-                },
-                ${
-                  member.longitude !== undefined
-                    ? Number(member.longitude).toFixed(6)
-                    : "-"
-                }
-
-                <br>
-
-                <button
-                  class="primary-btn"
-                  data-primary="${id}"
-                >
-                  ⭐ Make Primary
-                </button>
-
-                <button
-                  class="delete-btn"
-                  data-delete="${id}"
-                >
-                  🗑 Delete
-                </button>
-
-              `;
-
-
-              membersList.appendChild(div);
-
-            }
-          );
-
-
-        // ======================================
-        // DELETE
-        // ======================================
-
-        document
-          .querySelectorAll("[data-delete]")
-          .forEach(button => {
-
-            button.addEventListener(
-              "click",
-              async () => {
-
-                const id =
-                  button.dataset.delete;
-
-                if (
-                  confirm(
-                    "Delete this family member?"
-                  )
-                ) {
-
-                  await remove(
-                    ref(
-                      db,
-                      `familyMembers/${DEVICE_ID}/${id}`
-                    )
-                  );
-
-                }
-
-              }
-            );
-
-          });
-
-
-        // ======================================
-        // MAKE PRIMARY
-        // ======================================
-
-        document
-          .querySelectorAll("[data-primary]")
-          .forEach(button => {
-
-            button.addEventListener(
-              "click",
-              async () => {
-
-                const selectedId =
-                  button.dataset.primary;
-
-
-                // Make every member non-primary
-
-                const updates = {};
-
-
-                Object.keys(data)
-                  .forEach(id => {
-
-                    updates[
-                      `familyMembers/${DEVICE_ID}/${id}/isPrimary`
-                    ] =
-                      id === selectedId;
-
-                  });
-
-
-                await update(
-                  ref(db),
-                  updates
-                );
-
-
-                showMessage(
-                  "Primary family contact updated. ⭐",
-                  "success"
-                );
-
-              }
-            );
-
-          });
-
-      },
-      (error) => {
-
-        console.error(
-          "Firebase read error:",
-          error
-        );
-
-        membersList.innerHTML =
-          "<p>Could not load family members.</p>";
-
-      }
-    );
-
-  </script>
-
+  <!-- =====================================================
+       LEAFLET
+       ===================================================== -->
 
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
   ></script>
 
+
+
+  <!-- =====================================================
+       FAMILY JAVASCRIPT
+       ===================================================== -->
+
+  <script
+    type="module"
+    src="family.js"
+  ></script>
+
+
 </body>
+
 </html>
