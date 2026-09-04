@@ -24,7 +24,6 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-// Network-first: live sensor data should never be served stale from cache
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(event.request).catch(() => caches.match(event.request))
