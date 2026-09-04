@@ -12,12 +12,13 @@ const DEVICE_ID = "SF-003";
 const DATA_PATH = `devices/${DEVICE_ID}`;
 
 const DEFAULT_GAS_THRESHOLD = 1600;
-const DEFAULT_FIRE_THRESHOLD = 5000; // 5 kΩ
+const DEFAULT_FIRE_THRESHOLD = 5000;
 
-/* Default map coordinates (change to your real location) */
+/* ========== YOUR EXACT LOCATION ========== */
 const DEFAULT_LAT = 15.855881303189477;
 const DEFAULT_LNG = 74.57802140000477;
 const DEFAULT_ZOOM = 16;
+/* ======================================== */
 
 let previousFireState = false;
 let lastFirebaseData = null;
@@ -75,6 +76,17 @@ function numberValue(value, fallback = 0) {
   return Number.isFinite(n) ? n : fallback;
 }
 
+function getValidCoord(value, fallback) {
+  if (value === null || value === undefined || value === "") {
+    return fallback;
+  }
+  const n = Number(value);
+  if (!Number.isFinite(n) || n === 0) {
+    return fallback;
+  }
+  return n;
+}
+
 /* ---------- Map ---------- */
 function createMarkerIcon(isFire) {
   const colorClass = isFire ? "fire" : "safe";
@@ -111,18 +123,21 @@ function initMap() {
   }).addTo(map);
 
   marker.bindPopup("Device location");
+
+  console.log("Map initialized at:", DEFAULT_LAT, DEFAULT_LNG);
 }
 
 function updateMap(data, fireAlert) {
   if (!map || !marker) return;
 
-  const lat = numberValue(
-    data.lat ?? data.location?.lat ?? data.coordinates?.lat,
-    currentLat
+  // Always use your fixed location unless Firebase sends valid non-zero coordinates
+  const lat = getValidCoord(
+    data?.lat ?? data?.location?.lat ?? data?.coordinates?.lat,
+    DEFAULT_LAT
   );
-  const lng = numberValue(
-    data.lng ?? data.location?.lng ?? data.coordinates?.lng,
-    currentLng
+  const lng = getValidCoord(
+    data?.lng ?? data?.location?.lng ?? data?.coordinates?.lng,
+    DEFAULT_LNG
   );
 
   currentLat = lat;
@@ -140,7 +155,7 @@ function updateMap(data, fireAlert) {
     : `<strong>Monitoring</strong><br>${building}<br>Floor ${floor} • ${zone}`;
 
   marker.setPopupContent(popupHtml);
-  map.setView([lat, lng], map.getZoom() < 15 ? 16 : map.getZoom());
+  map.setView([lat, lng], DEFAULT_ZOOM);
 
   const mapEl = $("map");
   if (mapEl) {
@@ -520,4 +535,5 @@ initMap();
 console.log("==========================================");
 console.log("SMART FIRE GUARDIAN DASHBOARD");
 console.log(`Listening to: /${DATA_PATH}`);
+console.log("Map location:", DEFAULT_LAT, DEFAULT_LNG);
 console.log("==========================================");
