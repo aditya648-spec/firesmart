@@ -150,6 +150,101 @@ body {
   color: #172033;
 }
 
+/* ---------- Map ---------- */
+.map-card {
+  background: #ffffff;
+  border: 1px solid #e5eaf1;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+}
+
+.map-container {
+  width: 100%;
+  height: 320px;
+  background: #e8eef5;
+}
+
+.map-container.fire-focus {
+  outline: 3px solid #dc2626;
+  outline-offset: -3px;
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 12px 18px;
+  border-top: 1px solid #edf1f5;
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.map-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.map-marker-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.map-marker-dot.safe {
+  background: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+}
+
+.map-marker-dot.fire {
+  background: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.25);
+}
+
+/* Custom Leaflet marker styles */
+.leaflet-marker-icon.sf-marker {
+  background: transparent;
+  border: none;
+}
+
+.sf-marker-pin {
+  width: 28px;
+  height: 28px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.sf-marker-pin.safe {
+  background: #16a34a;
+}
+
+.sf-marker-pin.fire {
+  background: #dc2626;
+  animation: markerPulse 1s infinite alternate;
+}
+
+.sf-marker-pin span {
+  transform: rotate(45deg);
+  font-size: 14px;
+  line-height: 1;
+}
+
+@keyframes markerPulse {
+  from {
+    transform: rotate(-45deg) scale(1);
+  }
+  to {
+    transform: rotate(-45deg) scale(1.15);
+  }
+}
+
 /* ---------- Main Status ---------- */
 .main-status {
   border-radius: 20px;
@@ -727,86 +822,3 @@ body.fire-active {
 
   .brand-subtitle {
     font-size: 11px;
-  }
-
-  .device-status {
-    font-size: 12px;
-  }
-
-  .last-update {
-    font-size: 11px;
-  }
-
-  .main-status {
-    padding: 22px;
-    gap: 15px;
-  }
-
-  .status-value {
-    font-size: 29px;
-  }
-
-  .status-text {
-    font-size: 15px;
-  }
-
-  .status-description {
-    font-size: 12px;
-  }
-
-  .sensor-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .info-card {
-    padding: 15px;
-  }
-
-  .sequence {
-    padding: 17px;
-  }
-
-  .fire-popup-box {
-    padding: 27px 20px;
-  }
-
-  .fire-popup-title {
-    font-size: 29px;
-  }
-
-  .fire-popup-icon {
-    font-size: 56px;
-  }
-
-  .footer {
-    padding: 20px 14px;
-  }
-}
-
-/* ---------- Very Small Screens ---------- */
-@media (max-width: 390px) {
-  .info-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .device-status {
-    flex-basis: 100%;
-  }
-
-  .last-update {
-    flex-basis: 100%;
-    text-align: left;
-  }
-
-  .main-status {
-    padding: 19px;
-  }
-
-  .status-value {
-    font-size: 26px;
-  }
-}
