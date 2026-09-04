@@ -8,7 +8,6 @@ import {
 
 /* =========================================================
    SMART FIRE GUARDIAN
-   APP.JS
    ========================================================= */
 
 
@@ -18,11 +17,12 @@ import {
 
 const DEVICE_ID = "SF-003";
 
-const DATA_PATH = `devices/${DEVICE_ID}`;
+const DATA_PATH =
+  `devices/${DEVICE_ID}`;
 
 
 /* =========================================================
-   DEFAULT SENSOR THRESHOLDS
+   THRESHOLDS
    ========================================================= */
 
 const DEFAULT_GAS_THRESHOLD = 1600;
@@ -31,37 +31,41 @@ const DEFAULT_FIRE_THRESHOLD = 5000;
 
 
 /* =========================================================
-   DEVICE LOCATION
+   YOUR LOCATION
    ========================================================= */
 
-const DEFAULT_LAT = 15.855881303189477;
+const DEFAULT_LAT =
+  15.855881303189477;
 
-const DEFAULT_LNG = 74.57802140000477;
+const DEFAULT_LNG =
+  74.57802140000477;
 
 
 /* =========================================================
    POLICE STATION
    ========================================================= */
 
-const POLICE_LAT = 15.881842260513212;
+const POLICE_LAT =
+  15.881842260513212;
 
-const POLICE_LNG = 74.52917008030238;
+const POLICE_LNG =
+  74.52917008030238;
 
 
 /* =========================================================
    FIRE STATION
    ========================================================= */
 
-const FIRE_STATION_LAT = 15.845029016505203;
+const FIRE_STATION_LAT =
+  15.845029016505203;
 
-const FIRE_STATION_LNG = 74.50745329043593;
+const FIRE_STATION_LNG =
+  74.50745329043593;
 
 
 /* =========================================================
    MAP
    ========================================================= */
-
-const DEFAULT_ZOOM = 13;
 
 let map = null;
 
@@ -86,28 +90,38 @@ let popupDeviceMarker = null;
 
 
 /* =========================================================
-   CURRENT LOCATION
+   CURRENT DEVICE POSITION
    ========================================================= */
 
-let currentLat = DEFAULT_LAT;
+let currentLat =
+  DEFAULT_LAT;
 
-let currentLng = DEFAULT_LNG;
+let currentLng =
+  DEFAULT_LNG;
 
 
 /* =========================================================
    FIRE STATE
    ========================================================= */
 
-let previousFireState = false;
+let previousFireState =
+  false;
+
+
+/* =========================================================
+   HELPER
+   ========================================================= */
+
+function $(id) {
+
+  return document.getElementById(id);
+
+}
 
 
 /* =========================================================
    HTML ELEMENTS
    ========================================================= */
-
-const $ = (id) =>
-  document.getElementById(id);
-
 
 const elements = {
 
@@ -202,7 +216,7 @@ const elements = {
 
 
 /* =========================================================
-   NUMBER HELPER
+   NUMBER
    ========================================================= */
 
 function numberValue(
@@ -210,24 +224,18 @@ function numberValue(
   fallback = 0
 ) {
 
-  const number =
+  const n =
     Number(value);
 
-  if (
-    Number.isFinite(number)
-  ) {
-
-    return number;
-
-  }
-
-  return fallback;
+  return Number.isFinite(n)
+    ? n
+    : fallback;
 
 }
 
 
 /* =========================================================
-   COORDINATE HELPER
+   COORDINATE
    ========================================================= */
 
 function validCoordinate(
@@ -235,15 +243,15 @@ function validCoordinate(
   fallback
 ) {
 
-  const number =
+  const n =
     Number(value);
 
   if (
-    Number.isFinite(number) &&
-    number !== 0
+    Number.isFinite(n) &&
+    n !== 0
   ) {
 
-    return number;
+    return n;
 
   }
 
@@ -253,7 +261,7 @@ function validCoordinate(
 
 
 /* =========================================================
-   TIME
+   CURRENT TIME
    ========================================================= */
 
 function currentTime() {
@@ -281,20 +289,17 @@ function distanceKm(
   lng2
 ) {
 
-  const earthRadius = 6371;
-
+  const R = 6371;
 
   const dLat =
     (lat2 - lat1) *
     Math.PI /
     180;
 
-
   const dLng =
     (lng2 - lng1) *
     Math.PI /
     180;
-
 
   const a =
 
@@ -318,7 +323,6 @@ function distanceKm(
     Math.sin(dLng / 2) *
     Math.sin(dLng / 2);
 
-
   const c =
     2 *
     Math.atan2(
@@ -326,19 +330,17 @@ function distanceKm(
       Math.sqrt(1 - a)
     );
 
-
-  return earthRadius * c;
+  return R * c;
 
 }
 
 
 /* =========================================================
-   MARKER ICON
+   MAP MARKER ICON
+   MATCHES YOUR EXISTING CSS
    ========================================================= */
 
-function markerIcon(
-  type
-) {
+function markerIcon(type) {
 
   let emoji = "📍";
 
@@ -381,28 +383,28 @@ function markerIcon(
   return L.divIcon({
 
     className:
-      "smart-fire-marker",
+      "sf-marker",
 
     html: `
-      <div class="smart-marker-pin ${className}">
-        <span>${emoji}</span>
+
+      <div class="sf-marker-pin ${className}">
+
+        <span>
+          ${emoji}
+        </span>
+
       </div>
+
     `,
 
-    iconSize: [
-      36,
-      36
-    ],
+    iconSize:
+      [32, 32],
 
-    iconAnchor: [
-      18,
-      36
-    ],
+    iconAnchor:
+      [16, 32],
 
-    popupAnchor: [
-      0,
-      -35
-    ]
+    popupAnchor:
+      [0, -32]
 
   });
 
@@ -419,9 +421,7 @@ function initMap() {
     $("map");
 
 
-  if (
-    !mapElement
-  ) {
+  if (!mapElement) {
 
     console.error(
       "Map element not found."
@@ -445,19 +445,22 @@ function initMap() {
   }
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      CREATE MAP
-     ------------------------------------------------------- */
+     ======================================================= */
 
   map =
     L.map(
-      "map"
+      "map",
+      {
+        zoomControl: true
+      }
     );
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      OPEN STREET MAP
-     ------------------------------------------------------- */
+     ======================================================= */
 
   L.tileLayer(
 
@@ -472,14 +475,12 @@ function initMap() {
 
     }
 
-  ).addTo(
-    map
-  );
+  ).addTo(map);
 
 
-  /* -------------------------------------------------------
-     DEVICE MARKER
-     ------------------------------------------------------- */
+  /* =======================================================
+     YOUR LOCATION
+     ======================================================= */
 
   deviceMarker =
     L.marker(
@@ -491,28 +492,63 @@ function initMap() {
 
       {
         icon:
-          markerIcon(
-            "safe"
-          )
+          markerIcon("safe")
       }
 
-    ).addTo(
-      map
-    );
+    ).addTo(map);
 
 
-  deviceMarker.bindPopup(
-    `
-      <strong>📍 Smart Fire Guardian</strong>
-      <br>
-      Device: ${DEVICE_ID}
-    `
+  deviceMarker.bindTooltip(
+
+    "📍 YOUR LOCATION",
+
+    {
+
+      permanent: true,
+
+      direction: "top",
+
+      offset:
+        [0, -30],
+
+      className:
+        "your-location-label"
+
+    }
+
   );
 
 
-  /* -------------------------------------------------------
-     POLICE MARKER
-     ------------------------------------------------------- */
+  deviceMarker.bindPopup(
+
+    `
+      <strong>
+        📍 YOUR LOCATION
+      </strong>
+
+      <br><br>
+
+      Smart Fire Guardian
+
+      <br>
+
+      Device: ${DEVICE_ID}
+
+      <br>
+
+      ABC Apartments
+
+      <br>
+
+      Floor 3 • Room 302
+    `
+
+  );
+
+
+  /* =======================================================
+     POLICE STATION
+     ======================================================= */
 
   policeMarker =
     L.marker(
@@ -524,30 +560,51 @@ function initMap() {
 
       {
         icon:
-          markerIcon(
-            "police"
-          )
+          markerIcon("police")
       }
 
-    ).addTo(
-      map
-    );
+    ).addTo(map);
 
 
-  policeMarker.bindPopup(
-    `
-      <strong>🚓 Police Station</strong>
-      <br>
-      Nearest Police Station
-      <br><br>
-      <b>Emergency Response Point</b>
-    `
+  policeMarker.bindTooltip(
+
+    "🚓 NEAREST POLICE STATION",
+
+    {
+
+      permanent: true,
+
+      direction: "top",
+
+      offset:
+        [0, -30],
+
+      className:
+        "police-location-label"
+
+    }
+
   );
 
 
-  /* -------------------------------------------------------
-     FIRE STATION MARKER
-     ------------------------------------------------------- */
+  policeMarker.bindPopup(
+
+    `
+      <strong>
+        🚓 NEAREST POLICE STATION
+      </strong>
+
+      <br><br>
+
+      Emergency Police Response Point
+    `
+
+  );
+
+
+  /* =======================================================
+     FIRE STATION
+     ======================================================= */
 
   fireStationMarker =
     L.marker(
@@ -559,33 +616,57 @@ function initMap() {
 
       {
         icon:
-          markerIcon(
-            "fireStation"
-          )
+          markerIcon("fireStation")
       }
 
-    ).addTo(
-      map
-    );
+    ).addTo(map);
 
 
-  fireStationMarker.bindPopup(
-    `
-      <strong>🚒 Fire Station</strong>
-      <br>
-      Emergency Fire Response Point
-    `
+  fireStationMarker.bindTooltip(
+
+    "🚒 NEAREST FIRE STATION",
+
+    {
+
+      permanent: true,
+
+      direction: "top",
+
+      offset:
+        [0, -30],
+
+      className:
+        "fire-station-location-label"
+
+    }
+
   );
 
 
-  /* -------------------------------------------------------
-     DEVICE → POLICE LINE
-     ------------------------------------------------------- */
+  fireStationMarker.bindPopup(
+
+    `
+      <strong>
+        🚒 NEAREST FIRE STATION
+      </strong>
+
+      <br><br>
+
+      Emergency Fire Response Point
+    `
+
+  );
+
+
+  /* =======================================================
+     RESPONSE LINE → POLICE
+     ======================================================= */
 
   deviceToPoliceLine =
     L.polyline(
 
       [
+
         [
           DEFAULT_LAT,
           DEFAULT_LNG
@@ -595,28 +676,32 @@ function initMap() {
           POLICE_LAT,
           POLICE_LNG
         ]
+
       ],
 
       {
+
         weight: 4,
 
-        opacity: 0.75,
+        opacity: 0.8,
 
         dashArray:
-          "8, 8"
+          "8,8"
+
       }
 
     );
 
 
-  /* -------------------------------------------------------
-     DEVICE → FIRE STATION LINE
-     ------------------------------------------------------- */
+  /* =======================================================
+     RESPONSE LINE → FIRE STATION
+     ======================================================= */
 
   deviceToFireStationLine =
     L.polyline(
 
       [
+
         [
           DEFAULT_LAT,
           DEFAULT_LNG
@@ -626,74 +711,39 @@ function initMap() {
           FIRE_STATION_LAT,
           FIRE_STATION_LNG
         ]
+
       ],
 
       {
+
         weight: 4,
 
-        opacity: 0.75,
+        opacity: 0.8,
 
         dashArray:
-          "8, 8"
+          "8,8"
+
       }
 
     );
 
 
-  /* -------------------------------------------------------
-     SHOW ALL THREE LOCATIONS
-     ------------------------------------------------------- */
-
-  showAllLocationsOnMap();
-
-
-  console.log(
-    "Map loaded."
-  );
-
-  console.log(
-    "Device:",
-    DEFAULT_LAT,
-    DEFAULT_LNG
-  );
-
-  console.log(
-    "Police:",
-    POLICE_LAT,
-    POLICE_LNG
-  );
-
-  console.log(
-    "Fire Station:",
-    FIRE_STATION_LAT,
-    FIRE_STATION_LNG
-  );
-
-}
-
-
-/* =========================================================
-   SHOW ALL LOCATIONS
-   ========================================================= */
-
-function showAllLocationsOnMap() {
-
-  if (
-    !map
-  ) {
-
-    return;
-
-  }
-
+  /* =======================================================
+     INITIAL VIEW ONLY
+     
+     THIS IS THE ONLY PLACE WE USE fitBounds().
+     
+     Firebase WILL NOT CALL IT AGAIN.
+     ======================================================= */
 
   const bounds =
     L.latLngBounds(
 
       [
+
         [
-          currentLat,
-          currentLng
+          DEFAULT_LAT,
+          DEFAULT_LNG
         ],
 
         [
@@ -705,6 +755,7 @@ function showAllLocationsOnMap() {
           FIRE_STATION_LAT,
           FIRE_STATION_LNG
         ]
+
       ]
 
     );
@@ -716,12 +767,14 @@ function showAllLocationsOnMap() {
 
     {
       padding:
-        [
-          60,
-          60
-        ]
+        [70, 70]
     }
 
+  );
+
+
+  console.log(
+    "MAP INITIALIZED"
   );
 
 }
@@ -746,9 +799,9 @@ function updateMap(
   }
 
 
-  /* -------------------------------------------------------
-     GET DEVICE COORDINATES
-     ------------------------------------------------------- */
+  /* =======================================================
+     GET CURRENT DEVICE LOCATION
+     ======================================================= */
 
   currentLat =
     validCoordinate(
@@ -774,9 +827,13 @@ function updateMap(
     );
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      MOVE DEVICE MARKER
-     ------------------------------------------------------- */
+     
+     ONLY MOVE MARKER.
+     
+     DO NOT CHANGE MAP VIEW.
+     ======================================================= */
 
   deviceMarker.setLatLng(
 
@@ -788,9 +845,9 @@ function updateMap(
   );
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      DEVICE ICON
-     ------------------------------------------------------- */
+     ======================================================= */
 
   deviceMarker.setIcon(
 
@@ -805,13 +862,34 @@ function updateMap(
   );
 
 
-  /* -------------------------------------------------------
-     DEVICE POPUP
-     ------------------------------------------------------- */
+  /* =======================================================
+     DEVICE LABEL
+     ======================================================= */
+
+  if (fireAlert) {
+
+    deviceMarker.setTooltipContent(
+      "🔥 FIRE LOCATION"
+    );
+
+  }
+
+  else {
+
+    deviceMarker.setTooltipContent(
+      "📍 YOUR LOCATION"
+    );
+
+  }
+
+
+  /* =======================================================
+     DEVICE INFORMATION
+     ======================================================= */
 
   const building =
     data?.building ??
-    "AMBIT COLLEGE";
+    "ABC Apartments";
 
 
   const floor =
@@ -821,49 +899,91 @@ function updateMap(
 
   const zone =
     data?.zone ??
-    "COMPUTER LAB";
+    "Room 302";
 
 
-  deviceMarker.setPopupContent(
+  /* =======================================================
+     DEVICE POPUP
+     ======================================================= */
 
-    fireAlert
+  if (fireAlert) {
 
-      ?
+    deviceMarker.setPopupContent(
 
       `
-        <strong style="color:#b91c1c">
-          🔥 FIRE ALERT
+
+        <strong
+          style="color:#b91c1c"
+        >
+
+          🔥 FIRE LOCATION
+
         </strong>
+
         <br><br>
-        <b>${building}</b>
+
+        <b>
+          ${building}
+        </b>
+
         <br>
+
         Floor ${floor}
+
         <br>
+
         ${zone}
-      `
 
-      :
-
-      `
-        <strong>📍 Smart Fire Guardian</strong>
         <br><br>
-        <b>${building}</b>
+
+        🚓 Police Station notified
+
         <br>
-        Floor ${floor}
-        <br>
-        ${zone}
+
+        🚒 Fire Station notified
+
       `
 
-  );
+    );
+
+  }
+
+  else {
+
+    deviceMarker.setPopupContent(
+
+      `
+
+        <strong>
+          📍 YOUR LOCATION
+        </strong>
+
+        <br><br>
+
+        <b>
+          ${building}
+        </b>
+
+        <br>
+
+        Floor ${floor}
+
+        <br>
+
+        ${zone}
+
+      `
+
+    );
+
+  }
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      POLICE MARKER
-     ------------------------------------------------------- */
+     ======================================================= */
 
-  if (
-    policeMarker
-  ) {
+  if (policeMarker) {
 
     policeMarker.setLatLng(
 
@@ -877,13 +997,11 @@ function updateMap(
   }
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      FIRE STATION MARKER
-     ------------------------------------------------------- */
+     ======================================================= */
 
-  if (
-    fireStationMarker
-  ) {
+  if (fireStationMarker) {
 
     fireStationMarker.setLatLng(
 
@@ -897,17 +1015,16 @@ function updateMap(
   }
 
 
-  /* -------------------------------------------------------
-     UPDATE LINES
-     ------------------------------------------------------- */
+  /* =======================================================
+     UPDATE POLICE LINE
+     ======================================================= */
 
-  if (
-    deviceToPoliceLine
-  ) {
+  if (deviceToPoliceLine) {
 
     deviceToPoliceLine.setLatLngs(
 
       [
+
         [
           currentLat,
           currentLng
@@ -917,6 +1034,7 @@ function updateMap(
           POLICE_LAT,
           POLICE_LNG
         ]
+
       ]
 
     );
@@ -924,13 +1042,16 @@ function updateMap(
   }
 
 
-  if (
-    deviceToFireStationLine
-  ) {
+  /* =======================================================
+     UPDATE FIRE STATION LINE
+     ======================================================= */
+
+  if (deviceToFireStationLine) {
 
     deviceToFireStationLine.setLatLngs(
 
       [
+
         [
           currentLat,
           currentLng
@@ -940,6 +1061,7 @@ function updateMap(
           FIRE_STATION_LAT,
           FIRE_STATION_LNG
         ]
+
       ]
 
     );
@@ -947,13 +1069,15 @@ function updateMap(
   }
 
 
-  /* -------------------------------------------------------
-     FIRE = SHOW EMERGENCY LINES
-     ------------------------------------------------------- */
+  /* =======================================================
+     FIRE
+     
+     SHOW RESPONSE LINES.
+     
+     NO fitBounds().
+     ======================================================= */
 
-  if (
-    fireAlert
-  ) {
+  if (fireAlert) {
 
     if (
       deviceToPoliceLine &&
@@ -982,50 +1106,16 @@ function updateMap(
 
     }
 
-
-    const emergencyBounds =
-      L.latLngBounds(
-
-        [
-          [
-            currentLat,
-            currentLng
-          ],
-
-          [
-            POLICE_LAT,
-            POLICE_LNG
-          ],
-
-          [
-            FIRE_STATION_LAT,
-            FIRE_STATION_LNG
-          ]
-        ]
-
-      );
-
-
-    map.fitBounds(
-
-      emergencyBounds,
-
-      {
-        padding:
-          [
-            60,
-            60
-          ]
-      }
-
-    );
-
   }
 
 
-  /* -------------------------------------------------------
-     SAFE = HIDE LINES
-     ------------------------------------------------------- */
+  /* =======================================================
+     SAFE / HEAT
+     
+     HIDE RESPONSE LINES.
+     
+     NO fitBounds().
+     ======================================================= */
 
   else {
 
@@ -1056,23 +1146,18 @@ function updateMap(
 
     }
 
-
-    showAllLocationsOnMap();
-
   }
 
 
-  /* -------------------------------------------------------
-     FIRE BORDER
-     ------------------------------------------------------- */
+  /* =======================================================
+     FIRE MAP BORDER
+     ======================================================= */
 
   const mapElement =
     $("map");
 
 
-  if (
-    mapElement
-  ) {
+  if (mapElement) {
 
     mapElement.classList.toggle(
       "fire-focus",
@@ -1085,7 +1170,742 @@ function updateMap(
 
 
 /* =========================================================
-   EMERGENCY RESPONSE PANEL
+   LOCATION
+   ========================================================= */
+
+function updateLocation(data) {
+
+  const building =
+    data?.building ??
+    "ABC Apartments";
+
+
+  const floor =
+    data?.floor ??
+    "3";
+
+
+  const zone =
+    data?.zone ??
+    "Room 302";
+
+
+  if (elements.location) {
+
+    elements.location.textContent =
+      `${building} • Floor ${floor} • ${zone}`;
+
+  }
+
+}
+
+
+/* =========================================================
+   DEVICE INFO
+   ========================================================= */
+
+function updateDeviceInfo(data) {
+
+  if (elements.deviceId) {
+
+    elements.deviceId.textContent =
+      data?.deviceId ??
+      DEVICE_ID;
+
+  }
+
+
+  if (elements.building) {
+
+    elements.building.textContent =
+      data?.building ??
+      "ABC Apartments";
+
+  }
+
+
+  if (elements.floor) {
+
+    elements.floor.textContent =
+      data?.floor ??
+      "3";
+
+  }
+
+
+  if (elements.zone) {
+
+    elements.zone.textContent =
+      data?.zone ??
+      "Room 302";
+
+  }
+
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+function updateTopBar() {
+
+  if (elements.lastUpdate) {
+
+    elements.lastUpdate.textContent =
+      currentTime();
+
+  }
+
+
+  if (elements.deviceTopDot) {
+
+    elements.deviceTopDot.classList.add(
+      "online"
+    );
+
+    elements.deviceTopDot.classList.remove(
+      "offline"
+    );
+
+  }
+
+
+  if (elements.deviceTopStatus) {
+
+    elements.deviceTopStatus.textContent =
+      "Device Online";
+
+  }
+
+
+  if (elements.deviceConn) {
+
+    elements.deviceConn.textContent =
+      "Online";
+
+  }
+
+}
+
+
+/* =========================================================
+   HEAT SENSOR
+   ========================================================= */
+
+function updateHeat(
+  heatData
+) {
+
+  const resistance =
+    numberValue(
+
+      heatData?.resistance,
+
+      0
+
+    );
+
+
+  const threshold =
+    numberValue(
+
+      heatData?.fireThreshold,
+
+      DEFAULT_FIRE_THRESHOLD
+
+    );
+
+
+  const heatDetected =
+
+    heatData?.alert === true
+
+    ||
+
+    (
+      resistance > 0 &&
+      resistance <= threshold
+    );
+
+
+  /* -------------------------------------------------------
+     DISPLAY
+     ------------------------------------------------------- */
+
+  if (elements.flame) {
+
+    if (resistance > 0) {
+
+      elements.flame.textContent =
+
+        `${(
+          resistance / 1000
+        ).toFixed(2)} kΩ`;
+
+    }
+
+    else {
+
+      elements.flame.textContent =
+        "—";
+
+    }
+
+  }
+
+
+  /* -------------------------------------------------------
+     STATE
+     ------------------------------------------------------- */
+
+  if (elements.heatState) {
+
+    elements.heatState.textContent =
+
+      heatDetected
+        ? "HEAT DETECTED"
+        : "SAFE";
+
+  }
+
+
+  /* -------------------------------------------------------
+     CARD
+     ------------------------------------------------------- */
+
+  if (elements.heatCard) {
+
+    elements.heatCard.classList.toggle(
+      "alert",
+      heatDetected
+    );
+
+    elements.heatCard.classList.toggle(
+      "safe",
+      !heatDetected
+    );
+
+  }
+
+
+  return {
+
+    resistance,
+
+    threshold,
+
+    heatDetected
+
+  };
+
+}
+
+
+/* =========================================================
+   MQ-2
+   ========================================================= */
+
+function updateGas(
+  gasData,
+  heatDetected
+) {
+
+  const gasRaw =
+    numberValue(
+
+      gasData?.raw,
+
+      0
+
+    );
+
+
+  const gasThreshold =
+    numberValue(
+
+      gasData?.threshold,
+
+      DEFAULT_GAS_THRESHOLD
+
+    );
+
+
+  const gasDetected =
+
+    gasData?.alert === true
+
+    ||
+
+    gasRaw >= gasThreshold;
+
+
+  /* -------------------------------------------------------
+     DISPLAY
+     ------------------------------------------------------- */
+
+  if (elements.gas) {
+
+    elements.gas.textContent =
+      gasRaw;
+
+  }
+
+
+  /* -------------------------------------------------------
+     STATUS
+     ------------------------------------------------------- */
+
+  if (elements.gasState) {
+
+    if (!heatDetected) {
+
+      elements.gasState.textContent =
+        "WAITING FOR HEAT";
+
+    }
+
+    else if (gasDetected) {
+
+      elements.gasState.textContent =
+        "SMOKE DETECTED";
+
+    }
+
+    else {
+
+      elements.gasState.textContent =
+        "SAFE";
+
+    }
+
+  }
+
+
+  const gasAlert =
+    heatDetected &&
+    gasDetected;
+
+
+  /* -------------------------------------------------------
+     CARD
+     ------------------------------------------------------- */
+
+  if (elements.gasCard) {
+
+    elements.gasCard.classList.toggle(
+      "alert",
+      gasAlert
+    );
+
+    elements.gasCard.classList.toggle(
+      "safe",
+      !gasAlert
+    );
+
+  }
+
+
+  return {
+
+    gasRaw,
+
+    gasThreshold,
+
+    gasDetected
+
+  };
+
+}
+
+
+/* =========================================================
+   FIRE DETECTION SEQUENCE
+   ========================================================= */
+
+function updateSequence(
+
+  heatDetected,
+
+  gasDetected,
+
+  fireAlert,
+
+  confirmationCount,
+
+  requiredCount
+
+) {
+
+  /* =======================================================
+     HEAT
+     ======================================================= */
+
+  if (elements.stepHeat) {
+
+    elements.stepHeat.classList.toggle(
+      "active",
+      heatDetected
+    );
+
+    elements.stepHeat.classList.toggle(
+      "complete",
+      heatDetected
+    );
+
+  }
+
+
+  if (elements.stepHeatStatus) {
+
+    elements.stepHeatStatus.textContent =
+
+      heatDetected
+        ? "Heat detected"
+        : "Waiting";
+
+  }
+
+
+  /* =======================================================
+     SMOKE
+     ======================================================= */
+
+  const smokeCheck =
+    heatDetected &&
+    gasDetected;
+
+
+  if (elements.stepSmoke) {
+
+    elements.stepSmoke.classList.toggle(
+      "active",
+      smokeCheck
+    );
+
+    elements.stepSmoke.classList.toggle(
+      "complete",
+      smokeCheck
+    );
+
+  }
+
+
+  if (elements.stepSmokeStatus) {
+
+    if (!heatDetected) {
+
+      elements.stepSmokeStatus.textContent =
+        "Waiting for heat";
+
+    }
+
+    else if (!gasDetected) {
+
+      elements.stepSmokeStatus.textContent =
+        "Smoke not detected";
+
+    }
+
+    else {
+
+      elements.stepSmokeStatus.textContent =
+        "Smoke detected";
+
+    }
+
+  }
+
+
+  /* =======================================================
+     FIRE
+     ======================================================= */
+
+  if (elements.stepFire) {
+
+    elements.stepFire.classList.toggle(
+      "active",
+      fireAlert
+    );
+
+    elements.stepFire.classList.toggle(
+      "complete",
+      fireAlert
+    );
+
+  }
+
+
+  if (elements.stepFireStatus) {
+
+    if (fireAlert) {
+
+      elements.stepFireStatus.textContent =
+        "FIRE CONFIRMED";
+
+    }
+
+    else if (
+      heatDetected &&
+      gasDetected
+    ) {
+
+      elements.stepFireStatus.textContent =
+        `Confirming ${confirmationCount}/${requiredCount}`;
+
+    }
+
+    else {
+
+      elements.stepFireStatus.textContent =
+        "Not confirmed";
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   MAIN STATUS
+   ========================================================= */
+
+function updateMainStatus(
+
+  fireAlert,
+
+  heatDetected,
+
+  gasDetected
+
+) {
+
+  /* =======================================================
+     FIRE
+     ======================================================= */
+
+  if (fireAlert) {
+
+    if (elements.statusValue) {
+
+      elements.statusValue.textContent =
+        "FIRE";
+
+    }
+
+
+    if (elements.statusText) {
+
+      elements.statusText.textContent =
+        "FIRE CONFIRMED";
+
+    }
+
+
+    if (elements.statusDescription) {
+
+      elements.statusDescription.textContent =
+        "Heat and smoke detected. Immediate attention required.";
+
+    }
+
+
+    if (elements.mainStatus) {
+
+      elements.mainStatus.classList.add(
+        "fire"
+      );
+
+      elements.mainStatus.classList.remove(
+        "safe",
+        "heat"
+      );
+
+    }
+
+
+    if (elements.statusDot) {
+
+      elements.statusDot.classList.add(
+        "fire"
+      );
+
+      elements.statusDot.classList.remove(
+        "safe",
+        "heat"
+      );
+
+    }
+
+
+    if (elements.alarm) {
+
+      elements.alarm.textContent =
+        "🔥 FIRE ALARM ACTIVE";
+
+      elements.alarm.classList.add(
+        "active"
+      );
+
+    }
+
+  }
+
+
+  /* =======================================================
+     HEAT
+     ======================================================= */
+
+  else if (heatDetected) {
+
+    if (elements.statusValue) {
+
+      elements.statusValue.textContent =
+        "HEAT";
+
+    }
+
+
+    if (elements.statusText) {
+
+      elements.statusText.textContent =
+        "HEAT DETECTED";
+
+    }
+
+
+    if (elements.statusDescription) {
+
+      elements.statusDescription.textContent =
+
+        gasDetected
+
+          ? "Smoke detected. Checking for fire confirmation..."
+
+          : "High temperature detected. Monitoring for smoke.";
+
+    }
+
+
+    if (elements.mainStatus) {
+
+      elements.mainStatus.classList.add(
+        "heat"
+      );
+
+      elements.mainStatus.classList.remove(
+        "safe",
+        "fire"
+      );
+
+    }
+
+
+    if (elements.statusDot) {
+
+      elements.statusDot.classList.add(
+        "heat"
+      );
+
+      elements.statusDot.classList.remove(
+        "safe",
+        "fire"
+      );
+
+    }
+
+
+    if (elements.alarm) {
+
+      elements.alarm.textContent =
+        "Heat detected — monitoring";
+
+      elements.alarm.classList.remove(
+        "active"
+      );
+
+    }
+
+  }
+
+
+  /* =======================================================
+     SAFE
+     ======================================================= */
+
+  else {
+
+    if (elements.statusValue) {
+
+      elements.statusValue.textContent =
+        "SAFE";
+
+    }
+
+
+    if (elements.statusText) {
+
+      elements.statusText.textContent =
+        "SYSTEM SAFE";
+
+    }
+
+
+    if (elements.statusDescription) {
+
+      elements.statusDescription.textContent =
+        "No fire conditions detected.";
+
+    }
+
+
+    if (elements.mainStatus) {
+
+      elements.mainStatus.classList.add(
+        "safe"
+      );
+
+      elements.mainStatus.classList.remove(
+        "heat",
+        "fire"
+      );
+
+    }
+
+
+    if (elements.statusDot) {
+
+      elements.statusDot.classList.add(
+        "safe"
+      );
+
+      elements.statusDot.classList.remove(
+        "heat",
+        "fire"
+      );
+
+    }
+
+
+    if (elements.alarm) {
+
+      elements.alarm.textContent =
+        "No alarm";
+
+      elements.alarm.classList.remove(
+        "active"
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   EMERGENCY PANEL
    ========================================================= */
 
 function createEmergencyPanel() {
@@ -1100,9 +1920,7 @@ function createEmergencyPanel() {
 
 
   const panel =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
 
   panel.id =
@@ -1126,7 +1944,7 @@ function createEmergencyPanel() {
           </div>
 
           <div class="emergency-response-subtitle">
-            Fire location notification
+            Fire location response
           </div>
 
         </div>
@@ -1147,7 +1965,7 @@ function createEmergencyPanel() {
           </div>
 
           <div class="response-detail">
-            🚓 Nearest Police Station
+            🚓 Police response point
           </div>
 
         </div>
@@ -1168,7 +1986,7 @@ function createEmergencyPanel() {
           </div>
 
           <div class="response-detail">
-            🚒 Fire Station
+            🚒 Fire response point
           </div>
 
         </div>
@@ -1229,23 +2047,33 @@ function createEmergencyPanel() {
   `;
 
 
-  const mapSection =
+  const mapElement =
     $("map");
 
 
   if (
-    mapSection &&
-    mapSection.parentElement
+    mapElement
   ) {
 
-    mapSection.parentElement
-      .insertBefore(
-        panel,
-        mapSection
+    const mapCard =
+      mapElement.closest(
+        ".map-card"
       );
 
-  }
 
+    if (
+      mapCard &&
+      mapCard.parentElement
+    ) {
+
+      mapCard.parentElement.insertBefore(
+        panel,
+        mapCard
+      );
+
+    }
+
+  }
 
 }
 
@@ -1265,9 +2093,7 @@ function showEmergencyPanel(
     $("emergencyResponsePanel");
 
 
-  if (
-    !panel
-  ) {
+  if (!panel) {
 
     return;
 
@@ -1276,7 +2102,7 @@ function showEmergencyPanel(
 
   const building =
     data?.building ??
-    "AMBIT COLLEGE";
+    "ABC Apartments";
 
 
   const floor =
@@ -1286,15 +2112,14 @@ function showEmergencyPanel(
 
   const zone =
     data?.zone ??
-    "COMPUTER LAB";
+    "Room 302";
 
 
   if (
     $("responseBuilding")
   ) {
 
-    $("responseBuilding")
-      .textContent =
+    $("responseBuilding").textContent =
       building;
 
   }
@@ -1304,8 +2129,7 @@ function showEmergencyPanel(
     $("responseFloorZone")
   ) {
 
-    $("responseFloorZone")
-      .textContent =
+    $("responseFloorZone").textContent =
       `Floor ${floor} • ${zone}`;
 
   }
@@ -1323,7 +2147,7 @@ function showEmergencyPanel(
     );
 
 
-  const fireStationDistance =
+  const fireDistance =
     distanceKm(
 
       currentLat,
@@ -1339,8 +2163,7 @@ function showEmergencyPanel(
     $("policeDistance")
   ) {
 
-    $("policeDistance")
-      .textContent =
+    $("policeDistance").textContent =
       `${policeDistance.toFixed(2)} km`;
 
   }
@@ -1350,9 +2173,8 @@ function showEmergencyPanel(
     $("fireStationDistance")
   ) {
 
-    $("fireStationDistance")
-      .textContent =
-      `${fireStationDistance.toFixed(2)} km`;
+    $("fireStationDistance").textContent =
+      `${fireDistance.toFixed(2)} km`;
 
   }
 
@@ -1374,9 +2196,7 @@ function hideEmergencyPanel() {
     $("emergencyResponsePanel");
 
 
-  if (
-    panel
-  ) {
+  if (panel) {
 
     panel.classList.remove(
       "show"
@@ -1403,9 +2223,7 @@ function createFirePopup() {
 
 
   const popup =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
 
   popup.id =
@@ -1422,11 +2240,9 @@ function createFirePopup() {
           🔥
         </div>
 
-
         <div class="fire-popup-title">
           FIRE ALERT
         </div>
-
 
         <div class="fire-popup-message">
           Fire conditions detected!
@@ -1526,9 +2342,7 @@ function createFirePopup() {
     $("acknowledgeFire");
 
 
-  if (
-    button
-  ) {
+  if (button) {
 
     button.addEventListener(
       "click",
@@ -1560,9 +2374,7 @@ function createPopupMap() {
   }
 
 
-  if (
-    popupMap
-  ) {
+  if (popupMap) {
 
     popupMap.invalidateSize();
 
@@ -1583,10 +2395,13 @@ function createPopupMap() {
 
 
   L.tileLayer(
+
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+
     {
       maxZoom: 19
     }
+
   ).addTo(
     popupMap
   );
@@ -1602,9 +2417,7 @@ function createPopupMap() {
 
       {
         icon:
-          markerIcon(
-            "fire"
-          )
+          markerIcon("fire")
       }
 
     ).addTo(
@@ -1612,8 +2425,99 @@ function createPopupMap() {
     );
 
 
-  popupDeviceMarker.bindPopup(
-    "🔥 Fire Location"
+  popupDeviceMarker.bindTooltip(
+    "🔥 FIRE LOCATION",
+    {
+      permanent: true,
+      direction: "top"
+    }
+  );
+
+
+  const police =
+    L.marker(
+
+      [
+        POLICE_LAT,
+        POLICE_LNG
+      ],
+
+      {
+        icon:
+          markerIcon("police")
+      }
+
+    ).addTo(
+      popupMap
+    );
+
+
+  police.bindTooltip(
+    "🚓 POLICE STATION",
+    {
+      permanent: true,
+      direction: "top"
+    }
+  );
+
+
+  const fireStation =
+    L.marker(
+
+      [
+        FIRE_STATION_LAT,
+        FIRE_STATION_LNG
+      ],
+
+      {
+        icon:
+          markerIcon("fireStation")
+      }
+
+    ).addTo(
+      popupMap
+    );
+
+
+  fireStation.bindTooltip(
+    "🚒 FIRE STATION",
+    {
+      permanent: true,
+      direction: "top"
+    }
+  );
+
+
+  const bounds =
+    L.latLngBounds([
+
+      [
+        currentLat,
+        currentLng
+      ],
+
+      [
+        POLICE_LAT,
+        POLICE_LNG
+      ],
+
+      [
+        FIRE_STATION_LAT,
+        FIRE_STATION_LNG
+      ]
+
+    ]);
+
+
+  popupMap.fitBounds(
+
+    bounds,
+
+    {
+      padding:
+        [35, 35]
+    }
+
   );
 
 }
@@ -1634,9 +2538,7 @@ function showFirePopup(
     $("firePopup");
 
 
-  if (
-    !popup
-  ) {
+  if (!popup) {
 
     return;
 
@@ -1645,7 +2547,7 @@ function showFirePopup(
 
   const building =
     data?.building ??
-    "AMBIT COLLEGE";
+    "ABC Apartments";
 
 
   const floor =
@@ -1655,15 +2557,14 @@ function showFirePopup(
 
   const zone =
     data?.zone ??
-    "COMPUTER LAB";
+    "Room 302";
 
 
   if (
     $("popupBuilding")
   ) {
 
-    $("popupBuilding")
-      .textContent =
+    $("popupBuilding").textContent =
       building;
 
   }
@@ -1673,8 +2574,7 @@ function showFirePopup(
     $("popupFloor")
   ) {
 
-    $("popupFloor")
-      .textContent =
+    $("popupFloor").textContent =
       floor;
 
   }
@@ -1684,8 +2584,7 @@ function showFirePopup(
     $("popupZone")
   ) {
 
-    $("popupZone")
-      .textContent =
+    $("popupZone").textContent =
       zone;
 
   }
@@ -1723,18 +2622,6 @@ function showFirePopup(
         );
 
 
-        popupMap.setView(
-
-          [
-            currentLat,
-            currentLng
-          ],
-
-          14
-
-        );
-
-
         popupMap.invalidateSize();
 
       }
@@ -1758,9 +2645,7 @@ function hideFirePopup() {
     $("firePopup");
 
 
-  if (
-    popup
-  ) {
+  if (popup) {
 
     popup.classList.remove(
       "show"
@@ -1777,831 +2662,17 @@ function hideFirePopup() {
 
 
 /* =========================================================
-   UPDATE LOCATION
-   ========================================================= */
-
-function updateLocation(
-  data
-) {
-
-  const building =
-    data?.building ??
-    "AMBIT COLLEGE";
-
-
-  const floor =
-    data?.floor ??
-    "3";
-
-
-  const zone =
-    data?.zone ??
-    "COMPUTER LAB";
-
-
-  if (
-    elements.location
-  ) {
-
-    elements.location.textContent =
-      `${building} • Floor ${floor} • ${zone}`;
-
-  }
-
-}
-
-
-/* =========================================================
-   UPDATE DEVICE INFORMATION
-   ========================================================= */
-
-function updateDeviceInfo(
-  data
-) {
-
-  if (
-    elements.deviceId
-  ) {
-
-    elements.deviceId.textContent =
-      data?.deviceId ??
-      DEVICE_ID;
-
-  }
-
-
-  if (
-    elements.building
-  ) {
-
-    elements.building.textContent =
-      data?.building ??
-      "AMBIT COLLEGE";
-
-  }
-
-
-  if (
-    elements.floor
-  ) {
-
-    elements.floor.textContent =
-      data?.floor ??
-      "3";
-
-  }
-
-
-  if (
-    elements.zone
-  ) {
-
-    elements.zone.textContent =
-      data?.zone ??
-      "COMPUTER LAB";
-
-  }
-
-}
-
-
-/* =========================================================
-   TOP BAR
-   ========================================================= */
-
-function updateTopBar() {
-
-  if (
-    elements.lastUpdate
-  ) {
-
-    elements.lastUpdate.textContent =
-      currentTime();
-
-  }
-
-
-  if (
-    elements.deviceTopDot
-  ) {
-
-    elements.deviceTopDot.classList.add(
-      "online"
-    );
-
-    elements.deviceTopDot.classList.remove(
-      "offline"
-    );
-
-  }
-
-
-  if (
-    elements.deviceTopStatus
-  ) {
-
-    elements.deviceTopStatus.textContent =
-      "Device Online";
-
-  }
-
-
-  if (
-    elements.deviceConn
-  ) {
-
-    elements.deviceConn.textContent =
-      "Online";
-
-  }
-
-}
-
-
-/* =========================================================
-   HEAT
-   ========================================================= */
-
-function updateHeat(
-  heatData
-) {
-
-  const resistance =
-    numberValue(
-
-      heatData?.resistance,
-
-      0
-
-    );
-
-
-  const threshold =
-    numberValue(
-
-      heatData?.fireThreshold,
-
-      DEFAULT_FIRE_THRESHOLD
-
-    );
-
-
-  const heatDetected =
-
-    heatData?.alert === true
-
-    ||
-
-    (
-      resistance > 0 &&
-      resistance <= threshold
-    );
-
-
-  if (
-    elements.flame
-  ) {
-
-    if (
-      resistance > 0
-    ) {
-
-      elements.flame.textContent =
-        `${(
-          resistance / 1000
-        ).toFixed(2)} kΩ`;
-
-    }
-
-    else {
-
-      elements.flame.textContent =
-        "—";
-
-    }
-
-  }
-
-
-  if (
-    elements.heatState
-  ) {
-
-    elements.heatState.textContent =
-
-      heatDetected
-        ? "HEAT DETECTED"
-        : "SAFE";
-
-  }
-
-
-  if (
-    elements.heatCard
-  ) {
-
-    elements.heatCard.classList.toggle(
-      "alert",
-      heatDetected
-    );
-
-    elements.heatCard.classList.toggle(
-      "safe",
-      !heatDetected
-    );
-
-  }
-
-
-  return {
-
-    resistance,
-
-    threshold,
-
-    heatDetected
-
-  };
-
-}
-
-
-/* =========================================================
-   GAS / MQ2
-   ========================================================= */
-
-function updateGas(
-  gasData,
-  heatDetected
-) {
-
-  const gasRaw =
-    numberValue(
-
-      gasData?.raw,
-
-      0
-
-    );
-
-
-  const gasThreshold =
-    numberValue(
-
-      gasData?.threshold,
-
-      DEFAULT_GAS_THRESHOLD
-
-    );
-
-
-  const gasDetected =
-
-    gasData?.alert === true
-
-    ||
-
-    gasRaw >= gasThreshold;
-
-
-  if (
-    elements.gas
-  ) {
-
-    elements.gas.textContent =
-      gasRaw;
-
-  }
-
-
-  if (
-    elements.gasState
-  ) {
-
-    if (
-      !heatDetected
-    ) {
-
-      elements.gasState.textContent =
-        "WAITING FOR HEAT";
-
-    }
-
-    else if (
-      gasDetected
-    ) {
-
-      elements.gasState.textContent =
-        "SMOKE DETECTED";
-
-    }
-
-    else {
-
-      elements.gasState.textContent =
-        "SAFE";
-
-    }
-
-  }
-
-
-  const showGasAlert =
-
-    heatDetected &&
-    gasDetected;
-
-
-  if (
-    elements.gasCard
-  ) {
-
-    elements.gasCard.classList.toggle(
-      "alert",
-      showGasAlert
-    );
-
-    elements.gasCard.classList.toggle(
-      "safe",
-      !showGasAlert
-    );
-
-  }
-
-
-  return {
-
-    gasRaw,
-
-    gasThreshold,
-
-    gasDetected
-
-  };
-
-}
-
-
-/* =========================================================
-   FIRE DETECTION SEQUENCE
-   ========================================================= */
-
-function updateSequence(
-
-  heatDetected,
-
-  gasDetected,
-
-  fireAlert,
-
-  confirmationCount,
-
-  requiredCount
-
-) {
-
-  /* -------------------------------------------------------
-     STEP 1 - HEAT
-     ------------------------------------------------------- */
-
-  if (
-    elements.stepHeat
-  ) {
-
-    elements.stepHeat.classList.toggle(
-      "active",
-      heatDetected
-    );
-
-    elements.stepHeat.classList.toggle(
-      "complete",
-      heatDetected
-    );
-
-  }
-
-
-  if (
-    elements.stepHeatStatus
-  ) {
-
-    elements.stepHeatStatus.textContent =
-
-      heatDetected
-
-        ? "Heat detected"
-
-        : "Waiting";
-
-  }
-
-
-  /* -------------------------------------------------------
-     STEP 2 - SMOKE
-     ------------------------------------------------------- */
-
-  const smokeActive =
-
-    heatDetected &&
-    gasDetected;
-
-
-  if (
-    elements.stepSmoke
-  ) {
-
-    elements.stepSmoke.classList.toggle(
-      "active",
-      smokeActive
-    );
-
-    elements.stepSmoke.classList.toggle(
-      "complete",
-      smokeActive
-    );
-
-  }
-
-
-  if (
-    elements.stepSmokeStatus
-  ) {
-
-    if (
-      !heatDetected
-    ) {
-
-      elements.stepSmokeStatus.textContent =
-        "Waiting for heat";
-
-    }
-
-    else if (
-      !gasDetected
-    ) {
-
-      elements.stepSmokeStatus.textContent =
-        "Smoke not detected";
-
-    }
-
-    else {
-
-      elements.stepSmokeStatus.textContent =
-        "Smoke detected";
-
-    }
-
-  }
-
-
-  /* -------------------------------------------------------
-     STEP 3 - FIRE
-     ------------------------------------------------------- */
-
-  if (
-    elements.stepFire
-  ) {
-
-    elements.stepFire.classList.toggle(
-      "active",
-      fireAlert
-    );
-
-    elements.stepFire.classList.toggle(
-      "complete",
-      fireAlert
-    );
-
-  }
-
-
-  if (
-    elements.stepFireStatus
-  ) {
-
-    if (
-      fireAlert
-    ) {
-
-      elements.stepFireStatus.textContent =
-        "FIRE CONFIRMED";
-
-    }
-
-    else if (
-      heatDetected &&
-      gasDetected
-    ) {
-
-      elements.stepFireStatus.textContent =
-        `Confirming ${confirmationCount}/${requiredCount}`;
-
-    }
-
-    else {
-
-      elements.stepFireStatus.textContent =
-        "Not confirmed";
-
-    }
-
-  }
-
-}
-
-
-/* =========================================================
-   MAIN STATUS
-   ========================================================= */
-
-function updateMainStatus(
-
-  fireAlert,
-
-  heatDetected,
-
-  gasDetected
-
-) {
-
-  /* =======================================================
-     FIRE
-     ======================================================= */
-
-  if (
-    fireAlert
-  ) {
-
-    if (
-      elements.statusValue
-    ) {
-
-      elements.statusValue.textContent =
-        "FIRE";
-
-    }
-
-
-    if (
-      elements.statusText
-    ) {
-
-      elements.statusText.textContent =
-        "FIRE CONFIRMED";
-
-    }
-
-
-    if (
-      elements.statusDescription
-    ) {
-
-      elements.statusDescription.textContent =
-        "Heat and smoke detected. Immediate attention required.";
-
-    }
-
-
-    if (
-      elements.mainStatus
-    ) {
-
-      elements.mainStatus.classList.add(
-        "fire"
-      );
-
-      elements.mainStatus.classList.remove(
-        "safe",
-        "heat"
-      );
-
-    }
-
-
-    if (
-      elements.statusDot
-    ) {
-
-      elements.statusDot.classList.add(
-        "fire"
-      );
-
-      elements.statusDot.classList.remove(
-        "safe",
-        "heat"
-      );
-
-    }
-
-
-    if (
-      elements.alarm
-    ) {
-
-      elements.alarm.textContent =
-        "🔥 FIRE ALARM ACTIVE";
-
-      elements.alarm.classList.add(
-        "active"
-      );
-
-    }
-
-  }
-
-
-  /* =======================================================
-     HEAT
-     ======================================================= */
-
-  else if (
-    heatDetected
-  ) {
-
-    if (
-      elements.statusValue
-    ) {
-
-      elements.statusValue.textContent =
-        "HEAT";
-
-    }
-
-
-    if (
-      elements.statusText
-    ) {
-
-      elements.statusText.textContent =
-        "HEAT DETECTED";
-
-    }
-
-
-    if (
-      elements.statusDescription
-    ) {
-
-      elements.statusDescription.textContent =
-
-        gasDetected
-
-          ? "Smoke detected. Checking for fire confirmation..."
-
-          : "High temperature detected. Monitoring for smoke.";
-
-    }
-
-
-    if (
-      elements.mainStatus
-    ) {
-
-      elements.mainStatus.classList.add(
-        "heat"
-      );
-
-      elements.mainStatus.classList.remove(
-        "safe",
-        "fire"
-      );
-
-    }
-
-
-    if (
-      elements.statusDot
-    ) {
-
-      elements.statusDot.classList.add(
-        "heat"
-      );
-
-      elements.statusDot.classList.remove(
-        "safe",
-        "fire"
-      );
-
-    }
-
-
-    if (
-      elements.alarm
-    ) {
-
-      elements.alarm.textContent =
-        "Heat detected — monitoring";
-
-      elements.alarm.classList.remove(
-        "active"
-      );
-
-    }
-
-  }
-
-
-  /* =======================================================
-     SAFE
-     ======================================================= */
-
-  else {
-
-    if (
-      elements.statusValue
-    ) {
-
-      elements.statusValue.textContent =
-        "SAFE";
-
-    }
-
-
-    if (
-      elements.statusText
-    ) {
-
-      elements.statusText.textContent =
-        "SYSTEM SAFE";
-
-    }
-
-
-    if (
-      elements.statusDescription
-    ) {
-
-      elements.statusDescription.textContent =
-        "No fire conditions detected.";
-
-    }
-
-
-    if (
-      elements.mainStatus
-    ) {
-
-      elements.mainStatus.classList.add(
-        "safe"
-      );
-
-      elements.mainStatus.classList.remove(
-        "heat",
-        "fire"
-      );
-
-    }
-
-
-    if (
-      elements.statusDot
-    ) {
-
-      elements.statusDot.classList.add(
-        "safe"
-      );
-
-      elements.statusDot.classList.remove(
-        "heat",
-        "fire"
-      );
-
-    }
-
-
-    if (
-      elements.alarm
-    ) {
-
-      elements.alarm.textContent =
-        "No alarm";
-
-      elements.alarm.classList.remove(
-        "active"
-      );
-
-    }
-
-  }
-
-}
-
-
-/* =========================================================
-   FIREBASE DATA
+   PROCESS FIREBASE DATA
    ========================================================= */
 
 function processFirebaseData(
   data
 ) {
 
-  if (
-    !data
-  ) {
+  if (!data) {
 
     console.warn(
-      "No data found at:",
+      "No Firebase data found:",
       DATA_PATH
     );
 
@@ -2616,34 +2687,34 @@ function processFirebaseData(
   );
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      LOCATION
-     ------------------------------------------------------- */
+     ======================================================= */
 
   updateLocation(
     data
   );
 
 
-  /* -------------------------------------------------------
-     DEVICE INFORMATION
-     ------------------------------------------------------- */
+  /* =======================================================
+     DEVICE
+     ======================================================= */
 
   updateDeviceInfo(
     data
   );
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      TOP BAR
-     ------------------------------------------------------- */
+     ======================================================= */
 
   updateTopBar();
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      HEAT FIRST
-     ------------------------------------------------------- */
+     ======================================================= */
 
   const heat =
     updateHeat(
@@ -2651,9 +2722,9 @@ function processFirebaseData(
     );
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      MQ-2 SECOND
-     ------------------------------------------------------- */
+     ======================================================= */
 
   const gas =
     updateGas(
@@ -2665,9 +2736,9 @@ function processFirebaseData(
     );
 
 
-  /* -------------------------------------------------------
-     FIRE ALERT
-     ------------------------------------------------------- */
+  /* =======================================================
+     FIRE
+     ======================================================= */
 
   const fireAlert =
 
@@ -2678,9 +2749,9 @@ function processFirebaseData(
     data.status === "FIRE";
 
 
-  /* -------------------------------------------------------
-     FIRE CONFIRMATION
-     ------------------------------------------------------- */
+  /* =======================================================
+     CONFIRMATION
+     ======================================================= */
 
   const confirmationCount =
     numberValue(
@@ -2702,9 +2773,9 @@ function processFirebaseData(
     );
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      SEQUENCE
-     ------------------------------------------------------- */
+     ======================================================= */
 
   updateSequence(
 
@@ -2721,9 +2792,9 @@ function processFirebaseData(
   );
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      MAIN STATUS
-     ------------------------------------------------------- */
+     ======================================================= */
 
   updateMainStatus(
 
@@ -2736,9 +2807,9 @@ function processFirebaseData(
   );
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      MAP
-     ------------------------------------------------------- */
+     ======================================================= */
 
   updateMap(
 
@@ -2749,13 +2820,11 @@ function processFirebaseData(
   );
 
 
-  /* -------------------------------------------------------
-     FIRE RESPONSE
-     ------------------------------------------------------- */
+  /* =======================================================
+     EMERGENCY RESPONSE
+     ======================================================= */
 
-  if (
-    fireAlert
-  ) {
+  if (fireAlert) {
 
     showEmergencyPanel(
       data
@@ -2773,9 +2842,7 @@ function processFirebaseData(
     hideEmergencyPanel();
 
 
-    if (
-      previousFireState
-    ) {
+    if (previousFireState) {
 
       hideFirePopup();
 
@@ -2791,10 +2858,10 @@ function processFirebaseData(
 
 
 /* =========================================================
-   FIREBASE CONNECTION STATUS
+   FIREBASE CONNECTION
    ========================================================= */
 
-const firebaseConnectionRef =
+const connectionRef =
   ref(
     db,
     ".info/connected"
@@ -2803,7 +2870,7 @@ const firebaseConnectionRef =
 
 onValue(
 
-  firebaseConnectionRef,
+  connectionRef,
 
   (snapshot) => {
 
@@ -2811,9 +2878,7 @@ onValue(
       snapshot.val() === true;
 
 
-    if (
-      elements.fbDot
-    ) {
+    if (elements.fbDot) {
 
       elements.fbDot.classList.toggle(
         "online",
@@ -2828,9 +2893,7 @@ onValue(
     }
 
 
-    if (
-      elements.fbStatus
-    ) {
+    if (elements.fbStatus) {
 
       elements.fbStatus.textContent =
 
@@ -2850,9 +2913,7 @@ onValue(
     );
 
 
-    if (
-      elements.fbStatus
-    ) {
+    if (elements.fbStatus) {
 
       elements.fbStatus.textContent =
         "Connection Error";
@@ -2865,7 +2926,7 @@ onValue(
 
 
 /* =========================================================
-   DEVICE FIREBASE LISTENER
+   DEVICE LISTENER
    ========================================================= */
 
 const deviceRef =
@@ -2885,12 +2946,6 @@ onValue(
       snapshot.val();
 
 
-    console.log(
-      "Device snapshot received:",
-      data
-    );
-
-
     processFirebaseData(
       data
     );
@@ -2900,7 +2955,7 @@ onValue(
   (error) => {
 
     console.error(
-      "Device data error:",
+      "Firebase device error:",
       error
     );
 
@@ -2941,21 +2996,13 @@ initMap();
 
 
 console.log(
-  "======================================="
+  "SMART FIRE GUARDIAN STARTED"
 );
 
 console.log(
-  "SMART FIRE GUARDIAN"
+  `Database: /${DATA_PATH}`
 );
 
 console.log(
-  "Dashboard started"
-);
-
-console.log(
-  `Firebase path: /${DATA_PATH}`
-);
-
-console.log(
-  "======================================="
+  "Map zoom is controlled by user."
 );
