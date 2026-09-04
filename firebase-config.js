@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyCjFneNv4UqsfG8i46YXSeFuuEcLL3JE2A",
   authDomain: "smartfire-guardian.firebaseapp.com",
   databaseURL: "https://smartfire-guardian-default-rtdb.firebaseio.com",
   projectId: "smartfire-guardian",
@@ -12,5 +12,6 @@ const firebaseConfig = {
   measurementId: "G-KTGH9K5HCJ"
 };
 
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+
 export const db = getDatabase(app);
