@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -25,14 +27,17 @@
     href="manifest.json"
   >
 
-  <!-- Leaflet -->
+  <!-- Leaflet Map -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   >
+
 </head>
 
+
 <body>
+
 
   <!-- =====================================================
        TOP BAR
@@ -47,6 +52,7 @@
       </div>
 
       <div>
+
         <div class="brand-title">
           Smart Fire Guardian
         </div>
@@ -54,6 +60,7 @@
         <div class="brand-subtitle">
           Fire Monitoring System
         </div>
+
       </div>
 
     </div>
@@ -75,14 +82,16 @@
   </header>
 
 
+
   <!-- =====================================================
-       MAIN
+       MAIN DASHBOARD
        ===================================================== -->
 
   <main class="dashboard">
 
+
     <!-- ===================================================
-         LOCATION BAR
+         LOCATION
          =================================================== -->
 
     <section class="location-bar">
@@ -90,6 +99,7 @@
       <div class="location-icon">
         📍
       </div>
+
 
       <div>
 
@@ -106,6 +116,7 @@
 
       </div>
 
+
       <div class="last-update-area">
 
         <div class="small-label">
@@ -119,6 +130,7 @@
       </div>
 
     </section>
+
 
 
     <!-- ===================================================
@@ -135,6 +147,7 @@
         class="big-status-dot safe"
       ></div>
 
+
       <div class="status-content">
 
         <div
@@ -144,12 +157,14 @@
           SAFE
         </div>
 
+
         <div
           id="statusText"
           class="status-text"
         >
           SYSTEM SAFE
         </div>
+
 
         <div
           id="statusDescription"
@@ -163,6 +178,7 @@
     </section>
 
 
+
     <!-- ===================================================
          SENSOR CARDS
          =================================================== -->
@@ -170,7 +186,7 @@
     <section class="sensor-grid">
 
 
-      <!-- HEAT -->
+      <!-- HEAT SENSOR -->
 
       <div
         id="heatCard"
@@ -182,6 +198,7 @@
           <div class="sensor-icon heat-icon">
             🌡️
           </div>
+
 
           <div>
 
@@ -205,6 +222,7 @@
           —
         </div>
 
+
         <div
           id="heatState"
           class="sensor-state"
@@ -215,7 +233,8 @@
       </div>
 
 
-      <!-- GAS -->
+
+      <!-- GAS SENSOR -->
 
       <div
         id="gasCard"
@@ -227,6 +246,7 @@
           <div class="sensor-icon gas-icon">
             💨
           </div>
+
 
           <div>
 
@@ -250,6 +270,7 @@
           —
         </div>
 
+
         <div
           id="gasState"
           class="sensor-state"
@@ -262,6 +283,7 @@
     </section>
 
 
+
     <!-- ===================================================
          FIRE DETECTION SEQUENCE
          =================================================== -->
@@ -272,7 +294,9 @@
         Fire Detection Sequence
       </div>
 
+
       <div class="sequence">
+
 
         <!-- STEP 1 -->
 
@@ -284,6 +308,7 @@
           <div class="step-number">
             1
           </div>
+
 
           <div class="step-content">
 
@@ -308,6 +333,7 @@
         </div>
 
 
+
         <!-- STEP 2 -->
 
         <div
@@ -318,6 +344,7 @@
           <div class="step-number">
             2
           </div>
+
 
           <div class="step-content">
 
@@ -342,6 +369,7 @@
         </div>
 
 
+
         <!-- STEP 3 -->
 
         <div
@@ -352,6 +380,7 @@
           <div class="step-number">
             3
           </div>
+
 
           <div class="step-content">
 
@@ -375,6 +404,7 @@
     </section>
 
 
+
     <!-- ===================================================
          ALARM
          =================================================== -->
@@ -385,11 +415,13 @@
         🔔
       </div>
 
+
       <div>
 
         <div class="alarm-title">
           Alarm Status
         </div>
+
 
         <div
           id="alarm"
@@ -403,8 +435,9 @@
     </section>
 
 
+
     <!-- ===================================================
-         MAP
+         EMERGENCY RESPONSE MAP
          =================================================== -->
 
     <section class="map-card">
@@ -417,11 +450,13 @@
             Emergency Response Map
           </div>
 
+
           <div class="map-subtitle">
             Device location and nearest emergency response points
           </div>
 
         </div>
+
 
         <div
           id="mapStatus"
@@ -441,6 +476,7 @@
     </section>
 
 
+
     <!-- ===================================================
          RECENT FIRE LOGS
          =================================================== -->
@@ -455,11 +491,13 @@
             Recent Fire Logs
           </div>
 
+
           <div class="map-subtitle">
             Latest confirmed fire events
           </div>
 
         </div>
+
 
         <div class="fire-log-count">
           Latest 5
@@ -482,6 +520,7 @@
     </section>
 
 
+
     <!-- ===================================================
          DEVICE INFORMATION
          =================================================== -->
@@ -494,6 +533,7 @@
 
 
       <div class="info-grid">
+
 
         <div class="info-item">
 
@@ -551,6 +591,7 @@
     </section>
 
 
+
     <!-- ===================================================
          CONNECTION
          =================================================== -->
@@ -564,11 +605,13 @@
           class="connection-dot"
         ></span>
 
+
         <div>
 
           <div class="connection-title">
             Firebase Connection
           </div>
+
 
           <div
             id="fbStatus"
@@ -597,13 +640,20 @@
     </section>
 
 
+
+    <!-- ===================================================
+         FOOTER
+         =================================================== -->
+
     <footer>
 
       Smart Fire Guardian • ESP32 Fire Monitoring System
 
     </footer>
 
+
   </main>
+
 
 
   <!-- =====================================================
@@ -637,22 +687,48 @@
 
         <div class="fire-popup-details">
 
-          <div>
-            <strong>Building</strong>
-            <span id="popupBuilding">—</span>
-          </div>
 
           <div>
-            <strong>Floor</strong>
-            <span id="popupFloor">—</span>
+
+            <strong>
+              Building
+            </strong>
+
+            <span id="popupBuilding">
+              —
+            </span>
+
           </div>
 
+
           <div>
-            <strong>Zone</strong>
-            <span id="popupZone">—</span>
+
+            <strong>
+              Floor
+            </strong>
+
+            <span id="popupFloor">
+              —
+            </span>
+
           </div>
+
+
+          <div>
+
+            <strong>
+              Zone
+            </strong>
+
+            <span id="popupZone">
+              —
+            </span>
+
+          </div>
+
 
         </div>
+
 
 
         <!-- POPUP MAP -->
@@ -667,7 +743,8 @@
         </div>
 
 
-        <!-- RESPONSE MESSAGE -->
+
+        <!-- EMERGENCY RESPONSE -->
 
         <div class="popup-dispatch-message">
 
@@ -675,15 +752,18 @@
             🚨 EMERGENCY RESPONSE
           </div>
 
+
           <div class="popup-dispatch-item">
             ✓ Location sent to Police Station
           </div>
+
 
           <div class="popup-dispatch-item">
             ✓ Location sent to Fire Station
           </div>
 
         </div>
+
 
 
         <button
@@ -701,8 +781,9 @@
   </div>
 
 
+
   <!-- =====================================================
-       LEAFLET
+       LEAFLET JAVASCRIPT
        ===================================================== -->
 
   <script
@@ -710,8 +791,9 @@
   ></script>
 
 
+
   <!-- =====================================================
-       APP
+       YOUR FIREBASE DASHBOARD JAVASCRIPT
        ===================================================== -->
 
   <script
@@ -719,5 +801,7 @@
     src="app.js"
   ></script>
 
+
 </body>
+
 </html>
