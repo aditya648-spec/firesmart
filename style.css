@@ -1,1033 +1,182 @@
-/* ==========================================================
-   SMARTFIRE GUARDIAN
-   Modern Monitoring Dashboard
-   ========================================================== */
+/* =====================================================
+   FIRE ALERT POPUP
+   ===================================================== */
 
-
-/* ==========================================================
-   GLOBAL
-   ========================================================== */
-
-* {
-  box-sizing: border-box;
-}
-
-
-body {
-  margin: 0;
-
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-
-  background:
-    #f4f7fb;
-
-  color:
-    #172033;
-}
-
-
-/* ==========================================================
-   DASHBOARD
-   ========================================================== */
-
-.dashboard {
-
-  width: min(1180px, 94%);
-
-  margin: 0 auto;
-
-  padding:
-    28px 0 40px;
-}
-
-
-/* ==========================================================
-   HEADER
-   ========================================================== */
-
-.topbar {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 20px;
-
-  margin-bottom: 22px;
-}
-
-
-.brand {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 14px;
-}
-
-
-.brand-icon {
-
-  width: 52px;
-
-  height: 52px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  border-radius: 15px;
-
-  background: #172033;
-
-  font-size: 25px;
-}
-
-
-.brand h1 {
-
-  margin: 0;
-
-  font-size: 25px;
-
-  letter-spacing: -0.5px;
-}
-
-
-.brand p {
-
-  margin: 4px 0 0;
-
-  color: #7b8497;
-
-  font-size: 13px;
-}
-
-
-.connection-area {
-
-  text-align: right;
-}
-
-
-.device-status {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: flex-end;
-
-  gap: 7px;
-
-  font-size: 13px;
-
-  font-weight: 700;
-}
-
-
-.last-update {
-
-  margin-top: 5px;
-
-  color: #8a93a5;
-
-  font-size: 12px;
-}
-
-
-/* ==========================================================
-   DOTS
-   ========================================================== */
-
-.dot {
-
-  display: inline-block;
-
-  width: 9px;
-
-  height: 9px;
-
-  border-radius: 50%;
-}
-
-
-.dot.online,
-.dot.on {
-
-  background: #20a36a;
-
-  box-shadow:
-    0 0 0 4px rgba(32, 163, 106, 0.12);
-}
-
-
-.dot.off {
-
-  background: #aab1bd;
-}
-
-
-/* ==========================================================
-   LOCATION
-   ========================================================== */
-
-.location-card {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 15px;
-
-  padding: 17px 20px;
-
-  margin-bottom: 18px;
-
-  background: white;
-
-  border: 1px solid #e5eaf1;
-
-  border-radius: 14px;
-}
-
-
-.location-icon {
-
-  width: 42px;
-
-  height: 42px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  background: #f1f4f8;
-
-  border-radius: 11px;
-
-  font-size: 20px;
-}
-
-
-.location-title {
-
-  font-size: 11px;
-
-  text-transform: uppercase;
-
-  letter-spacing: 0.8px;
-
-  color: #8a93a5;
-
-  font-weight: 700;
-}
-
-
-.location-value {
-
-  margin-top: 3px;
-
-  font-size: 15px;
-
-  font-weight: 650;
-}
-
-
-/* ==========================================================
-   MAIN STATUS
-   ========================================================== */
-
-.main-status {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 22px;
-
-  padding: 27px;
-
-  margin-bottom: 28px;
-
-  background: white;
-
-  border: 1px solid #e5eaf1;
-
-  border-radius: 18px;
-
-  box-shadow:
-    0 8px 25px rgba(30, 42, 65, 0.05);
-}
-
-
-.status-indicator-large {
-
-  width: 76px;
-
-  height: 76px;
-
-  flex: 0 0 76px;
-
-  border-radius: 50%;
-
-  position: relative;
-}
-
-
-.status-indicator-large.safe {
-
-  background: #e6f7ef;
-
-  border: 10px solid #c8eedc;
-}
-
-
-.status-indicator-large.alert {
-
-  background: #fde9e9;
-
-  border: 10px solid #f7caca;
-
-  animation:
-    alertPulse 1.2s infinite;
-}
-
-
-@keyframes alertPulse {
-
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.06);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-
-.status-label {
-
-  font-size: 11px;
-
-  font-weight: 800;
-
-  letter-spacing: 1px;
-
-  color: #8b94a5;
-}
-
-
-.status-value {
-
-  margin-top: 3px;
-
-  font-size: 30px;
-
-  font-weight: 800;
-
-  letter-spacing: -0.8px;
-}
-
-
-.status-value.safe {
-
-  color: #198754;
-}
-
-
-.status-value.alert {
-
-  color: #d63c3c;
-}
-
-
-.status-value.unknown {
-
-  color: #7c8595;
-}
-
-
-.status-description {
-
-  margin-top: 4px;
-
-  color: #737d90;
-
-  font-size: 13px;
-}
-
-
-/* ==========================================================
-   SECTION TITLE
-   ========================================================== */
-
-.section-title {
-
-  margin: 25px 0 11px;
-
-  font-size: 11px;
-
-  font-weight: 800;
-
-  letter-spacing: 1px;
-
-  color: #7e8798;
-}
-
-
-/* ==========================================================
-   SENSOR GRID
-   ========================================================== */
-
-.sensor-grid {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 16px;
-}
-
-
-.sensor-card {
-
-  background: white;
-
-  border: 1px solid #e5eaf1;
-
-  border-radius: 16px;
-
-  padding: 22px;
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-
-.sensor-card:hover {
-
-  transform:
-    translateY(-2px);
-
-  box-shadow:
-    0 8px 24px
-    rgba(30, 42, 65, 0.07);
-}
-
-
-.sensor-header {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 13px;
-}
-
-
-.sensor-icon {
-
-  width: 44px;
-
-  height: 44px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  border-radius: 12px;
-
-  font-size: 21px;
-}
-
-
-.heat-icon {
-
-  background: #fff2e5;
-}
-
-
-.gas-icon {
-
-  background: #e9f2ff;
-}
-
-
-.sensor-header h2 {
-
-  margin: 0;
-
-  font-size: 16px;
-}
-
-
-.sensor-header p {
-
-  margin: 3px 0 0;
-
-  color: #8a93a5;
-
-  font-size: 12px;
-}
-
-
-.sensor-value {
-
-  margin-top: 23px;
-
-  font-size: 32px;
-
-  font-weight: 800;
-
-  letter-spacing: -0.8px;
-}
-
-
-.threshold {
-
-  margin-top: 7px;
-
-  color: #8a93a5;
-
-  font-size: 12px;
-}
-
-
-.threshold strong {
-
-  color: #5c6678;
-}
-
-
-.sensor-state {
-
-  margin-top: 17px;
-
-  display: inline-block;
-
-  padding: 6px 9px;
-
-  border-radius: 7px;
-
-  font-size: 11px;
-
-  font-weight: 800;
-
-  letter-spacing: 0.4px;
-}
-
-
-.sensor-state.normal {
-
-  background: #eaf8f1;
-
-  color: #168354;
-}
-
-
-.sensor-state.warn {
-
-  background: #fff0f0;
-
-  color: #cf3d3d;
-}
-
-
-/* ==========================================================
-   DETECTION SEQUENCE
-   ========================================================== */
-
-.sequence-card {
-
-  display: flex;
-
-  align-items: stretch;
-
-  gap: 8px;
-
-  padding: 14px;
-
-  background: white;
-
-  border: 1px solid #e5eaf1;
-
-  border-radius: 16px;
-}
-
-
-.sequence-step {
-
-  flex: 1;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 13px;
-
-  background: #f7f9fc;
-
-  border-radius: 11px;
-}
-
-
-.step-number {
-
-  width: 29px;
-
-  height: 29px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  flex: 0 0 29px;
-
-  border-radius: 50%;
-
-  background: #e5eaf1;
-
-  color: #657084;
-
-  font-size: 12px;
-
-  font-weight: 800;
-}
-
-
-.step-content {
-
-  display: flex;
-
-  flex-direction: column;
-
-  min-width: 0;
-}
-
-
-.step-content strong {
-
-  font-size: 12px;
-}
-
-
-.step-content span {
-
-  margin-top: 2px;
-
-  color: #8b94a5;
-
-  font-size: 10px;
-}
-
-
-.step-status {
-
-  margin-left: auto;
-
-  color: #98a0af;
-
-  font-size: 9px;
-
-  font-weight: 800;
-
-  white-space: nowrap;
-}
-
-
-.sequence-arrow {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  color: #b3bac5;
-
-  font-size: 20px;
-}
-
-
-/* ==========================================================
-   ALARM
-   ========================================================== */
-
-.alarm-card {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 20px;
-
-  margin-top: 16px;
-
-  padding: 18px 20px;
-
-  background: white;
-
-  border: 1px solid #e5eaf1;
-
-  border-radius: 15px;
-}
-
-
-.alarm-left {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 13px;
-}
-
-
-.alarm-icon {
-
-  width: 43px;
-
-  height: 43px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  border-radius: 11px;
-
-  background: #f1f4f8;
-
-  font-size: 19px;
-}
-
-
-.alarm-title {
-
-  color: #8992a3;
-
-  font-size: 11px;
-
-  text-transform: uppercase;
-
-  letter-spacing: 0.7px;
-
-  font-weight: 800;
-}
-
-
-.alarm-status {
-
-  margin-top: 3px;
-
-  font-size: 17px;
-
-  font-weight: 800;
-}
-
-
-.alarm-info {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: flex-end;
-
-  gap: 3px;
-
-  color: #8a93a5;
-
-  font-size: 11px;
-}
-
-
-/* ==========================================================
-   DEVICE INFORMATION
-   ========================================================== */
-
-.info-grid {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
-
-  gap: 12px;
-}
-
-
-.info-card {
-
-  padding: 16px;
-
-  background: white;
-
-  border: 1px solid #e5eaf1;
-
-  border-radius: 13px;
-}
-
-
-.info-card span {
-
-  display: block;
-
-  color: #8a93a5;
-
-  font-size: 10px;
-
-  text-transform: uppercase;
-
-  letter-spacing: 0.6px;
-
-  font-weight: 800;
-}
-
-
-.info-card strong {
-
-  display: block;
-
-  margin-top: 5px;
-
-  font-size: 14px;
-
-  word-break: break-word;
-}
-
-
-/* ==========================================================
-   CONNECTION PANEL
-   ========================================================== */
-
-.connection-panel {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 15px;
-
-  margin-top: 20px;
-
-  padding: 13px 16px;
-
-  background: #edf1f6;
-
-  border-radius: 10px;
-
-  color: #697386;
-
-  font-size: 11px;
-}
-
-
-.connection-panel strong {
-
-  color: #4c5668;
-}
-
-
-/* ==========================================================
-   FOOTER
-   ========================================================== */
-
-footer {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 3px;
-
-  margin-top: 24px;
-
-  padding-top: 18px;
-
-  border-top: 1px solid #e0e5ec;
-
-  color: #9098a7;
-
-  font-size: 10px;
-
-  line-height: 1.5;
-}
-
-
-footer strong {
-
-  color: #667083;
+#firePopup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
 }
-
-
-/* ==========================================================
-   MOBILE
-   ========================================================== */
-
-@media (max-width: 750px) {
-
-  .dashboard {
-
-    width: 92%;
-
-    padding-top: 18px;
-  }
-
-
-  .topbar {
-
-    align-items: flex-start;
-
-    flex-direction: column;
-  }
-
-
-  .connection-area {
-
-    width: 100%;
 
-    text-align: left;
-  }
-
-
-  .device-status {
-
-    justify-content: flex-start;
-  }
-
-
-  .sensor-grid {
-
-    grid-template-columns:
-      1fr;
-  }
-
-
-  .info-grid {
-
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-  }
-
-
-  .sequence-card {
-
-    flex-direction: column;
-
-    gap: 6px;
-  }
-
-
-  .sequence-arrow {
-
-    transform:
-      rotate(90deg);
-
-    height: 15px;
-  }
-
-
-  .alarm-card {
-
-    align-items: flex-start;
-
-    flex-direction: column;
-  }
-
-
-  .alarm-info {
-
-    align-items: flex-start;
-  }
-
-
-  .connection-panel {
-
-    align-items: flex-start;
-
-    flex-direction: column;
-  }
+#firePopup.show {
+    display: block;
 }
-
-
-/* ==========================================================
-   SMALL PHONES
-   ========================================================== */
-
-@media (max-width: 430px) {
-
-  .brand h1 {
-
-    font-size: 21px;
-  }
 
+.fire-popup-overlay {
+    position: fixed;
+    inset: 0;
 
-  .main-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     padding: 20px;
 
+    background: rgba(0, 0, 0, 0.75);
+
+    backdrop-filter: blur(5px);
+}
+
+.fire-popup-box {
+    width: min(460px, 95vw);
+
+    padding: 32px 28px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.45);
+
+    border: 4px solid #d32f2f;
+
+    animation: firePopupIn 0.25s ease-out;
+}
+
+.fire-popup-icon {
+    font-size: 64px;
+
+    margin-bottom: 10px;
+
+    animation: firePulse 0.8s infinite alternate;
+}
+
+.fire-popup-title {
+    font-size: 34px;
+
+    font-weight: 900;
+
+    color: #c62828;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 10px;
+}
+
+.fire-popup-message {
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: #333333;
+
+    margin-bottom: 22px;
+}
+
+.fire-popup-details {
+    text-align: left;
+
+    background: #f5f5f5;
+
+    border-radius: 12px;
+
+    padding: 16px;
+
+    margin-bottom: 22px;
+}
+
+.fire-popup-details div {
+    display: flex;
+
+    justify-content: space-between;
+
     gap: 15px;
-  }
+
+    padding: 7px 0;
+
+    border-bottom: 1px solid #dddddd;
+}
+
+.fire-popup-details div:last-child {
+    border-bottom: none;
+}
+
+.fire-popup-details strong {
+    color: #555555;
+}
+
+.fire-popup-details span {
+    font-weight: 700;
+
+    color: #222222;
+}
+
+#acknowledgeFire {
+    width: 100%;
+
+    padding: 14px 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #c62828;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: transform 0.15s ease,
+                opacity 0.15s ease;
+}
+
+#acknowledgeFire:hover {
+    opacity: 0.9;
+
+    transform: scale(1.02);
+}
+
+#acknowledgeFire:active {
+    transform: scale(0.98);
+}
 
 
-  .status-indicator-large {
+/* =====================================================
+   ANIMATIONS
+   ===================================================== */
 
-    width: 60px;
+@keyframes firePopupIn {
 
-    height: 60px;
+    from {
+        opacity: 0;
 
-    flex-basis: 60px;
+        transform: scale(0.85);
+    }
 
-    border-width: 8px;
-  }
+    to {
+        opacity: 1;
 
+        transform: scale(1);
+    }
 
-  .status-value {
+}
 
-    font-size: 24px;
-  }
+@keyframes firePulse {
 
+    from {
+        transform: scale(1);
+    }
 
-  .sensor-value {
+    to {
+        transform: scale(1.12);
+    }
 
-    font-size: 28px;
-  }
-
-
-  .info-grid {
-
-    grid-template-columns:
-      1fr;
-  }
 }
