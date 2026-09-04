@@ -925,3 +925,526 @@ body.fire-active {
     font-size: 26px;
   }
 }
+
+/* =========================================================
+   SMART FIRE GUARDIAN MAP MARKERS
+   ========================================================= */
+
+.sf-marker {
+    background: transparent;
+    border: none;
+}
+
+
+.sf-marker-pin {
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50% 50% 50% 0;
+
+    transform: rotate(-45deg);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 3px solid #ffffff;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+
+.sf-marker-pin span {
+    transform: rotate(45deg);
+
+    font-size: 16px;
+
+    line-height: 1;
+}
+
+
+.sf-marker-pin.safe {
+    background: #16a34a;
+}
+
+
+.sf-marker-pin.fire {
+    background: #dc2626;
+
+    animation: mapFirePulse 0.8s infinite alternate;
+}
+
+
+.sf-marker-pin.police {
+    background: #2563eb;
+}
+
+
+.sf-marker-pin.station {
+    background: #ea580c;
+}
+
+
+@keyframes mapFirePulse {
+
+    from {
+        transform: rotate(-45deg) scale(1);
+    }
+
+    to {
+        transform: rotate(-45deg) scale(1.15);
+    }
+
+}
+
+
+/* =========================================================
+   EMERGENCY RESPONSE PANEL
+   ========================================================= */
+
+#emergencyResponsePanel {
+    display: none;
+
+    position: relative;
+
+    margin-bottom: 12px;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    border: 2px solid #fecaca;
+
+    background: #fff7f7;
+
+    box-shadow:
+        0 5px 20px rgba(220, 38, 38, 0.10);
+}
+
+
+#emergencyResponsePanel.show {
+    display: block;
+
+    animation: responsePanelIn 0.3s ease-out;
+}
+
+
+.emergency-response-inner {
+    padding: 18px;
+}
+
+
+.emergency-response-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding-bottom: 14px;
+
+    margin-bottom: 10px;
+
+    border-bottom: 1px solid #fecaca;
+}
+
+
+.emergency-response-icon {
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 11px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #dc2626;
+
+    color: #ffffff;
+
+    font-size: 21px;
+}
+
+
+.emergency-response-title {
+    font-size: 15px;
+
+    font-weight: 900;
+
+    color: #991b1b;
+
+    letter-spacing: 0.4px;
+}
+
+
+.emergency-response-subtitle {
+    font-size: 11px;
+
+    color: #b45309;
+
+    margin-top: 2px;
+}
+
+
+/* Response row */
+
+.response-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #fee2e2;
+}
+
+
+.response-check {
+    width: 27px;
+
+    height: 27px;
+
+    min-width: 27px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #16a34a;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 900;
+}
+
+
+.response-content {
+    min-width: 0;
+}
+
+
+.response-title {
+    font-size: 12px;
+
+    font-weight: 850;
+
+    color: #374151;
+}
+
+
+.response-detail {
+    font-size: 11px;
+
+    color: #6b7280;
+
+    margin-top: 2px;
+}
+
+
+/* Fire location */
+
+.response-location {
+    margin-top: 12px;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    border: 1px solid #fecaca;
+}
+
+
+.response-location-title {
+    font-size: 10px;
+
+    font-weight: 900;
+
+    color: #b91c1c;
+
+    letter-spacing: 0.5px;
+
+    margin-bottom: 4px;
+}
+
+
+.response-location-value {
+    font-size: 13px;
+
+    font-weight: 850;
+
+    color: #172033;
+}
+
+
+.response-location-detail {
+    font-size: 11px;
+
+    color: #64748b;
+
+    margin-top: 2px;
+}
+
+
+/* Distances */
+
+.response-distance {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+
+    margin-top: 10px;
+
+    font-size: 10px;
+
+    color: #64748b;
+}
+
+
+.response-distance > div {
+    padding: 8px;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+}
+
+
+.response-distance strong {
+    display: block;
+
+    color: #172033;
+
+    font-size: 12px;
+
+    margin-top: 2px;
+}
+
+
+@keyframes responsePanelIn {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =========================================================
+   FIRE POPUP DISPATCH MESSAGE
+   ========================================================= */
+
+.popup-dispatch-message {
+    margin-bottom: 20px;
+
+    padding: 13px;
+
+    border-radius: 11px;
+
+    background: #fff7ed;
+
+    border: 1px solid #fed7aa;
+
+    text-align: left;
+}
+
+
+.popup-dispatch-title {
+    font-size: 11px;
+
+    font-weight: 900;
+
+    color: #9a3412;
+
+    margin-bottom: 7px;
+
+    letter-spacing: 0.4px;
+}
+
+
+.popup-dispatch-item {
+    font-size: 12px;
+
+    font-weight: 750;
+
+    color: #374151;
+
+    padding: 4px 0;
+}
+
+
+/* =========================================================
+   MAP
+   ========================================================= */
+
+.map-card {
+    position: relative;
+
+    background: #ffffff;
+
+    border: 1px solid #e5eaf1;
+
+    border-radius: 18px;
+
+    padding: 0;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 5px 20px rgba(15, 23, 42, 0.04);
+}
+
+
+.map-container {
+    width: 100%;
+
+    height: 450px;
+}
+
+
+.map-container.fire-focus {
+    border: 3px solid #dc2626;
+
+    box-shadow:
+        inset 0 0 0 2px #fee2e2;
+}
+
+
+.map-legend {
+    position: absolute;
+
+    bottom: 12px;
+
+    left: 12px;
+
+    z-index: 500;
+
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    padding: 9px 12px;
+
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.94);
+
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.12);
+
+    font-size: 11px;
+}
+
+
+.map-legend-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    color: #475569;
+
+    font-weight: 650;
+}
+
+
+.map-marker-dot {
+    width: 9px;
+
+    height: 9px;
+
+    border-radius: 50%;
+
+    display: inline-block;
+}
+
+
+.map-marker-dot.safe {
+    background: #16a34a;
+}
+
+
+.map-marker-dot.fire {
+    background: #dc2626;
+}
+
+
+/* =========================================================
+   FIRE POPUP MAP
+   ========================================================= */
+
+.fire-popup-map-wrap {
+    width: 100%;
+
+    margin-bottom: 18px;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    border: 1px solid #e5e7eb;
+}
+
+
+.fire-popup-map {
+    width: 100%;
+
+    height: 180px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .map-container {
+        height: 360px;
+    }
+
+
+    .response-distance {
+        grid-template-columns: 1fr;
+    }
+
+
+    .emergency-response-inner {
+        padding: 14px;
+    }
+
+
+    .fire-popup-map {
+        height: 160px;
+    }
+
+}
