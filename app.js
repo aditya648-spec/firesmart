@@ -14,8 +14,20 @@ const DATA_PATH = `devices/${DEVICE_ID}`;
 const DEFAULT_GAS_THRESHOLD = 1600;
 const DEFAULT_FIRE_THRESHOLD = 5000; // 5 kΩ
 
+/* Default map coordinates (fallback if Firebase has none)
+   Change these to your building's real location */
+const DEFAULT_LAT = 28.6139;   // New Delhi example
+const DEFAULT_LNG = 77.2090;
+const DEFAULT_ZOOM = 16;
+
 let previousFireState = false;
 let lastFirebaseData = null;
+
+/* Map state */
+let map = null;
+let marker = null;
+let currentLat = DEFAULT_LAT;
+let currentLng = DEFAULT_LNG;
 
 /* ---------- Helpers ---------- */
 const $ = (id) => document.getElementById(id);
@@ -63,6 +75,90 @@ function getCurrentTime() {
 function numberValue(value, fallback = 0) {
   const n = Number(value);
   return Number.isFinite(n) ? n : fallback;
+}
+
+/* ---------- Map ---------- */
+function createMarkerIcon(isFire) {
+  const colorClass = isFire ? "fire" : "safe";
+  const emoji = isFire ? "🔥" : "📍";
+
+  return L.divIcon({
+    className: "sf-marker",
+    html: `<div class="sf-marker-pin ${colorClass}"><span>${emoji}</span></div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+  });
+}
+
+function initMap() {
+  const mapEl = $("map");
+  if (!mapEl || typeof L === "undefined") {
+    console.warn("Leaflet not loaded or map element missing.");
+    return;
+  }
+
+  map = L.map("map", {
+    zoomControl: true,
+    attributionControl: true
+  }).setView([DEFAULT_LAT, DEFAULT_LNG], DEFAULT_ZOOM);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+
+  marker = L.marker([DEFAULT_LAT, DEFAULT_LNG], {
+    icon: createMarkerIcon(false)
+  }).addTo(map);
+
+  marker.bindPopup("Device location");
+}
+
+function updateMap(data, fireAlert) {
+  if (!map || !marker) return;
+
+  // Prefer coordinates from Firebase:
+  // data.lat / data.lng
+  // or data.location.lat / data.location.lng
+  // or data.coordinates.lat / data.coordinates.lng
+  const lat = numberValue(
+    data.lat ?? data.location?.lat ?? data.coordinates?.lat,
+    currentLat
+  );
+  const lng = numberValue(
+    data.lng ?? data.location?.lng ?? data.coordinates?.lng,
+    currentLng
+  );
+
+  currentLat = lat;
+  currentLng = lng;
+
+  marker.setLatLng([lat, lng]);
+  marker.setIcon(createMarkerIcon(fireAlert));
+
+  const building = data.building ?? "ABC Apartments";
+  const floor = data.floor ?? "3";
+  const zone = data.zone ?? "Room 302";
+
+  const popupHtml = fireAlert
+    ? `<strong style="color:#b91c1c">🔥 FIRE ALERT</strong><br>${building}<br>Floor ${floor} • ${zone}`
+    : `<strong>Monitoring</strong><br>${building}<br>Floor ${floor} • ${zone}`;
+
+  marker.setPopupContent(popupHtml);
+
+  // Center map on the location
+  map.setView([lat, lng], map.getZoom() < 15 ? 16 : map.getZoom());
+
+  // Visual highlight on the map container when fire is active
+  const mapEl = $("map");
+  if (mapEl) {
+    mapEl.classList.toggle("fire-focus", fireAlert);
+  }
+
+  if (fireAlert) {
+    marker.openPopup();
+  }
 }
 
 /* ---------- Fire Popup ---------- */
@@ -400,6 +496,9 @@ function processData(data) {
 
   updateMainStatus(fireAlert, heat.heatDetected, gas.gasDetected);
 
+  // Update map with current location + fire state
+  updateMap(data, fireAlert);
+
   // Fire popup: show when fire is active, hide only when it clears
   if (fireAlert) {
     showFirePopup(data);
@@ -432,6 +531,7 @@ onValue(
 
 /* ---------- Init ---------- */
 createFirePopup();
+initMap();
 
 console.log("==========================================");
 console.log("SMART FIRE GUARDIAN DASHBOARD");
