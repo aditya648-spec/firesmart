@@ -1,54 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>SmartFire Guardian</title>
 
-  <link rel="stylesheet" href="style.css">
+  <!-- IMPORTANT: style.css must be in the same folder -->
+  <link rel="stylesheet" href="./style.css">
+
 </head>
+
 
 <body>
 
-  <!-- ================= FIRE ALERT POPUP ================= -->
+
+  <!-- =====================================================
+       FIRE ALERT POPUP
+       ===================================================== -->
 
   <div id="firePopup" class="fire-popup hidden">
 
     <div class="fire-popup-box">
 
-      <div class="fire-icon">🔥</div>
+      <div class="fire-icon">
+        🔥
+      </div>
 
-      <h1>FIRE ALERT</h1>
+      <h1>
+        FIRE ALERT
+      </h1>
 
       <p class="fire-message">
         Fire has been detected!
       </p>
 
+
       <div class="fire-details">
 
-        <div>
-          <span>Building</span>
-          <strong id="popupBuilding">ABC Apartments</strong>
+        <div class="fire-detail">
+
+          <span>
+            BUILDING
+          </span>
+
+          <strong id="popupBuilding">
+            ABC Apartments
+          </strong>
+
         </div>
 
-        <div>
-          <span>Floor</span>
-          <strong id="popupFloor">3</strong>
+
+        <div class="fire-detail">
+
+          <span>
+            FLOOR
+          </span>
+
+          <strong id="popupFloor">
+            3
+          </strong>
+
         </div>
 
-        <div>
-          <span>Zone</span>
-          <strong id="popupZone">Room 302</strong>
+
+        <div class="fire-detail">
+
+          <span>
+            ZONE
+          </span>
+
+          <strong id="popupZone">
+            Room 302
+          </strong>
+
         </div>
 
       </div>
 
-      <p class="fire-confirmation">
-        Heat + Smoke confirmed
-      </p>
 
-      <button id="acknowledgeFire">
+      <div class="fire-confirmation">
+        🔥 Heat + Smoke confirmed
+      </div>
+
+
+      <button
+        id="acknowledgeFire"
+        class="acknowledge-button"
+      >
         ACKNOWLEDGE
       </button>
 
@@ -57,46 +102,89 @@
   </div>
 
 
-  <!-- ================= HEADER ================= -->
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
 
   <header class="top-header">
 
     <div class="brand">
-      <div class="brand-icon">🔥</div>
+
+      <div class="brand-icon">
+        🔥
+      </div>
 
       <div>
-        <h1>SmartFire Guardian</h1>
-        <p>Smart Fire Monitoring System</p>
+
+        <h1>
+          SmartFire Guardian
+        </h1>
+
+        <p>
+          Smart Fire Monitoring System
+        </p>
+
       </div>
+
     </div>
 
+
     <div class="top-status">
-      <span id="deviceTopDot" class="status-dot"></span>
-      <span id="deviceTopStatus">Connecting...</span>
+
+      <span
+        id="deviceTopDot"
+        class="status-dot"
+      ></span>
+
+      <span id="deviceTopStatus">
+        Connecting...
+      </span>
+
     </div>
 
   </header>
 
 
+
+  <!-- =====================================================
+       MAIN CONTENT
+       ===================================================== -->
+
   <main class="container">
 
-    <!-- ================= LOCATION ================= -->
+
+    <!-- ===================================================
+         LOCATION
+         =================================================== -->
 
     <section class="location-card">
 
       <div>
-        <span class="section-label">MONITORING LOCATION</span>
+
+        <span class="section-label">
+          MONITORING LOCATION
+        </span>
 
         <h2 id="location">
           ABC Apartments
         </h2>
 
         <p>
-          Floor <strong id="floor">3</strong>
-          •
-          <span id="zone">Room 302</span>
+          Floor
+          <strong id="floor">3</strong>
+
+          <span class="separator">
+            •
+          </span>
+
+          <span id="zone">
+            Room 302
+          </span>
         </p>
+
       </div>
+
 
       <div class="location-icon">
         📍
@@ -105,11 +193,17 @@
     </section>
 
 
-    <!-- ================= MAIN STATUS ================= -->
 
-    <section id="mainStatusCard" class="main-status-card safe">
+    <!-- ===================================================
+         MAIN SYSTEM STATUS
+         =================================================== -->
 
-      <div class="main-status-left">
+    <section
+      id="mainStatusCard"
+      class="main-status-card safe"
+    >
+
+      <div>
 
         <span class="section-label">
           SYSTEM STATUS
@@ -125,24 +219,38 @@
 
       </div>
 
+
       <div class="main-status-indicator">
-        <span id="statusDot" class="large-status-dot"></span>
+
+        <span
+          id="statusDot"
+          class="large-status-dot"
+        ></span>
+
       </div>
 
     </section>
 
 
-    <!-- ================= SENSOR CARDS ================= -->
+
+    <!-- ===================================================
+         SENSOR CARDS
+         =================================================== -->
 
     <section class="sensor-grid">
 
+
       <!-- HEAT SENSOR -->
 
-      <div id="heatCard" class="sensor-card">
+      <div
+        id="heatCard"
+        class="sensor-card"
+      >
 
         <div class="sensor-header">
 
           <div>
+
             <span class="sensor-label">
               HEAT SENSOR
             </span>
@@ -150,7 +258,9 @@
             <h3>
               Thermistor
             </h3>
+
           </div>
+
 
           <div class="sensor-icon">
             🌡️
@@ -158,35 +268,52 @@
 
         </div>
 
+
         <div class="sensor-value">
 
           <span id="flame">
             --
           </span>
 
-          <small>kΩ</small>
+          <small>
+            kΩ
+          </small>
 
         </div>
 
-        <div id="heatState" class="sensor-state">
+
+        <div
+          id="heatState"
+          class="sensor-state"
+        >
           WAITING
         </div>
 
+
         <div class="sensor-threshold">
+
           Fire threshold:
-          <strong>5.0 kΩ</strong>
+          <strong>
+            5.0 kΩ
+          </strong>
+
         </div>
 
       </div>
 
 
-      <!-- MQ2 -->
 
-      <div id="gasCard" class="sensor-card">
+      <!-- MQ-2 SENSOR -->
+
+      <div
+        id="gasCard"
+        class="sensor-card"
+      >
 
         <div class="sensor-header">
 
           <div>
+
             <span class="sensor-label">
               MQ-2 SENSOR
             </span>
@@ -194,7 +321,9 @@
             <h3>
               Smoke / Gas
             </h3>
+
           </div>
+
 
           <div class="sensor-icon">
             💨
@@ -202,23 +331,35 @@
 
         </div>
 
+
         <div class="sensor-value">
 
           <span id="gas">
             --
           </span>
 
-          <small>ADC</small>
+          <small>
+            ADC
+          </small>
 
         </div>
 
-        <div id="gasState" class="sensor-state">
+
+        <div
+          id="gasState"
+          class="sensor-state"
+        >
           WAITING
         </div>
 
+
         <div class="sensor-threshold">
+
           Fire threshold:
-          <strong>1600 ADC</strong>
+          <strong>
+            1600 ADC
+          </strong>
+
         </div>
 
       </div>
@@ -226,30 +367,35 @@
     </section>
 
 
-    <!-- ================= FIRE DETECTION SEQUENCE ================= -->
+
+    <!-- ===================================================
+         FIRE DETECTION SEQUENCE
+         =================================================== -->
 
     <section class="sequence-card">
 
       <div class="section-heading">
 
-        <div>
-          <span class="section-label">
-            FIRE DETECTION SEQUENCE
-          </span>
+        <span class="section-label">
+          FIRE DETECTION SEQUENCE
+        </span>
 
-          <h2>
-            HEAT → SMOKE → FIRE
-          </h2>
-        </div>
+        <h2>
+          HEAT → SMOKE → FIRE
+        </h2>
 
       </div>
 
 
       <div class="sequence">
 
+
         <!-- STEP 1 -->
 
-        <div id="stepHeat" class="sequence-step">
+        <div
+          id="stepHeat"
+          class="sequence-step"
+        >
 
           <div class="step-number">
             1
@@ -277,7 +423,10 @@
 
         <!-- STEP 2 -->
 
-        <div id="stepSmoke" class="sequence-step">
+        <div
+          id="stepSmoke"
+          class="sequence-step"
+        >
 
           <div class="step-number">
             2
@@ -305,7 +454,10 @@
 
         <!-- STEP 3 -->
 
-        <div id="stepFire" class="sequence-step">
+        <div
+          id="stepFire"
+          class="sequence-step"
+        >
 
           <div class="step-number">
             3
@@ -330,7 +482,10 @@
     </section>
 
 
-    <!-- ================= ALARM ================= -->
+
+    <!-- ===================================================
+         ALARM
+         =================================================== -->
 
     <section class="alarm-card">
 
@@ -346,6 +501,7 @@
 
       </div>
 
+
       <div class="alarm-icon">
         🔔
       </div>
@@ -353,7 +509,10 @@
     </section>
 
 
-    <!-- ================= DEVICE INFORMATION ================= -->
+
+    <!-- ===================================================
+         DEVICE INFORMATION
+         =================================================== -->
 
     <section class="info-card">
 
@@ -365,34 +524,71 @@
 
       </div>
 
+
       <div class="info-grid">
 
-        <div>
-          <span>Device ID</span>
-          <strong id="deviceId">SF-003</strong>
-        </div>
 
         <div>
-          <span>Building</span>
-          <strong id="building">ABC Apartments</strong>
+
+          <span>
+            Device ID
+          </span>
+
+          <strong id="deviceId">
+            SF-003
+          </strong>
+
         </div>
 
-        <div>
-          <span>Floor</span>
-          <strong id="floorInfo">3</strong>
-        </div>
 
         <div>
-          <span>Zone</span>
-          <strong id="zoneInfo">Room 302</strong>
+
+          <span>
+            Building
+          </span>
+
+          <strong id="building">
+            ABC Apartments
+          </strong>
+
         </div>
+
+
+        <div>
+
+          <span>
+            Floor
+          </span>
+
+          <strong id="floorInfo">
+            3
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Zone
+          </span>
+
+          <strong id="zoneInfo">
+            Room 302
+          </strong>
+
+        </div>
+
 
       </div>
 
     </section>
 
 
-    <!-- ================= CONNECTION ================= -->
+
+    <!-- ===================================================
+         FIREBASE CONNECTION
+         =================================================== -->
 
     <section class="connection-card">
 
@@ -403,14 +599,18 @@
         </span>
 
         <h3>
-          Firebase Database
+          Firebase Realtime Database
         </h3>
 
       </div>
 
+
       <div class="connection-status">
 
-        <span id="fbDot" class="status-dot"></span>
+        <span
+          id="fbDot"
+          class="status-dot"
+        ></span>
 
         <span id="fbStatus">
           Connecting...
@@ -421,34 +621,48 @@
     </section>
 
 
-    <!-- ================= LAST UPDATE ================= -->
+
+    <!-- ===================================================
+         LAST UPDATE
+         =================================================== -->
 
     <div class="last-update">
 
       Last update:
+
       <strong id="lastUpdate">
         Waiting...
       </strong>
 
     </div>
 
+
   </main>
 
 
-  <!-- ================= FOOTER ================= -->
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
 
   <footer>
 
-    <p>
-      SmartFire Guardian • ESP32 Fire Monitoring System
-    </p>
+    SmartFire Guardian • ESP32 Fire Monitoring System
 
   </footer>
 
 
-  <!-- ================= JAVASCRIPT ================= -->
 
-  <script type="module" src="app.js"></script>
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
+  <script
+    type="module"
+    src="./app.js"
+  ></script>
+
 
 </body>
+
 </html>
