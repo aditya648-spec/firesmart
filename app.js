@@ -14,11 +14,10 @@ const DATA_PATH = `devices/${DEVICE_ID}`;
 const DEFAULT_GAS_THRESHOLD = 1600;
 const DEFAULT_FIRE_THRESHOLD = 5000;
 
-/* ========== YOUR EXACT LOCATION ========== */
+/* Your location coordinates */
 const DEFAULT_LAT = 15.855881303189477;
 const DEFAULT_LNG = 74.57802140000477;
 const DEFAULT_ZOOM = 16;
-/* ======================================== */
 
 let previousFireState = false;
 let lastFirebaseData = null;
@@ -27,6 +26,9 @@ let map = null;
 let marker = null;
 let currentLat = DEFAULT_LAT;
 let currentLng = DEFAULT_LNG;
+
+let popupMap = null;
+let popupMarker = null;
 
 /* ---------- Helpers ---------- */
 const $ = (id) => document.getElementById(id);
@@ -123,14 +125,12 @@ function initMap() {
   }).addTo(map);
 
   marker.bindPopup("Device location");
-
   console.log("Map initialized at:", DEFAULT_LAT, DEFAULT_LNG);
 }
 
 function updateMap(data, fireAlert) {
   if (!map || !marker) return;
 
-  // Always use your fixed location unless Firebase sends valid non-zero coordinates
   const lat = getValidCoord(
     data?.lat ?? data?.location?.lat ?? data?.coordinates?.lat,
     DEFAULT_LAT
@@ -167,7 +167,7 @@ function updateMap(data, fireAlert) {
   }
 }
 
-/* ---------- Fire Popup ---------- */
+/* ---------- Fire Popup (with map) ---------- */
 function createFirePopup() {
   if ($("firePopup")) return;
 
@@ -178,7 +178,7 @@ function createFirePopup() {
       <div class="fire-popup-box">
         <div class="fire-popup-icon">🔥</div>
         <div class="fire-popup-title">FIRE ALERT</div>
-        <div class="fire-popup-message">Fire conditions detected!</div>
+        <div class="fire-popup-message">Fire conditions detected at this location!</div>
         <div class="fire-popup-details">
           <div>
             <strong>Building:</strong>
@@ -193,6 +193,9 @@ function createFirePopup() {
             <span id="popupZone">—</span>
           </div>
         </div>
+        <div class="fire-popup-map-wrap">
+          <div id="popupMap" class="fire-popup-map"></div>
+        </div>
         <button id="acknowledgeFire" type="button">ACKNOWLEDGE</button>
       </div>
     </div>
@@ -204,6 +207,40 @@ function createFirePopup() {
   if (acknowledgeButton) {
     acknowledgeButton.addEventListener("click", hideFirePopup);
   }
+}
+
+function initPopupMap(lat, lng) {
+  const mapEl = $("popupMap");
+  if (!mapEl || typeof L === "undefined") return;
+
+  if (!popupMap) {
+    popupMap = L.map("popupMap", {
+      zoomControl: true,
+      attributionControl: false
+    }).setView([lat, lng], 16);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19
+    }).addTo(popupMap);
+
+    popupMarker = L.marker([lat, lng], {
+      icon: createMarkerIcon(true)
+    }).addTo(popupMap);
+
+    popupMarker.bindPopup("🔥 Fire location");
+  } else {
+    popupMap.setView([lat, lng], 16);
+    popupMarker.setLatLng([lat, lng]);
+    popupMarker.setIcon(createMarkerIcon(true));
+  }
+
+  setTimeout(() => {
+    if (popupMap) {
+      popupMap.invalidateSize();
+      popupMap.setView([lat, lng], 16);
+      popupMarker.openPopup();
+    }
+  }, 200);
 }
 
 function showFirePopup(data) {
@@ -220,8 +257,19 @@ function showFirePopup(data) {
   if ($("popupFloor")) $("popupFloor").textContent = floor;
   if ($("popupZone")) $("popupZone").textContent = zone;
 
+  const lat = getValidCoord(
+    data?.lat ?? data?.location?.lat ?? data?.coordinates?.lat,
+    DEFAULT_LAT
+  );
+  const lng = getValidCoord(
+    data?.lng ?? data?.location?.lng ?? data?.coordinates?.lng,
+    DEFAULT_LNG
+  );
+
   popup.classList.add("show");
   document.body.classList.add("fire-active");
+
+  initPopupMap(lat, lng);
 }
 
 function hideFirePopup() {
