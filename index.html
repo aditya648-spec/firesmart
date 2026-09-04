@@ -1,796 +1,723 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
 
-    <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+  <meta
+    name="theme-color"
+    content="#0f172a"
+  >
 
-    <title>
-        Smart Fire Guardian
-    </title>
+  <title>Smart Fire Guardian</title>
 
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+  <link
+    rel="manifest"
+    href="manifest.json"
+  >
 
-    <link
-        rel="manifest"
-        href="manifest.json"
-    >
-
-
-    <!-- Leaflet -->
-
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIINfQ9tD/miZyoHS5obTRR9BMY="
-        crossorigin=""
-    >
-
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
 </head>
-
 
 <body>
 
+  <!-- =====================================================
+       TOP BAR
+       ===================================================== -->
 
-<!-- =========================================================
-     TOP BAR
-     ========================================================= -->
+  <header class="topbar">
 
-<header class="topbar">
+    <div class="brand-area">
 
-    <div class="brand">
+      <div class="brand-icon">
+        🔥
+      </div>
 
-        <div class="brand-icon">
-            🔥
+      <div>
+        <div class="brand-title">
+          Smart Fire Guardian
         </div>
 
-        <div>
-
-            <div class="brand-title">
-                Smart Fire Guardian
-            </div>
-
-            <div class="brand-subtitle">
-                IoT Fire Detection &amp; Monitoring System
-            </div>
-
+        <div class="brand-subtitle">
+          Fire Monitoring System
         </div>
+      </div>
 
     </div>
 
 
     <div class="device-status">
 
-        <span
-            id="deviceTopDot"
-            class="status-indicator"
-        ></span>
+      <span
+        id="deviceTopDot"
+        class="status-dot online"
+      ></span>
 
-        <span id="deviceTopStatus">
-            Waiting...
-        </span>
+      <span id="deviceTopStatus">
+        Connecting...
+      </span>
 
     </div>
 
-
-    <div
-        id="lastUpdate"
-        class="last-update"
-    >
-        —
-    </div>
-
-</header>
+  </header>
 
 
+  <!-- =====================================================
+       MAIN
+       ===================================================== -->
 
-<!-- =========================================================
-     MAIN
-     ========================================================= -->
+  <main class="dashboard">
 
-<main class="container">
+    <!-- ===================================================
+         LOCATION BAR
+         =================================================== -->
 
+    <section class="location-bar">
 
-    <!-- =====================================================
-         LOCATION
-         ===================================================== -->
+      <div class="location-icon">
+        📍
+      </div>
 
-    <section class="location-section">
+      <div>
 
-        <div class="location-icon">
-            📍
+        <div class="small-label">
+          MONITORING LOCATION
         </div>
+
+        <div
+          id="location"
+          class="location-value"
+        >
+          —
+        </div>
+
+      </div>
+
+      <div class="last-update-area">
+
+        <div class="small-label">
+          LAST UPDATE
+        </div>
+
+        <div id="lastUpdate">
+          —
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         MAIN STATUS
+         =================================================== -->
+
+    <section
+      id="mainStatus"
+      class="main-status safe"
+    >
+
+      <div
+        id="statusDot"
+        class="big-status-dot safe"
+      ></div>
+
+      <div class="status-content">
+
+        <div
+          id="statusValue"
+          class="status-value"
+        >
+          SAFE
+        </div>
+
+        <div
+          id="statusText"
+          class="status-text"
+        >
+          SYSTEM SAFE
+        </div>
+
+        <div
+          id="statusDescription"
+          class="status-description"
+        >
+          No fire conditions detected.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         SENSOR CARDS
+         =================================================== -->
+
+    <section class="sensor-grid">
+
+
+      <!-- HEAT -->
+
+      <div
+        id="heatCard"
+        class="sensor-card"
+      >
+
+        <div class="sensor-card-header">
+
+          <div class="sensor-icon heat-icon">
+            🌡️
+          </div>
+
+          <div>
+
+            <div class="sensor-title">
+              Heat Sensor
+            </div>
+
+            <div class="sensor-subtitle">
+              Thermistor
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="flame"
+          class="sensor-value"
+        >
+          —
+        </div>
+
+        <div
+          id="heatState"
+          class="sensor-state"
+        >
+          Waiting...
+        </div>
+
+      </div>
+
+
+      <!-- GAS -->
+
+      <div
+        id="gasCard"
+        class="sensor-card"
+      >
+
+        <div class="sensor-card-header">
+
+          <div class="sensor-icon gas-icon">
+            💨
+          </div>
+
+          <div>
+
+            <div class="sensor-title">
+              Smoke / Gas
+            </div>
+
+            <div class="sensor-subtitle">
+              MQ-2 Sensor
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="gas"
+          class="sensor-value"
+        >
+          —
+        </div>
+
+        <div
+          id="gasState"
+          class="sensor-state"
+        >
+          Waiting...
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         FIRE DETECTION SEQUENCE
+         =================================================== -->
+
+    <section class="sequence-card">
+
+      <div class="section-heading">
+        Fire Detection Sequence
+      </div>
+
+      <div class="sequence">
+
+        <!-- STEP 1 -->
+
+        <div
+          id="stepHeat"
+          class="sequence-step"
+        >
+
+          <div class="step-number">
+            1
+          </div>
+
+          <div class="step-content">
+
+            <div class="step-title">
+              Check Heat
+            </div>
+
+            <div
+              id="stepHeatStatus"
+              class="step-status"
+            >
+              Waiting
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="sequence-arrow">
+          →
+        </div>
+
+
+        <!-- STEP 2 -->
+
+        <div
+          id="stepSmoke"
+          class="sequence-step"
+        >
+
+          <div class="step-number">
+            2
+          </div>
+
+          <div class="step-content">
+
+            <div class="step-title">
+              Check Smoke
+            </div>
+
+            <div
+              id="stepSmokeStatus"
+              class="step-status"
+            >
+              Waiting
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="sequence-arrow">
+          →
+        </div>
+
+
+        <!-- STEP 3 -->
+
+        <div
+          id="stepFire"
+          class="sequence-step"
+        >
+
+          <div class="step-number">
+            3
+          </div>
+
+          <div class="step-content">
+
+            <div class="step-title">
+              Fire Decision
+            </div>
+
+            <div
+              id="stepFireStatus"
+              class="step-status"
+            >
+              Waiting
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         ALARM
+         =================================================== -->
+
+    <section class="alarm-card">
+
+      <div class="alarm-icon">
+        🔔
+      </div>
+
+      <div>
+
+        <div class="alarm-title">
+          Alarm Status
+        </div>
+
+        <div
+          id="alarm"
+          class="alarm-value"
+        >
+          No alarm
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         MAP
+         =================================================== -->
+
+    <section class="map-card">
+
+      <div class="map-header">
 
         <div>
 
-            <div class="section-label">
-                MONITORING LOCATION
-            </div>
+          <div class="section-heading">
+            Emergency Response Map
+          </div>
 
-            <div
-                id="location"
-                class="location-value"
-            >
-                —
-            </div>
+          <div class="map-subtitle">
+            Device location and nearest emergency response points
+          </div>
 
         </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         MAIN STATUS
-         ===================================================== -->
-
-    <section
-        id="mainStatus"
-        class="main-status safe"
-    >
 
         <div
-            id="statusDot"
-            class="status-dot safe"
-        ></div>
-
-
-        <div class="main-status-content">
-
-            <div
-                id="statusValue"
-                class="status-value"
-            >
-                SAFE
-            </div>
-
-
-            <div
-                id="statusText"
-                class="status-text"
-            >
-                System Monitoring
-            </div>
-
-
-            <div
-                id="statusDescription"
-                class="status-description"
-            >
-                No fire detected. System is monitoring.
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         MAP
-         ===================================================== -->
-
-    <section class="section">
-
-        <div class="section-heading">
-
-            <div>
-
-                <div class="section-title">
-                    Emergency Location Map
-                </div>
-
-                <div class="section-subtitle">
-                    Response routes appear only after confirmed fire
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="map-card">
-
-            <div
-                id="map"
-                class="map-container"
-            ></div>
-
-
-            <div class="map-legend">
-
-                <div class="map-legend-item">
-
-                    <span class="map-marker-dot safe"></span>
-
-                    Your Location
-
-                </div>
-
-
-                <div class="map-legend-item">
-
-                    🚓 Police Station
-
-                </div>
-
-
-                <div class="map-legend-item">
-
-                    🚒 Fire Station
-
-                </div>
-
-
-                <div class="map-legend-item">
-
-                    <span class="map-marker-dot fire"></span>
-
-                    Fire Response Route
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         SENSOR MONITORING
-         ===================================================== -->
-
-    <section class="section">
-
-        <div class="section-heading">
-
-            <div>
-
-                <div class="section-title">
-                    Sensor Monitoring
-                </div>
-
-                <div class="section-subtitle">
-                    Heat is checked first, followed by smoke/gas
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="sensor-grid">
-
-
-            <!-- HEAT -->
-
-            <div
-                id="heatCard"
-                class="sensor-card safe"
-            >
-
-                <div class="sensor-card-header">
-
-                    <div class="sensor-icon">
-                        🌡️
-                    </div>
-
-
-                    <div>
-
-                        <div class="sensor-title">
-                            Heat Sensor
-                        </div>
-
-                        <div class="sensor-subtitle">
-                            Thermistor resistance
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="sensor-reading">
-
-                    <span
-                        id="flame"
-                        class="reading-value"
-                    >
-                        —
-                    </span>
-
-                    <span class="reading-unit">
-                        kΩ
-                    </span>
-
-                </div>
-
-
-                <div
-                    id="heatState"
-                    class="sensor-state"
-                >
-                    WAITING
-                </div>
-
-            </div>
-
-
-
-            <!-- MQ2 -->
-
-            <div
-                id="gasCard"
-                class="sensor-card safe"
-            >
-
-                <div class="sensor-card-header">
-
-                    <div class="sensor-icon">
-                        💨
-                    </div>
-
-
-                    <div>
-
-                        <div class="sensor-title">
-                            MQ-2 Smoke / Gas
-                        </div>
-
-                        <div class="sensor-subtitle">
-                            Analog sensor reading
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="sensor-reading">
-
-                    <span
-                        id="gas"
-                        class="reading-value"
-                    >
-                        —
-                    </span>
-
-                    <span class="reading-unit">
-                        ADC
-                    </span>
-
-                </div>
-
-
-                <div
-                    id="gasState"
-                    class="sensor-state"
-                >
-                    WAITING
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         FIRE DETECTION SEQUENCE
-         ===================================================== -->
-
-    <section class="section">
-
-        <div class="section-heading">
-
-            <div>
-
-                <div class="section-title">
-                    Fire Detection Sequence
-                </div>
-
-                <div class="section-subtitle">
-                    Heat → Smoke/Gas → Fire confirmation
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="sequence">
-
-
-            <!-- STEP 1 -->
-
-            <div
-                id="stepHeat"
-                class="sequence-step"
-            >
-
-                <div class="step-number">
-                    1
-                </div>
-
-                <div class="step-content">
-
-                    <div class="step-title">
-                        Heat Detection
-                    </div>
-
-                    <div
-                        id="stepHeatStatus"
-                        class="step-status"
-                    >
-                        Waiting for sensor data
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="sequence-line"></div>
-
-
-            <!-- STEP 2 -->
-
-            <div
-                id="stepSmoke"
-                class="sequence-step"
-            >
-
-                <div class="step-number">
-                    2
-                </div>
-
-                <div class="step-content">
-
-                    <div class="step-title">
-                        Smoke / Gas Check
-                    </div>
-
-                    <div
-                        id="stepSmokeStatus"
-                        class="step-status"
-                    >
-                        Waiting for heat
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="sequence-line"></div>
-
-
-            <!-- STEP 3 -->
-
-            <div
-                id="stepFire"
-                class="sequence-step"
-            >
-
-                <div class="step-number">
-                    3
-                </div>
-
-                <div class="step-content">
-
-                    <div class="step-title">
-                        Fire Confirmation
-                    </div>
-
-                    <div
-                        id="stepFireStatus"
-                        class="step-status"
-                    >
-                        Waiting
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         ALARM
-         ===================================================== -->
-
-    <section class="section">
-
-        <div
-            id="alarm"
-            class="alarm"
+          id="mapStatus"
+          class="map-status"
         >
-            OFF
+          Monitoring
         </div>
+
+      </div>
+
+
+      <div
+        id="map"
+        class="map-container"
+      ></div>
 
     </section>
 
 
+    <!-- ===================================================
+         RECENT FIRE LOGS
+         =================================================== -->
 
-    <!-- =====================================================
-         RECENT FIRE ALERTS
-         ===================================================== -->
+    <section class="fire-log-card">
 
-    <section
-        id="recentFireSection"
-        class="section"
-    >
+      <div class="fire-log-header">
 
-        <div class="section-heading">
+        <div>
 
-            <div>
+          <div class="section-heading">
+            Recent Fire Logs
+          </div>
 
-                <div class="section-title">
-                    Recent Fire Alerts
-                </div>
-
-                <div class="section-subtitle">
-                    Latest 3 confirmed fire incidents
-                </div>
-
-            </div>
+          <div class="map-subtitle">
+            Latest confirmed fire events
+          </div>
 
         </div>
 
-
-        <div
-            id="recentFireLogs"
-            class="fire-log-list"
-        >
-
-            <div class="fire-log-empty">
-                No recent fire incidents
-            </div>
-
+        <div class="fire-log-count">
+          Latest 5
         </div>
+
+      </div>
+
+
+      <div
+        id="recentFireLogs"
+        class="recent-fire-logs"
+      >
+
+        <div class="no-fire-logs">
+          No fire incidents recorded.
+        </div>
+
+      </div>
 
     </section>
 
 
-
-    <!-- =====================================================
+    <!-- ===================================================
          DEVICE INFORMATION
-         ===================================================== -->
+         =================================================== -->
 
-    <section class="section">
+    <section class="info-card">
 
-        <div class="section-heading">
+      <div class="section-heading">
+        Device Information
+      </div>
 
-            <div>
 
-                <div class="section-title">
-                    Device Information
-                </div>
+      <div class="info-grid">
 
-            </div>
+        <div class="info-item">
+
+          <span class="info-label">
+            Device ID
+          </span>
+
+          <strong id="deviceId">
+            —
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span class="info-label">
+            Building
+          </span>
+
+          <strong id="building">
+            —
+          </strong>
 
         </div>
 
 
-        <div class="info-grid">
+        <div class="info-item">
 
+          <span class="info-label">
+            Floor
+          </span>
 
-            <div class="info-card">
-
-                <div class="info-label">
-                    Device ID
-                </div>
-
-                <div
-                    id="deviceId"
-                    class="info-value"
-                >
-                    —
-                </div>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <div class="info-label">
-                    Building
-                </div>
-
-                <div
-                    id="building"
-                    class="info-value"
-                >
-                    —
-                </div>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <div class="info-label">
-                    Floor
-                </div>
-
-                <div
-                    id="floor"
-                    class="info-value"
-                >
-                    —
-                </div>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <div class="info-label">
-                    Zone
-                </div>
-
-                <div
-                    id="zone"
-                    class="info-value"
-                >
-                    —
-                </div>
-
-            </div>
+          <strong id="floor">
+            —
+          </strong>
 
         </div>
+
+
+        <div class="info-item">
+
+          <span class="info-label">
+            Zone
+          </span>
+
+          <strong id="zone">
+            —
+          </strong>
+
+        </div>
+
+      </div>
 
     </section>
 
 
-
-    <!-- =====================================================
+    <!-- ===================================================
          CONNECTION
-         ===================================================== -->
+         =================================================== -->
 
-    <section class="section">
+    <section class="connection-card">
 
-        <div class="section-heading">
+      <div class="connection-left">
 
-            <div>
+        <span
+          id="fbDot"
+          class="connection-dot"
+        ></span>
 
-                <div class="section-title">
-                    System Connection
-                </div>
+        <div>
 
-            </div>
+          <div class="connection-title">
+            Firebase Connection
+          </div>
 
-        </div>
-
-
-        <div class="connection-card">
-
-
-            <div class="connection-row">
-
-                <div class="connection-name">
-
-                    <span
-                        id="fbDot"
-                        class="status-indicator"
-                    ></span>
-
-                    Firebase
-
-                </div>
-
-
-                <div
-                    id="fbStatus"
-                    class="connection-value"
-                >
-                    Connecting...
-                </div>
-
-            </div>
-
-
-
-            <div class="connection-row">
-
-                <div class="connection-name">
-                    📡 Device
-                </div>
-
-
-                <div
-                    id="deviceConn"
-                    class="connection-value"
-                >
-                    Waiting...
-                </div>
-
-            </div>
-
-
-
-            <div class="connection-row">
-
-                <div class="connection-name">
-                    🗄️ Database Path
-                </div>
-
-
-                <div class="connection-value">
-                    /devices/SF-003
-                </div>
-
-            </div>
+          <div
+            id="fbStatus"
+            class="connection-subtitle"
+          >
+            Connecting...
+          </div>
 
         </div>
+
+      </div>
+
+
+      <div class="device-connection">
+
+        <span>
+          Device:
+        </span>
+
+        <strong id="deviceConn">
+          Connecting...
+        </strong>
+
+      </div>
 
     </section>
 
-</main>
+
+    <footer>
+
+      Smart Fire Guardian • ESP32 Fire Monitoring System
+
+    </footer>
+
+  </main>
 
 
+  <!-- =====================================================
+       FIRE ALERT POPUP
+       ===================================================== -->
 
-<!-- =========================================================
-     FOOTER
-     ========================================================= -->
+  <div
+    id="firePopup"
+    class="fire-popup"
+  >
 
-<footer class="footer">
+    <div class="fire-popup-overlay">
 
-    <span>
-        Smart Fire Guardian
-    </span>
-
-    <span>
-        ESP32 • MQ-2 • Thermistor • Firebase
-    </span>
-
-    <span>
-        College Project Prototype
-    </span>
-
-</footer>
+      <div class="fire-popup-box">
 
 
+        <div class="fire-popup-icon">
+          🔥
+        </div>
 
-<!-- =========================================================
-     LEAFLET
-     ========================================================= -->
 
-<script
+        <div class="fire-popup-title">
+          FIRE ALERT
+        </div>
+
+
+        <div class="fire-popup-message">
+          Heat and smoke conditions confirmed.
+        </div>
+
+
+        <div class="fire-popup-details">
+
+          <div>
+            <strong>Building</strong>
+            <span id="popupBuilding">—</span>
+          </div>
+
+          <div>
+            <strong>Floor</strong>
+            <span id="popupFloor">—</span>
+          </div>
+
+          <div>
+            <strong>Zone</strong>
+            <span id="popupZone">—</span>
+          </div>
+
+        </div>
+
+
+        <!-- POPUP MAP -->
+
+        <div class="fire-popup-map-wrap">
+
+          <div
+            id="popupMap"
+            class="fire-popup-map"
+          ></div>
+
+        </div>
+
+
+        <!-- RESPONSE MESSAGE -->
+
+        <div class="popup-dispatch-message">
+
+          <div class="popup-dispatch-title">
+            🚨 EMERGENCY RESPONSE
+          </div>
+
+          <div class="popup-dispatch-item">
+            ✓ Location sent to Police Station
+          </div>
+
+          <div class="popup-dispatch-item">
+            ✓ Location sent to Fire Station
+          </div>
+
+        </div>
+
+
+        <button
+          id="acknowledgeFire"
+          type="button"
+        >
+          ACKNOWLEDGE
+        </button>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       LEAFLET
+       ===================================================== -->
+
+  <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-></script>
+  ></script>
 
 
+  <!-- =====================================================
+       APP
+       ===================================================== -->
 
-<!-- =========================================================
-     APP
-     ========================================================= -->
-
-<script
+  <script
     type="module"
     src="app.js"
-></script>
-
+  ></script>
 
 </body>
 </html>
