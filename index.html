@@ -6,6 +6,15 @@
   <meta name="theme-color" content="#0f172a">
   <meta name="description" content="Smart Fire Guardian - Real-time fire monitoring system">
   <title>Smart Fire Guardian</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  >
+
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
 </head>
@@ -48,6 +57,28 @@
         <div id="statusValue" class="status-value">—</div>
         <div id="statusText" class="status-text">Connecting to system...</div>
         <div id="statusDescription" class="status-description">Waiting for sensor data.</div>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <div class="section-title">Location Map</div>
+          <div class="section-subtitle">Live position of the monitored device</div>
+        </div>
+      </div>
+
+      <div class="map-card">
+        <div id="map" class="map-container"></div>
+        <div class="map-legend">
+          <span class="map-legend-item">
+            <span class="map-marker-dot safe"></span> Safe / Monitoring
+          </span>
+          <span class="map-legend-item">
+            <span class="map-marker-dot fire"></span> Fire Alert
+          </span>
+        </div>
       </div>
     </section>
 
@@ -205,6 +236,13 @@
     <div>Smart Fire Guardian</div>
     <div>ESP32 • MQ-2 • Thermistor • Firebase</div>
   </footer>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
 
   <script type="module" src="app.js"></script>
 </body>
