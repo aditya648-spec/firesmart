@@ -1,0 +1,10 @@
+{
+  "name": "SmartFire Guardian",
+  "short_name": "SF Guardian",
+  "description": "Prototype hazard monitoring dashboard - SIH 2026 PS 26223",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#eef1f0",
+  "theme_color": "#2b4c6f",
+  "icons": []
+}

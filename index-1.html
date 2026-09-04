@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartFire Guardian — Monitoring Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>SmartFire Guardian</h1>
+      <p class="ps-tag">SIH 2026 · PS 26223 · Team CODE6 · Prototype monitoring dashboard</p>
+    </div>
+    <div class="meta-tag" id="lastUpdate">last update: —</div>
+  </header>
+
+  <section class="status-panel">
+    <div>
+      <p class="status-label">System status</p>
+      <p class="status-value unknown" id="statusValue">
+        <span class="status-indicator unknown" id="statusDot"></span><span id="statusText">—</span>
+      </p>
+      <p class="status-location" id="location">—</p>
+    </div>
+  </section>
+
+  <div class="grid">
+    <div class="cell"><p class="k">Device ID</p><p class="v" id="deviceId">—</p></div>
+    <div class="cell"><p class="k">Zone / room</p><p class="v" id="zone">—</p></div>
+    <div class="cell"><p class="k">Building</p><p class="v" id="building">—</p></div>
+    <div class="cell"><p class="k">Floor</p><p class="v" id="floor">—</p></div>
+    <div class="cell"><p class="k">MQ-2 gas reading</p><p class="v" id="gas">—</p></div>
+    <div class="cell"><p class="k">MQ-2 smoke reading</p><p class="v" id="smoke">—</p></div>
+    <div class="cell"><p class="k">Flame sensor</p><p class="v" id="flame">—</p></div>
+    <div class="cell"><p class="k">Alarm state</p><p class="v" id="alarm">—</p></div>
+    <div class="cell"><p class="k">Temperature</p><p class="v dim" id="temperature">NOT CONNECTED</p></div>
+    <div class="cell"><p class="k">Device connection</p><p class="v" id="deviceConn">—</p></div>
+  </div>
+
+  <div class="conn-row">
+    <span><span class="dot off" id="fbDot"></span>Firebase connection: <span id="fbStatus">connecting…</span></span>
+    <span id="dbPath">/smartfire</span>
+  </div>
+
+  <footer>
+    This is a diploma-level prototype for early hazard indication and remote monitoring.
+    It is not a certified fire alarm system.
+  </footer>
+
+</div>
+
+<script type="module" src="firebase-config.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
