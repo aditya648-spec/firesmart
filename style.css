@@ -1,9 +1,6 @@
 /* =========================================================
-   SMART FIRE GUARDIAN — Dashboard Styles
-   Clean Original Interface
+   SMART FIRE GUARDIAN
    ========================================================= */
-
-/* ---------- Reset ---------- */
 
 *,
 *::before,
@@ -13,9 +10,11 @@
     padding: 0;
 }
 
+
 html {
     scroll-behavior: smooth;
 }
+
 
 body {
     font-family:
@@ -28,8 +27,11 @@ body {
         sans-serif;
 
     background: #f4f7fb;
+
     color: #172033;
+
     min-height: 100vh;
+
     line-height: 1.5;
 }
 
@@ -40,19 +42,23 @@ body {
 
 .topbar {
     width: 100%;
+
     min-height: 76px;
 
     padding: 14px 32px;
 
     background: #ffffff;
+
     border-bottom: 1px solid #e5eaf1;
 
     display: flex;
+
     align-items: center;
 
     gap: 28px;
 
     position: sticky;
+
     top: 0;
 
     z-index: 1000;
@@ -61,8 +67,10 @@ body {
         0 2px 10px rgba(15, 23, 42, 0.04);
 }
 
+
 .brand {
     display: flex;
+
     align-items: center;
 
     gap: 12px;
@@ -70,14 +78,18 @@ body {
     flex: 1;
 }
 
+
 .brand-icon {
     width: 44px;
+
     height: 44px;
 
     border-radius: 12px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     background: #fff3e0;
@@ -85,27 +97,34 @@ body {
     font-size: 24px;
 }
 
+
 .brand-title {
     font-size: 19px;
+
     font-weight: 800;
 
     color: #172033;
 }
 
+
 .brand-subtitle {
     font-size: 12px;
+
     color: #7b8494;
 
     margin-top: 1px;
 }
 
+
 .device-status {
     display: flex;
+
     align-items: center;
 
     gap: 8px;
 
     font-size: 13px;
+
     font-weight: 700;
 
     color: #4b5565;
@@ -113,8 +132,10 @@ body {
     white-space: nowrap;
 }
 
+
 .last-update {
     font-size: 12px;
+
     color: #7b8494;
 
     white-space: nowrap;
@@ -122,11 +143,12 @@ body {
 
 
 /* =========================================================
-   STATUS INDICATORS
+   STATUS INDICATOR
    ========================================================= */
 
 .status-indicator {
     width: 9px;
+
     height: 9px;
 
     border-radius: 50%;
@@ -139,12 +161,14 @@ body {
         0 0 0 3px rgba(148, 163, 184, 0.15);
 }
 
+
 .status-indicator.online {
     background: #16a34a;
 
     box-shadow:
         0 0 0 3px rgba(22, 163, 74, 0.14);
 }
+
 
 .status-indicator.offline {
     background: #dc2626;
@@ -155,11 +179,15 @@ body {
 
 
 /* =========================================================
-   MAIN CONTAINER
+   CONTAINER
    ========================================================= */
 
 .container {
-    width: min(1180px, calc(100% - 40px));
+    width:
+        min(
+            1180px,
+            calc(100% - 40px)
+        );
 
     margin: 0 auto;
 
@@ -173,6 +201,7 @@ body {
 
 .location-section {
     display: flex;
+
     align-items: center;
 
     gap: 13px;
@@ -180,6 +209,7 @@ body {
     background: #ffffff;
 
     border: 1px solid #e5eaf1;
+
     border-radius: 16px;
 
     padding: 17px 20px;
@@ -190,20 +220,25 @@ body {
         0 4px 18px rgba(15, 23, 42, 0.04);
 }
 
+
 .location-icon {
     width: 42px;
+
     height: 42px;
 
     border-radius: 11px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     background: #eef4ff;
 
     font-size: 21px;
 }
+
 
 .section-label {
     font-size: 10px;
@@ -217,263 +252,13 @@ body {
     margin-bottom: 2px;
 }
 
+
 .location-value {
     font-size: 16px;
 
     font-weight: 750;
 
     color: #172033;
-}
-
-
-/* =========================================================
-   MAP
-   ========================================================= */
-
-.map-card {
-    background: #ffffff;
-
-    border: 1px solid #e5eaf1;
-    border-radius: 18px;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 5px 20px rgba(15, 23, 42, 0.04);
-}
-
-.map-container {
-    width: 100%;
-
-    height: 320px;
-
-    background: #e8eef5;
-}
-
-.map-container.fire-focus {
-    outline: 3px solid #dc2626;
-    outline-offset: -3px;
-}
-
-.map-legend {
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: 18px;
-
-    padding: 12px 18px;
-
-    border-top: 1px solid #edf1f5;
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    color: #475569;
-}
-
-.map-legend-item {
-    display: flex;
-    align-items: center;
-
-    gap: 7px;
-}
-
-.map-marker-dot {
-    width: 12px;
-    height: 12px;
-
-    border-radius: 50%;
-
-    display: inline-block;
-}
-
-.map-marker-dot.safe {
-    background: #16a34a;
-
-    box-shadow:
-        0 0 0 3px rgba(22, 163, 74, 0.2);
-}
-
-.map-marker-dot.fire {
-    background: #dc2626;
-
-    box-shadow:
-        0 0 0 3px rgba(220, 38, 38, 0.25);
-}
-
-
-/* =========================================================
-   SMART FIRE GUARDIAN MAP MARKERS
-   ========================================================= */
-
-.leaflet-marker-icon.sf-marker {
-    background: transparent;
-    border: none;
-}
-
-.sf-marker {
-    background: transparent;
-    border: none;
-}
-
-.sf-marker-pin {
-    width: 32px;
-    height: 32px;
-
-    border-radius: 50% 50% 50% 0;
-
-    transform: rotate(-45deg);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 3px solid #ffffff;
-
-    box-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.35);
-}
-
-.sf-marker-pin span {
-    transform: rotate(45deg);
-
-    font-size: 16px;
-
-    line-height: 1;
-}
-
-
-/* Your location */
-
-.sf-marker-pin.safe {
-    background: #16a34a;
-}
-
-
-/* Fire */
-
-.sf-marker-pin.fire {
-    background: #dc2626;
-
-    animation:
-        mapFirePulse 0.8s infinite alternate;
-}
-
-
-/* Police */
-
-.sf-marker-pin.police {
-    background: #2563eb;
-}
-
-
-/* Fire station */
-
-.sf-marker-pin.station {
-    background: #ea580c;
-}
-
-
-/* Fire marker animation */
-
-@keyframes mapFirePulse {
-    from {
-        transform: rotate(-45deg) scale(1);
-    }
-
-    to {
-        transform: rotate(-45deg) scale(1.15);
-    }
-}
-
-
-/* =========================================================
-   MAP LOCATION LABELS
-   IMPORTANT:
-   These are the ONLY new visual additions for the map.
-   ========================================================= */
-
-.your-location-label,
-.police-location-label,
-.fire-station-location-label {
-    background: #ffffff !important;
-
-    border: 1px solid #d1d5db !important;
-
-    border-radius: 6px !important;
-
-    padding: 4px 8px !important;
-
-    font-size: 11px !important;
-
-    font-weight: 700 !important;
-
-    line-height: 1.25 !important;
-
-    color: #334155 !important;
-
-    white-space: nowrap !important;
-
-    box-shadow:
-        0 2px 6px rgba(0, 0, 0, 0.15) !important;
-}
-
-
-/*
-   Remove Leaflet's default tooltip arrow.
-
-   This keeps the permanent labels looking like
-   simple dashboard labels instead of speech bubbles.
-*/
-
-.your-location-label::before,
-.police-location-label::before,
-.fire-station-location-label::before {
-    display: none !important;
-}
-
-
-/* =========================================================
-   LEAFLET DEFAULT FIXES
-   ========================================================= */
-
-.leaflet-container {
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-}
-
-.leaflet-control-zoom {
-    border: none !important;
-    box-shadow:
-        0 2px 8px rgba(15, 23, 42, 0.15) !important;
-}
-
-.leaflet-control-zoom a {
-    color: #334155 !important;
-
-    background: #ffffff !important;
-
-    border-color: #e5eaf1 !important;
-}
-
-.leaflet-control-zoom a:hover {
-    background: #f8fafc !important;
-}
-
-.leaflet-popup-content-wrapper {
-    border-radius: 10px;
-}
-
-.leaflet-popup-content {
-    font-size: 13px;
-    line-height: 1.5;
 }
 
 
@@ -487,6 +272,7 @@ body {
     padding: 28px;
 
     display: flex;
+
     align-items: center;
 
     gap: 20px;
@@ -506,17 +292,20 @@ body {
         box-shadow 0.25s ease;
 }
 
+
 .main-status.safe {
     background: #f0fdf4;
 
     border-color: #bbf7d0;
 }
 
+
 .main-status.heat {
     background: #fff7ed;
 
     border-color: #fed7aa;
 }
+
 
 .main-status.fire {
     background: #fef2f2;
@@ -527,8 +316,10 @@ body {
         0 8px 32px rgba(220, 38, 38, 0.12);
 }
 
+
 .status-dot {
     width: 20px;
+
     height: 20px;
 
     min-width: 20px;
@@ -538,6 +329,7 @@ body {
     background: #94a3b8;
 }
 
+
 .status-dot.safe {
     background: #16a34a;
 
@@ -545,12 +337,14 @@ body {
         0 0 0 7px rgba(22, 163, 74, 0.12);
 }
 
+
 .status-dot.heat {
     background: #f59e0b;
 
     box-shadow:
         0 0 0 7px rgba(245, 158, 11, 0.12);
 }
+
 
 .status-dot.fire {
     background: #dc2626;
@@ -562,9 +356,11 @@ body {
         statusPulse 0.9s infinite;
 }
 
+
 .main-status-content {
     min-width: 0;
 }
+
 
 .status-value {
     font-size: 34px;
@@ -576,6 +372,7 @@ body {
     color: #172033;
 }
 
+
 .status-text {
     font-size: 17px;
 
@@ -585,6 +382,7 @@ body {
 
     color: #334155;
 }
+
 
 .status-description {
     font-size: 13px;
@@ -603,13 +401,17 @@ body {
     margin-bottom: 30px;
 }
 
+
 .section-heading {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     margin-bottom: 14px;
 }
+
 
 .section-title {
     font-size: 18px;
@@ -618,6 +420,7 @@ body {
 
     color: #172033;
 }
+
 
 .section-subtitle {
     font-size: 12px;
@@ -629,6 +432,271 @@ body {
 
 
 /* =========================================================
+   MAP
+   ========================================================= */
+
+.map-card {
+    background: #ffffff;
+
+    border: 1px solid #e5eaf1;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 5px 20px rgba(15, 23, 42, 0.04);
+}
+
+
+.map-container {
+    width: 100%;
+
+    height: 320px;
+
+    background: #e8eef5;
+}
+
+
+.map-container.fire-focus {
+    outline: 3px solid #dc2626;
+
+    outline-offset: -3px;
+}
+
+
+.map-legend {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 18px;
+
+    padding: 12px 18px;
+
+    border-top: 1px solid #edf1f5;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color: #475569;
+}
+
+
+.map-legend-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.map-marker-dot {
+    width: 12px;
+
+    height: 12px;
+
+    border-radius: 50%;
+
+    display: inline-block;
+}
+
+
+.map-marker-dot.safe {
+    background: #16a34a;
+
+    box-shadow:
+        0 0 0 3px rgba(22, 163, 74, 0.2);
+}
+
+
+.map-marker-dot.fire {
+    background: #dc2626;
+
+    box-shadow:
+        0 0 0 3px rgba(220, 38, 38, 0.25);
+}
+
+
+/* =========================================================
+   MAP MARKERS
+   ========================================================= */
+
+.leaflet-marker-icon.sf-marker {
+    background: transparent;
+
+    border: none;
+}
+
+
+.sf-marker {
+    background: transparent;
+
+    border: none;
+}
+
+
+.sf-marker-pin {
+    width: 32px;
+
+    height: 32px;
+
+    border-radius:
+        50% 50% 50% 0;
+
+    transform:
+        rotate(-45deg);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 3px solid #ffffff;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+
+.sf-marker-pin span {
+    transform:
+        rotate(45deg);
+
+    font-size: 16px;
+
+    line-height: 1;
+}
+
+
+.sf-marker-pin.safe {
+    background: #16a34a;
+}
+
+
+.sf-marker-pin.fire {
+    background: #dc2626;
+
+    animation:
+        mapFirePulse 0.8s infinite alternate;
+}
+
+
+.sf-marker-pin.police {
+    background: #2563eb;
+}
+
+
+.sf-marker-pin.station {
+    background: #ea580c;
+}
+
+
+@keyframes mapFirePulse {
+
+    from {
+        transform:
+            rotate(-45deg)
+            scale(1);
+    }
+
+    to {
+        transform:
+            rotate(-45deg)
+            scale(1.15);
+    }
+
+}
+
+
+/* =========================================================
+   MAP LABELS
+   ========================================================= */
+
+.your-location-label,
+.police-location-label,
+.fire-station-location-label {
+
+    background: #ffffff !important;
+
+    border:
+        1px solid #d1d5db !important;
+
+    border-radius:
+        6px !important;
+
+    padding:
+        4px 8px !important;
+
+    font-size:
+        11px !important;
+
+    font-weight:
+        700 !important;
+
+    line-height:
+        1.25 !important;
+
+    color:
+        #334155 !important;
+
+    white-space:
+        nowrap !important;
+
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+
+.your-location-label::before,
+.police-location-label::before,
+.fire-station-location-label::before {
+    display: none !important;
+}
+
+
+/* =========================================================
+   FIRE RESPONSE ROUTES
+   ========================================================= */
+
+.fire-route-line {
+    pointer-events: none;
+}
+
+
+.fire-route-arrow {
+    background: transparent !important;
+
+    border: none !important;
+}
+
+
+.fire-route-arrow-shape {
+    width: 0;
+
+    height: 0;
+
+    border-top:
+        7px solid transparent;
+
+    border-bottom:
+        7px solid transparent;
+
+    border-left:
+        14px solid #dc2626;
+
+    filter:
+        drop-shadow(
+            0 1px 2px
+            rgba(0, 0, 0, 0.3)
+        );
+}
+
+
+/* =========================================================
    SENSOR GRID
    ========================================================= */
 
@@ -636,22 +704,28 @@ body {
     display: grid;
 
     grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
 
     gap: 18px;
 }
 
+
 .sensor-card {
     background: #ffffff;
 
-    border: 1px solid #e5eaf1;
+    border:
+        1px solid #e5eaf1;
 
     border-radius: 18px;
 
     padding: 23px;
 
     box-shadow:
-        0 5px 20px rgba(15, 23, 42, 0.04);
+        0 5px 20px
+        rgba(15, 23, 42, 0.04);
 
     transition:
         transform 0.2s ease,
@@ -659,32 +733,44 @@ body {
         box-shadow 0.2s ease;
 }
 
+
 .sensor-card:hover {
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
 
     box-shadow:
-        0 8px 24px rgba(15, 23, 42, 0.07);
+        0 8px 24px
+        rgba(15, 23, 42, 0.07);
 }
+
 
 .sensor-card.safe {
-    border-color: #e5eaf1;
+    border-color:
+        #e5eaf1;
 }
+
 
 .sensor-card.alert {
-    border-color: #fecaca;
+    border-color:
+        #fecaca;
 
-    background: #fff7f7;
+    background:
+        #fff7f7;
 }
+
 
 .sensor-card-header {
     display: flex;
+
     align-items: center;
 
     gap: 12px;
 }
 
+
 .sensor-icon {
     width: 44px;
+
     height: 44px;
 
     border-radius: 12px;
@@ -692,11 +778,14 @@ body {
     background: #f1f5f9;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-size: 23px;
 }
+
 
 .sensor-title {
     font-size: 15px;
@@ -706,20 +795,24 @@ body {
     color: #172033;
 }
 
+
 .sensor-subtitle {
     font-size: 12px;
 
     color: #8490a3;
 }
 
+
 .sensor-reading {
     margin-top: 22px;
 
     display: flex;
+
     align-items: baseline;
 
     gap: 7px;
 }
+
 
 .reading-value {
     font-size: 32px;
@@ -729,6 +822,7 @@ body {
     color: #172033;
 }
 
+
 .reading-unit {
     font-size: 13px;
 
@@ -736,6 +830,7 @@ body {
 
     font-weight: 650;
 }
+
 
 .sensor-state {
     display: inline-block;
@@ -757,6 +852,7 @@ body {
     letter-spacing: 0.4px;
 }
 
+
 .sensor-card.alert .sensor-state {
     background: #fee2e2;
 
@@ -765,35 +861,39 @@ body {
 
 
 /* =========================================================
-   FIRE DETECTION SEQUENCE
+   SEQUENCE
    ========================================================= */
 
 .sequence {
     background: #ffffff;
 
-    border: 1px solid #e5eaf1;
+    border:
+        1px solid #e5eaf1;
 
     border-radius: 18px;
 
     padding: 22px;
 
     box-shadow:
-        0 5px 20px rgba(15, 23, 42, 0.04);
+        0 5px 20px
+        rgba(15, 23, 42, 0.04);
 }
+
 
 .sequence-step {
     display: flex;
+
     align-items: center;
 
     gap: 15px;
 
     padding: 7px 0;
-
-    transition: 0.2s ease;
 }
+
 
 .step-number {
     width: 38px;
+
     height: 38px;
 
     min-width: 38px;
@@ -801,7 +901,9 @@ body {
     border-radius: 50%;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     background: #eef2f7;
@@ -813,9 +915,11 @@ body {
     font-size: 14px;
 }
 
+
 .step-content {
     flex: 1;
 }
+
 
 .step-title {
     font-size: 14px;
@@ -825,6 +929,7 @@ body {
     color: #334155;
 }
 
+
 .step-status {
     font-size: 12px;
 
@@ -833,6 +938,7 @@ body {
     margin-top: 2px;
 }
 
+
 .sequence-step.active .step-number,
 .sequence-step.complete .step-number {
     background: #16a34a;
@@ -840,15 +946,31 @@ body {
     color: #ffffff;
 }
 
+
 .sequence-step.active .step-title,
 .sequence-step.complete .step-title {
     color: #166534;
 }
 
+
 .sequence-step.active .step-status,
 .sequence-step.complete .step-status {
     color: #15803d;
 }
+
+
+.sequence-step.fire-step .step-number {
+    background: #dc2626;
+
+    color: #ffffff;
+}
+
+
+.sequence-step.fire-step .step-title,
+.sequence-step.fire-step .step-status {
+    color: #b91c1c;
+}
+
 
 .sequence-line {
     width: 2px;
@@ -872,7 +994,8 @@ body {
 
     background: #f8fafc;
 
-    border: 1px solid #e5eaf1;
+    border:
+        1px solid #e5eaf1;
 
     color: #64748b;
 
@@ -882,6 +1005,7 @@ body {
 
     text-align: center;
 }
+
 
 .alarm.active {
     background: #fee2e2;
@@ -896,6 +1020,236 @@ body {
 
 
 /* =========================================================
+   RECENT FIRE LOGS
+   ========================================================= */
+
+.fire-log-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+.fire-log-empty {
+    background: #ffffff;
+
+    border:
+        1px solid #e5eaf1;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    text-align: center;
+
+    color: #8a94a6;
+
+    font-size: 13px;
+
+    font-weight: 650;
+}
+
+
+.fire-log-card {
+    background: #ffffff;
+
+    border:
+        1px solid #e5eaf1;
+
+    border-radius: 16px;
+
+    padding: 17px 18px;
+
+    box-shadow:
+        0 4px 16px
+        rgba(15, 23, 42, 0.04);
+}
+
+
+.fire-log-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding-bottom: 12px;
+
+    margin-bottom: 12px;
+
+    border-bottom:
+        1px solid #edf1f5;
+}
+
+
+.fire-log-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    font-size: 14px;
+
+    font-weight: 850;
+
+    color: #172033;
+}
+
+
+.fire-log-icon {
+    width: 32px;
+
+    height: 32px;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #fee2e2;
+
+    font-size: 17px;
+}
+
+
+.fire-log-time {
+    font-size: 11px;
+
+    font-weight: 700;
+
+    color: #8a94a6;
+
+    white-space: nowrap;
+}
+
+
+.fire-log-location {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-bottom: 12px;
+}
+
+
+.fire-log-location-icon {
+    font-size: 17px;
+
+    line-height: 1.3;
+}
+
+
+.fire-log-location-content {
+    min-width: 0;
+}
+
+
+.fire-log-location-label {
+    font-size: 10px;
+
+    font-weight: 800;
+
+    color: #8a94a6;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    margin-bottom: 2px;
+}
+
+
+.fire-log-location-value {
+    font-size: 14px;
+
+    font-weight: 800;
+
+    color: #172033;
+
+    word-break: break-word;
+}
+
+
+.fire-log-location-detail {
+    font-size: 11px;
+
+    color: #64748b;
+
+    margin-top: 2px;
+}
+
+
+.fire-log-notifications {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+
+.fire-log-notification {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 10px;
+
+    border-radius: 9px;
+
+    background: #f8fafc;
+
+    border:
+        1px solid #e5eaf1;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    color: #475569;
+}
+
+
+.fire-log-notification.sent {
+    background: #ecfdf3;
+
+    border-color: #bbf7d0;
+
+    color: #166534;
+}
+
+
+.fire-log-notification-icon {
+    font-size: 15px;
+
+    line-height: 1;
+}
+
+
+.fire-log-notification-text {
+    min-width: 0;
+}
+
+
+/* =========================================================
    DEVICE INFORMATION
    ========================================================= */
 
@@ -903,23 +1257,30 @@ body {
     display: grid;
 
     grid-template-columns:
-        repeat(4, minmax(0, 1fr));
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
 
     gap: 14px;
 }
 
+
 .info-card {
     background: #ffffff;
 
-    border: 1px solid #e5eaf1;
+    border:
+        1px solid #e5eaf1;
 
     border-radius: 15px;
 
     padding: 18px;
 
     box-shadow:
-        0 4px 16px rgba(15, 23, 42, 0.035);
+        0 4px 16px
+        rgba(15, 23, 42, 0.035);
 }
+
 
 .info-label {
     font-size: 11px;
@@ -934,6 +1295,7 @@ body {
 
     margin-bottom: 5px;
 }
+
 
 .info-value {
     font-size: 15px;
@@ -953,35 +1315,43 @@ body {
 .connection-card {
     background: #ffffff;
 
-    border: 1px solid #e5eaf1;
+    border:
+        1px solid #e5eaf1;
 
     border-radius: 18px;
 
     padding: 5px 20px;
 
     box-shadow:
-        0 4px 18px rgba(15, 23, 42, 0.04);
+        0 4px 18px
+        rgba(15, 23, 42, 0.04);
 }
+
 
 .connection-row {
     min-height: 52px;
 
     display: flex;
+
     align-items: center;
 
     justify-content: space-between;
 
     gap: 20px;
 
-    border-bottom: 1px solid #edf1f5;
+    border-bottom:
+        1px solid #edf1f5;
 }
+
 
 .connection-row:last-child {
     border-bottom: none;
 }
 
+
 .connection-name {
     display: flex;
+
     align-items: center;
 
     gap: 9px;
@@ -992,6 +1362,7 @@ body {
 
     font-weight: 700;
 }
+
 
 .connection-value {
     color: #172033;
@@ -1007,6 +1378,297 @@ body {
 
 
 /* =========================================================
+   FIRE POPUP
+   ========================================================= */
+
+#firePopup {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+}
+
+
+#firePopup.show {
+    display: block;
+}
+
+
+.fire-popup-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(
+            15,
+            23,
+            42,
+            0.72
+        );
+
+    backdrop-filter:
+        blur(4px);
+}
+
+
+.fire-popup-box {
+    width:
+        min(
+            430px,
+            94vw
+        );
+
+    padding: 30px 26px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border:
+        3px solid #dc2626;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.35);
+
+    animation:
+        firePopupIn
+        0.25s ease-out;
+}
+
+
+.fire-popup-icon {
+    font-size: 58px;
+
+    line-height: 1;
+
+    margin-bottom: 13px;
+
+    animation:
+        firePulse
+        0.7s infinite alternate;
+}
+
+
+.fire-popup-title {
+    font-size: 31px;
+
+    font-weight: 950;
+
+    line-height: 1.1;
+
+    color: #b91c1c;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 9px;
+}
+
+
+.fire-popup-message {
+    font-size: 15px;
+
+    font-weight: 650;
+
+    color: #475569;
+
+    margin-bottom: 18px;
+}
+
+
+.fire-popup-details {
+    text-align: left;
+
+    background: #f8fafc;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius: 12px;
+
+    padding: 12px 15px;
+
+    margin-bottom: 14px;
+}
+
+
+.fire-popup-details div {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 7px 0;
+
+    border-bottom:
+        1px solid #e2e8f0;
+
+    font-size: 13px;
+}
+
+
+.fire-popup-details div:last-child {
+    border-bottom: none;
+}
+
+
+.fire-popup-details strong {
+    color: #64748b;
+}
+
+
+.fire-popup-details span {
+    color: #172033;
+
+    font-weight: 800;
+
+    text-align: right;
+}
+
+
+.fire-popup-dispatch {
+    text-align: left;
+
+    padding: 11px 13px;
+
+    margin-bottom: 16px;
+
+    border-radius: 10px;
+
+    background: #ecfdf3;
+
+    border:
+        1px solid #bbf7d0;
+}
+
+
+.fire-popup-dispatch div {
+    padding: 4px 0;
+
+    color: #166534;
+
+    font-size: 12px;
+
+    font-weight: 750;
+}
+
+
+#acknowledgeFire {
+    width: 100%;
+
+    padding: 13px 18px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #dc2626;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+
+#acknowledgeFire:hover {
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes statusPulse {
+
+    0% {
+        transform: scale(1);
+
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.12);
+
+        opacity: 0.75;
+    }
+
+    100% {
+        transform: scale(1);
+
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes alarmPulse {
+
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0.65;
+    }
+
+}
+
+
+@keyframes firePopupIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            scale(0.88);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            scale(1);
+    }
+
+}
+
+
+@keyframes firePulse {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.12);
+    }
+
+}
+
+
+/* =========================================================
    FOOTER
    ========================================================= */
 
@@ -1015,12 +1677,15 @@ body {
 
     padding: 22px 30px;
 
-    border-top: 1px solid #e5eaf1;
+    border-top:
+        1px solid #e5eaf1;
 
     background: #ffffff;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     gap: 20px;
@@ -1032,38 +1697,6 @@ body {
     font-size: 11px;
 
     text-align: center;
-}
-
-
-/* =========================================================
-   ANIMATIONS
-   ========================================================= */
-
-@keyframes statusPulse {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scale(1.12);
-        opacity: 0.75;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes alarmPulse {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0.65;
-    }
 }
 
 
@@ -1081,22 +1714,30 @@ body {
         flex-wrap: wrap;
     }
 
+
     .brand {
         flex-basis: 100%;
     }
+
 
     .device-status {
         flex: 1;
     }
 
+
     .last-update {
         text-align: right;
     }
 
+
     .info-grid {
         grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
     }
+
 }
 
 
@@ -1107,10 +1748,15 @@ body {
 @media (max-width: 600px) {
 
     .container {
-        width: min(100% - 24px, 1180px);
+        width:
+            min(
+                100% - 24px,
+                1180px
+            );
 
         padding-top: 20px;
     }
+
 
     .topbar {
         padding: 12px 14px;
@@ -1118,21 +1764,26 @@ body {
         min-height: auto;
     }
 
+
     .brand-title {
         font-size: 17px;
     }
+
 
     .brand-subtitle {
         font-size: 11px;
     }
 
+
     .device-status {
         font-size: 12px;
     }
 
+
     .last-update {
         font-size: 11px;
     }
+
 
     .main-status {
         padding: 22px;
@@ -1140,58 +1791,89 @@ body {
         gap: 15px;
     }
 
+
     .status-value {
         font-size: 29px;
     }
+
 
     .status-text {
         font-size: 15px;
     }
 
+
     .status-description {
         font-size: 12px;
     }
+
 
     .sensor-grid {
         grid-template-columns: 1fr;
     }
 
+
     .map-container {
         height: 260px;
     }
 
+
     .info-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns:
+            1fr 1fr;
     }
+
 
     .info-card {
         padding: 15px;
     }
 
+
     .sequence {
         padding: 17px;
     }
 
-    /*
-       Keep map labels readable on phones.
-    */
 
-    .your-location-label,
-    .police-location-label,
-    .fire-station-location-label {
-        font-size: 10px !important;
+    .fire-log-header {
+        align-items: flex-start;
 
-        padding: 3px 6px !important;
+        flex-direction: column;
     }
+
+
+    .fire-log-time {
+        padding-left: 41px;
+    }
+
+
+    .fire-log-notifications {
+        grid-template-columns: 1fr;
+    }
+
+
+    .fire-popup-box {
+        padding: 25px 19px;
+    }
+
+
+    .fire-popup-title {
+        font-size: 27px;
+    }
+
+
+    .fire-popup-icon {
+        font-size: 52px;
+    }
+
 
     .footer {
         padding: 20px 14px;
     }
+
 }
 
 
 /* =========================================================
-   VERY SMALL SCREENS
+   VERY SMALL
    ========================================================= */
 
 @media (max-width: 390px) {
@@ -1200,9 +1882,11 @@ body {
         grid-template-columns: 1fr;
     }
 
+
     .device-status {
         flex-basis: 100%;
     }
+
 
     .last-update {
         flex-basis: 100%;
@@ -1210,23 +1894,19 @@ body {
         text-align: left;
     }
 
+
     .main-status {
         padding: 19px;
     }
+
 
     .status-value {
         font-size: 26px;
     }
 
+
     .map-container {
         height: 250px;
     }
 
-    .your-location-label,
-    .police-location-label,
-    .fire-station-location-label {
-        font-size: 9px !important;
-
-        padding: 3px 5px !important;
-    }
 }
