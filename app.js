@@ -14,16 +14,14 @@ const DATA_PATH = `devices/${DEVICE_ID}`;
 const DEFAULT_GAS_THRESHOLD = 1600;
 const DEFAULT_FIRE_THRESHOLD = 5000; // 5 kΩ
 
-/* Default map coordinates (fallback if Firebase has none)
-   Change these to your building's real location */
-const DEFAULT_LAT = 28.6139;   // New Delhi example
+/* Default map coordinates (change to your real location) */
+const DEFAULT_LAT = 28.6139;
 const DEFAULT_LNG = 77.2090;
 const DEFAULT_ZOOM = 16;
 
 let previousFireState = false;
 let lastFirebaseData = null;
 
-/* Map state */
 let map = null;
 let marker = null;
 let currentLat = DEFAULT_LAT;
@@ -118,10 +116,6 @@ function initMap() {
 function updateMap(data, fireAlert) {
   if (!map || !marker) return;
 
-  // Prefer coordinates from Firebase:
-  // data.lat / data.lng
-  // or data.location.lat / data.location.lng
-  // or data.coordinates.lat / data.coordinates.lng
   const lat = numberValue(
     data.lat ?? data.location?.lat ?? data.coordinates?.lat,
     currentLat
@@ -146,11 +140,8 @@ function updateMap(data, fireAlert) {
     : `<strong>Monitoring</strong><br>${building}<br>Floor ${floor} • ${zone}`;
 
   marker.setPopupContent(popupHtml);
-
-  // Center map on the location
   map.setView([lat, lng], map.getZoom() < 15 ? 16 : map.getZoom());
 
-  // Visual highlight on the map container when fire is active
   const mapEl = $("map");
   if (mapEl) {
     mapEl.classList.toggle("fire-focus", fireAlert);
@@ -331,7 +322,6 @@ function updateGas(gasData, heatDetected) {
     elements.gas.textContent = rawGas.toString();
   }
 
-  // Smoke is only meaningful after heat is already detected
   const smokeConfirmed = heatDetected && gasDetected;
 
   if (elements.gasState) {
@@ -359,7 +349,6 @@ function updateSequence(
   confirmationCount,
   requiredCount
 ) {
-  // Step 1 — Heat
   if (elements.stepHeat) {
     elements.stepHeat.classList.toggle("active", heatDetected);
     elements.stepHeat.classList.toggle("complete", heatDetected);
@@ -370,7 +359,6 @@ function updateSequence(
       : "Waiting";
   }
 
-  // Step 2 — Smoke
   const smokeStepActive = heatDetected && gasDetected;
   if (elements.stepSmoke) {
     elements.stepSmoke.classList.toggle("active", smokeStepActive);
@@ -386,7 +374,6 @@ function updateSequence(
     }
   }
 
-  // Step 3 — Fire
   if (elements.stepFire) {
     elements.stepFire.classList.toggle("active", fireAlert);
     elements.stepFire.classList.toggle("complete", fireAlert);
@@ -495,11 +482,8 @@ function processData(data) {
   );
 
   updateMainStatus(fireAlert, heat.heatDetected, gas.gasDetected);
-
-  // Update map with current location + fire state
   updateMap(data, fireAlert);
 
-  // Fire popup: show when fire is active, hide only when it clears
   if (fireAlert) {
     showFirePopup(data);
   } else if (previousFireState) {
