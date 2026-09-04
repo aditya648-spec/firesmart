@@ -1,4 +1,11 @@
+/* =========================================================
+   SMARTFIRE GUARDIAN
+   FIREBASE DASHBOARD
+   ========================================================= */
+
+
 import { db } from "./firebase-config.js";
+
 
 import {
   ref,
@@ -6,13 +13,16 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
-// =====================================================
-// CONFIGURATION
-// =====================================================
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
 
 const DEVICE_ID = "SF-003";
 
-const DATA_PATH = `devices/${DEVICE_ID}`;
+const DATA_PATH =
+  `devices/${DEVICE_ID}`;
 
 const GAS_THRESHOLD = 1600;
 
@@ -21,100 +31,177 @@ const HEAT_THRESHOLD = 5000;
 const OFFLINE_THRESHOLD_SEC = 20;
 
 
-// =====================================================
-// HTML ELEMENTS
-// =====================================================
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
 
 const el = {
 
-  // Top
-  deviceTopDot: document.getElementById("deviceTopDot"),
-  deviceTopStatus: document.getElementById("deviceTopStatus"),
+  deviceTopDot:
+    document.getElementById("deviceTopDot"),
 
-  // Location
-  location: document.getElementById("location"),
-  deviceId: document.getElementById("deviceId"),
-  zone: document.getElementById("zone"),
-  building: document.getElementById("building"),
-  floor: document.getElementById("floor"),
+  deviceTopStatus:
+    document.getElementById("deviceTopStatus"),
 
-  floorInfo: document.getElementById("floorInfo"),
-  zoneInfo: document.getElementById("zoneInfo"),
 
-  // Main status
-  mainStatusCard: document.getElementById("mainStatusCard"),
-  mainStatus: document.getElementById("mainStatus"),
-  statusDescription: document.getElementById("statusDescription"),
-  statusDot: document.getElementById("statusDot"),
+  location:
+    document.getElementById("location"),
 
-  // Sensors
-  heatCard: document.getElementById("heatCard"),
-  gasCard: document.getElementById("gasCard"),
+  deviceId:
+    document.getElementById("deviceId"),
 
-  flame: document.getElementById("flame"),
-  gas: document.getElementById("gas"),
+  zone:
+    document.getElementById("zone"),
 
-  heatState: document.getElementById("heatState"),
-  gasState: document.getElementById("gasState"),
+  building:
+    document.getElementById("building"),
 
-  // Sequence
-  stepHeat: document.getElementById("stepHeat"),
-  stepHeatStatus: document.getElementById("stepHeatStatus"),
+  floor:
+    document.getElementById("floor"),
 
-  stepSmoke: document.getElementById("stepSmoke"),
-  stepSmokeStatus: document.getElementById("stepSmokeStatus"),
+  floorInfo:
+    document.getElementById("floorInfo"),
 
-  stepFire: document.getElementById("stepFire"),
-  stepFireStatus: document.getElementById("stepFireStatus"),
+  zoneInfo:
+    document.getElementById("zoneInfo"),
 
-  // Alarm
-  alarm: document.getElementById("alarm"),
 
-  // Connection
-  fbDot: document.getElementById("fbDot"),
-  fbStatus: document.getElementById("fbStatus"),
+  mainStatusCard:
+    document.getElementById("mainStatusCard"),
 
-  // Last update
-  lastUpdate: document.getElementById("lastUpdate"),
+  mainStatus:
+    document.getElementById("mainStatus"),
 
-  // Popup
-  firePopup: document.getElementById("firePopup"),
-  popupBuilding: document.getElementById("popupBuilding"),
-  popupFloor: document.getElementById("popupFloor"),
-  popupZone: document.getElementById("popupZone"),
-  acknowledgeFire: document.getElementById("acknowledgeFire")
+  statusDescription:
+    document.getElementById("statusDescription"),
+
+  statusDot:
+    document.getElementById("statusDot"),
+
+
+  heatCard:
+    document.getElementById("heatCard"),
+
+  gasCard:
+    document.getElementById("gasCard"),
+
+  flame:
+    document.getElementById("flame"),
+
+  gas:
+    document.getElementById("gas"),
+
+  heatState:
+    document.getElementById("heatState"),
+
+  gasState:
+    document.getElementById("gasState"),
+
+
+  stepHeat:
+    document.getElementById("stepHeat"),
+
+  stepHeatStatus:
+    document.getElementById("stepHeatStatus"),
+
+  stepSmoke:
+    document.getElementById("stepSmoke"),
+
+  stepSmokeStatus:
+    document.getElementById("stepSmokeStatus"),
+
+  stepFire:
+    document.getElementById("stepFire"),
+
+  stepFireStatus:
+    document.getElementById("stepFireStatus"),
+
+
+  alarm:
+    document.getElementById("alarm"),
+
+
+  fbDot:
+    document.getElementById("fbDot"),
+
+  fbStatus:
+    document.getElementById("fbStatus"),
+
+
+  lastUpdate:
+    document.getElementById("lastUpdate"),
+
+
+  firePopup:
+    document.getElementById("firePopup"),
+
+  popupBuilding:
+    document.getElementById("popupBuilding"),
+
+  popupFloor:
+    document.getElementById("popupFloor"),
+
+  popupZone:
+    document.getElementById("popupZone"),
+
+  acknowledgeFire:
+    document.getElementById("acknowledgeFire")
 
 };
 
 
-// =====================================================
-// CURRENT STATE
-// =====================================================
 
-let latestData = null;
+/* =========================================================
+   STATE
+   ========================================================= */
+
 
 let lastFirebaseUpdateTime = 0;
 
 let popupAcknowledged = false;
 
+let currentFireState = false;
 
-// =====================================================
-// HELPER FUNCTIONS
-// =====================================================
+
+
+/* =========================================================
+   HELPER FUNCTIONS
+   ========================================================= */
+
 
 function numberValue(value, fallback = 0) {
 
-  const n = Number(value);
+  const number =
+    Number(value);
 
-  return Number.isFinite(n) ? n : fallback;
+  if (
+    Number.isFinite(number)
+  ) {
+
+    return number;
+
+  }
+
+  return fallback;
 
 }
 
 
-function textValue(value, fallback = "--") {
+function textValue(
+  value,
+  fallback = "--"
+) {
 
-  if (value === undefined || value === null || value === "") {
+  if (
+    value === undefined ||
+    value === null ||
+    value === ""
+  ) {
+
     return fallback;
+
   }
 
   return String(value);
@@ -122,87 +209,136 @@ function textValue(value, fallback = "--") {
 }
 
 
-function formatTime(date) {
+function isTrue(value) {
 
-  return date.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
-  });
+  return (
+    value === true ||
+    value === "true" ||
+    value === 1 ||
+    value === "1"
+  );
 
 }
 
 
-// =====================================================
-// FIRE POPUP
-// =====================================================
+function formatTime(date) {
+
+  return date.toLocaleTimeString(
+    [],
+    {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    }
+  );
+
+}
+
+
+
+/* =========================================================
+   FIRE POPUP
+   ========================================================= */
+
 
 function showFirePopup(data) {
 
-  if (!el.firePopup) return;
+  if (!el.firePopup) {
+
+    return;
+
+  }
+
 
   const building =
-    textValue(data.building, "ABC Apartments");
+    textValue(
+      data.building,
+      "ABC Apartments"
+    );
+
 
   const floor =
-    textValue(data.floor, "3");
+    textValue(
+      data.floor,
+      "3"
+    );
+
 
   const zone =
-    textValue(data.zone, "Room 302");
+    textValue(
+      data.zone,
+      "Room 302"
+    );
 
 
-  el.popupBuilding.textContent = building;
+  el.popupBuilding.textContent =
+    building;
 
-  el.popupFloor.textContent = floor;
+  el.popupFloor.textContent =
+    floor;
 
-  el.popupZone.textContent = zone;
+  el.popupZone.textContent =
+    zone;
 
 
-  el.firePopup.classList.remove("hidden");
-
-
-  popupAcknowledged = false;
+  el.firePopup.classList.remove(
+    "hidden"
+  );
 
 }
 
 
 function hideFirePopup() {
 
-  if (!el.firePopup) return;
+  if (!el.firePopup) {
 
-  el.firePopup.classList.add("hidden");
+    return;
+
+  }
+
+
+  el.firePopup.classList.add(
+    "hidden"
+  );
 
 }
 
 
-// =====================================================
-// FIRE POPUP BUTTON
-// =====================================================
 
-if (el.acknowledgeFire) {
+/* =========================================================
+   ACKNOWLEDGE BUTTON
+   ========================================================= */
 
-  el.acknowledgeFire.addEventListener("click", () => {
+
+el.acknowledgeFire.addEventListener(
+  "click",
+  () => {
 
     popupAcknowledged = true;
 
     hideFirePopup();
 
-  });
+  }
+);
 
-}
 
 
-// =====================================================
-// UPDATE ONLINE STATUS
-// =====================================================
+/* =========================================================
+   DEVICE ONLINE STATUS
+   ========================================================= */
+
 
 function updateOnlineStatus() {
 
-  if (!lastFirebaseUpdateTime) {
+  if (
+    lastFirebaseUpdateTime === 0
+  ) {
 
-    el.deviceTopDot.className = "status-dot";
+    el.deviceTopDot.className =
+      "status-dot";
 
-    el.deviceTopStatus.textContent = "Waiting...";
+    el.deviceTopStatus.textContent =
+      "Waiting...";
 
     return;
 
@@ -210,31 +346,47 @@ function updateOnlineStatus() {
 
 
   const ageSeconds =
-    (Date.now() - lastFirebaseUpdateTime) / 1000;
+    (
+      Date.now() -
+      lastFirebaseUpdateTime
+    ) / 1000;
 
 
-  if (ageSeconds <= OFFLINE_THRESHOLD_SEC) {
+  if (
+    ageSeconds <=
+    OFFLINE_THRESHOLD_SEC
+  ) {
 
-    el.deviceTopDot.className = "status-dot online";
+    el.deviceTopDot.className =
+      "status-dot online";
 
-    el.deviceTopStatus.textContent = "Device Online";
+    el.deviceTopStatus.textContent =
+      "Device Online";
 
   } else {
 
-    el.deviceTopDot.className = "status-dot offline";
+    el.deviceTopDot.className =
+      "status-dot offline";
 
-    el.deviceTopStatus.textContent = "Device Offline";
+    el.deviceTopStatus.textContent =
+      "Device Offline";
 
   }
 
 }
 
 
-// =====================================================
-// UPDATE MAIN STATUS
-// =====================================================
 
-function updateMainStatus(status, heatDetected, fireAlert) {
+/* =========================================================
+   MAIN STATUS
+   ========================================================= */
+
+
+function updateMainStatus(
+  heatDetected,
+  fireAlert
+) {
+
 
   el.mainStatusCard.classList.remove(
     "safe",
@@ -243,28 +395,37 @@ function updateMainStatus(status, heatDetected, fireAlert) {
   );
 
 
-  if (fireAlert || status === "FIRE") {
+  /* ---------------- FIRE ---------------- */
 
-    el.mainStatusCard.classList.add("alert");
 
-    el.mainStatus.textContent = "FIRE ALERT";
+  if (fireAlert) {
+
+    el.mainStatusCard.classList.add(
+      "alert"
+    );
+
+    el.mainStatus.textContent =
+      "FIRE ALERT";
 
     el.statusDescription.textContent =
       "Heat and smoke have been confirmed.";
 
-    el.statusDot.className =
-      "large-status-dot";
-
-    el.alarm.textContent = "ACTIVE";
+    el.alarm.textContent =
+      "ACTIVE";
 
     return;
 
   }
 
 
-  if (heatDetected || status === "HEAT DETECTED") {
+  /* ---------------- HEAT ---------------- */
 
-    el.mainStatusCard.classList.add("heat");
+
+  if (heatDetected) {
+
+    el.mainStatusCard.classList.add(
+      "heat"
+    );
 
     el.mainStatus.textContent =
       "HEAT DETECTED";
@@ -272,45 +433,58 @@ function updateMainStatus(status, heatDetected, fireAlert) {
     el.statusDescription.textContent =
       "Heat detected. Checking smoke/gas sensor.";
 
-    el.statusDot.className =
-      "large-status-dot";
-
-    el.alarm.textContent = "STANDBY";
+    el.alarm.textContent =
+      "STANDBY";
 
     return;
 
   }
 
 
-  el.mainStatusCard.classList.add("safe");
+  /* ---------------- SAFE ---------------- */
 
-  el.mainStatus.textContent = "SAFE";
+
+  el.mainStatusCard.classList.add(
+    "safe"
+  );
+
+  el.mainStatus.textContent =
+    "SAFE";
 
   el.statusDescription.textContent =
     "No fire detected. System is monitoring.";
 
-  el.statusDot.className =
-    "large-status-dot";
-
-  el.alarm.textContent = "OFF";
+  el.alarm.textContent =
+    "OFF";
 
 }
 
 
-// =====================================================
-// UPDATE HEAT SENSOR
-// =====================================================
 
-function updateHeatSensor(heatResistance, heatThreshold, heatDetected) {
+/* =========================================================
+   HEAT SENSOR
+   ========================================================= */
 
-  if (heatResistance > 0) {
+
+function updateHeatSensor(
+  heatResistance,
+  heatDetected
+) {
+
+
+  if (
+    heatResistance > 0
+  ) {
 
     el.flame.textContent =
-      (heatResistance / 1000).toFixed(2);
+      (
+        heatResistance / 1000
+      ).toFixed(2);
 
   } else {
 
-    el.flame.textContent = "--";
+    el.flame.textContent =
+      "--";
 
   }
 
@@ -323,7 +497,9 @@ function updateHeatSensor(heatResistance, heatThreshold, heatDetected) {
 
   if (heatDetected) {
 
-    el.heatCard.classList.add("warn");
+    el.heatCard.classList.add(
+      "warn"
+    );
 
     el.heatState.textContent =
       "HEAT DETECTED";
@@ -338,15 +514,18 @@ function updateHeatSensor(heatResistance, heatThreshold, heatDetected) {
 }
 
 
-// =====================================================
-// UPDATE MQ2 SENSOR
-// =====================================================
+
+/* =========================================================
+   MQ-2 SENSOR
+   ========================================================= */
+
 
 function updateGasSensor(
   gasRaw,
   heatDetected,
   smokeDetected
 ) {
+
 
   el.gas.textContent =
     Math.round(gasRaw);
@@ -359,11 +538,10 @@ function updateGasSensor(
 
 
   /*
-   * IMPORTANT:
-   *
-   * Smoke is only considered when heat
-   * has already been detected.
+   * Smoke is only considered
+   * after heat is detected.
    */
+
 
   if (!heatDetected) {
 
@@ -377,7 +555,9 @@ function updateGasSensor(
 
   if (smokeDetected) {
 
-    el.gasCard.classList.add("alert");
+    el.gasCard.classList.add(
+      "alert"
+    );
 
     el.gasState.textContent =
       "SMOKE DETECTED";
@@ -392,9 +572,11 @@ function updateGasSensor(
 }
 
 
-// =====================================================
-// UPDATE DETECTION SEQUENCE
-// =====================================================
+
+/* =========================================================
+   FIRE DETECTION SEQUENCE
+   ========================================================= */
+
 
 function updateSequence(
   heatDetected,
@@ -404,7 +586,8 @@ function updateSequence(
   requiredCount
 ) {
 
-  // Reset all classes
+
+  /* Reset */
 
   el.stepHeat.classList.remove(
     "active",
@@ -425,13 +608,16 @@ function updateSequence(
   );
 
 
-  // ===================================================
-  // NO HEAT
-  // ===================================================
+  /* =====================================================
+     NO HEAT
+     ===================================================== */
+
 
   if (!heatDetected) {
 
-    el.stepHeat.classList.add("confirmed");
+    el.stepHeat.classList.add(
+      "confirmed"
+    );
 
     el.stepHeatStatus.textContent =
       "Normal";
@@ -447,32 +633,59 @@ function updateSequence(
   }
 
 
-  // ===================================================
-  // HEAT DETECTED
-  // ===================================================
+  /* =====================================================
+     HEAT DETECTED
+     ===================================================== */
 
-  el.stepHeat.classList.add("active");
+
+  el.stepHeat.classList.add(
+    "active"
+  );
 
   el.stepHeatStatus.textContent =
     "Heat detected";
 
 
-  // ===================================================
-  // HEAT + SMOKE
-  // ===================================================
+  /* =====================================================
+     HEAT + SMOKE
+     ===================================================== */
+
 
   if (smokeDetected) {
 
-    el.stepSmoke.classList.add("active");
+
+    el.stepSmoke.classList.add(
+      "active"
+    );
+
+
+    /* ---------------- FIRE ---------------- */
 
 
     if (fireAlert) {
 
-      el.stepSmoke.classList.add("confirmed");
+      el.stepHeat.classList.remove(
+        "active"
+      );
 
-      el.stepFire.classList.add("fire");
+      el.stepHeat.classList.add(
+        "confirmed"
+      );
 
-      el.stepHeat.classList.add("confirmed");
+
+      el.stepSmoke.classList.remove(
+        "active"
+      );
+
+      el.stepSmoke.classList.add(
+        "confirmed"
+      );
+
+
+      el.stepFire.classList.add(
+        "fire"
+      );
+
 
       el.stepHeatStatus.textContent =
         "Confirmed";
@@ -488,6 +701,9 @@ function updateSequence(
     }
 
 
+    /* ---------------- CONFIRMING ---------------- */
+
+
     el.stepSmokeStatus.textContent =
       `Confirming ${confirmationCount}/${requiredCount}`;
 
@@ -499,9 +715,10 @@ function updateSequence(
   }
 
 
-  // ===================================================
-  // HEAT WITHOUT SMOKE
-  // ===================================================
+  /* =====================================================
+     HEAT WITHOUT SMOKE
+     ===================================================== */
+
 
   el.stepSmokeStatus.textContent =
     "No smoke detected";
@@ -512,39 +729,59 @@ function updateSequence(
 }
 
 
-// =====================================================
-// UPDATE ALL DASHBOARD DATA
-// =====================================================
+
+/* =========================================================
+   UPDATE DASHBOARD
+   ========================================================= */
+
 
 function updateDashboard(data) {
 
-  latestData = data;
 
+  /* =====================================================
+     DEVICE INFORMATION
+     ===================================================== */
 
-  // ---------------------------------------------------
-  // DEVICE INFORMATION
-  // ---------------------------------------------------
 
   const deviceId =
-    textValue(data.deviceId, DEVICE_ID);
+    textValue(
+      data.deviceId,
+      DEVICE_ID
+    );
+
 
   const building =
-    textValue(data.building, "ABC Apartments");
+    textValue(
+      data.building,
+      "ABC Apartments"
+    );
+
 
   const floor =
-    textValue(data.floor, "3");
+    textValue(
+      data.floor,
+      "3"
+    );
+
 
   const zone =
-    textValue(data.zone, "Room 302");
+    textValue(
+      data.zone,
+      "Room 302"
+    );
 
 
-  el.deviceId.textContent = deviceId;
+  el.deviceId.textContent =
+    deviceId;
 
-  el.building.textContent = building;
+  el.building.textContent =
+    building;
 
-  el.floorInfo.textContent = floor;
+  el.floorInfo.textContent =
+    floor;
 
-  el.zoneInfo.textContent = zone;
+  el.zoneInfo.textContent =
+    zone;
 
 
   el.location.textContent =
@@ -557,15 +794,21 @@ function updateDashboard(data) {
     zone;
 
 
-  // ---------------------------------------------------
-  // GAS
-  // ---------------------------------------------------
+
+  /* =====================================================
+     GAS
+     ===================================================== */
+
 
   const gasData =
     data.sensors?.gas || {};
 
+
   const gasRaw =
-    numberValue(gasData.raw);
+    numberValue(
+      gasData.raw
+    );
+
 
   const gasThreshold =
     numberValue(
@@ -574,17 +817,21 @@ function updateDashboard(data) {
     );
 
 
-  // ---------------------------------------------------
-  // HEAT
-  // ---------------------------------------------------
+
+  /* =====================================================
+     HEAT
+     ===================================================== */
+
 
   const heatData =
     data.sensors?.heat || {};
+
 
   const heatResistance =
     numberValue(
       heatData.resistance
     );
+
 
   const heatThreshold =
     numberValue(
@@ -593,17 +840,21 @@ function updateDashboard(data) {
     );
 
 
-  // ---------------------------------------------------
-  // FIRE CONFIRMATION
-  // ---------------------------------------------------
+
+  /* =====================================================
+     FIRE CONFIRMATION
+     ===================================================== */
+
 
   const confirmation =
     data.fireConfirmation || {};
+
 
   const confirmationCount =
     numberValue(
       confirmation.count
     );
+
 
   const requiredCount =
     numberValue(
@@ -612,71 +863,61 @@ function updateDashboard(data) {
     );
 
 
-  // ---------------------------------------------------
-  // FIRE ALERT
-  // ---------------------------------------------------
+
+  /* =====================================================
+     FIRE ALERT
+     ===================================================== */
+
 
   const fireAlert =
-    data.fireAlert === true ||
-    data.fireAlert === "true" ||
-    data.fireAlert === 1;
+    isTrue(
+      data.fireAlert
+    );
 
 
-  // ---------------------------------------------------
-  // DETECTION
-  // ---------------------------------------------------
+
+  /* =====================================================
+     DETECTION
+     ===================================================== */
+
 
   const heatDetected =
-    heatData.alert === true ||
-    heatData.alert === "true" ||
-    heatResistance <= heatThreshold;
+    isTrue(
+      heatData.alert
+    ) ||
+    (
+      heatResistance > 0 &&
+      heatResistance <= heatThreshold
+    );
 
 
   const smokeDetected =
-    gasData.alert === true ||
-    gasData.alert === "true" ||
+    isTrue(
+      gasData.alert
+    ) ||
     gasRaw >= gasThreshold;
 
 
   /*
    * IMPORTANT:
    *
-   * Smoke is ignored unless heat is present.
+   * Smoke is ignored unless
+   * heat is already detected.
    */
 
+
   const validSmoke =
-    heatDetected && smokeDetected;
+    heatDetected &&
+    smokeDetected;
 
 
-  // ---------------------------------------------------
-  // STATUS
-  // ---------------------------------------------------
 
-  let status =
-    textValue(data.status, "SAFE");
+  /* =====================================================
+     UPDATE UI
+     ===================================================== */
 
-
-  if (fireAlert) {
-
-    status = "FIRE";
-
-  } else if (heatDetected) {
-
-    status = "HEAT DETECTED";
-
-  } else {
-
-    status = "SAFE";
-
-  }
-
-
-  // ---------------------------------------------------
-  // UPDATE UI
-  // ---------------------------------------------------
 
   updateMainStatus(
-    status,
     heatDetected,
     fireAlert
   );
@@ -684,7 +925,6 @@ function updateDashboard(data) {
 
   updateHeatSensor(
     heatResistance,
-    heatThreshold,
     heatDetected
   );
 
@@ -705,22 +945,74 @@ function updateDashboard(data) {
   );
 
 
-  // ---------------------------------------------------
-  // LAST UPDATE
-  // ---------------------------------------------------
+
+  /* =====================================================
+     LAST UPDATE
+     ===================================================== */
+
 
   el.lastUpdate.textContent =
-    formatTime(new Date());
+    formatTime(
+      new Date()
+    );
+
+
+
+  /* =====================================================
+     FIRE POPUP
+     ===================================================== */
+
+
+  if (fireAlert) {
+
+
+    /*
+     * Only show popup when entering
+     * a new FIRE state.
+     */
+
+
+    if (!currentFireState) {
+
+      popupAcknowledged = false;
+
+    }
+
+
+    currentFireState = true;
+
+
+    if (!popupAcknowledged) {
+
+      showFirePopup(data);
+
+    }
+
+  } else {
+
+
+    currentFireState = false;
+
+    popupAcknowledged = false;
+
+    hideFirePopup();
+
+  }
 
 }
 
 
-// =====================================================
-// FIREBASE DEVICE LISTENER
-// =====================================================
+
+/* =========================================================
+   FIREBASE DEVICE LISTENER
+   ========================================================= */
+
 
 const deviceRef =
-  ref(db, DATA_PATH);
+  ref(
+    db,
+    DATA_PATH
+  );
 
 
 onValue(
@@ -729,6 +1021,7 @@ onValue(
 
   (snapshot) => {
 
+
     const data =
       snapshot.val();
 
@@ -736,7 +1029,7 @@ onValue(
     if (!data) {
 
       console.warn(
-        "No device data found."
+        "No SmartFire Guardian data found."
       );
 
       return;
@@ -744,60 +1037,34 @@ onValue(
     }
 
 
+    /* Record browser receipt time */
+
     lastFirebaseUpdateTime =
       Date.now();
 
 
-    updateDashboard(data);
+    /* Update dashboard */
 
+    updateDashboard(
+      data
+    );
 
-    // -------------------------------------------------
-    // FIRE POPUP
-    // -------------------------------------------------
-
-    const fireAlert =
-      data.fireAlert === true ||
-      data.fireAlert === "true" ||
-      data.fireAlert === 1;
-
-
-    if (fireAlert) {
-
-      /*
-       * Show the popup every time a FIRE state
-       * is received, unless user has acknowledged it.
-       */
-
-      if (!popupAcknowledged) {
-
-        showFirePopup(data);
-
-      }
-
-    } else {
-
-      /*
-       * Once FIRE is cleared, reset acknowledgement
-       * so the next fire can produce a new popup.
-       */
-
-      popupAcknowledged = false;
-
-      hideFirePopup();
-
-    }
 
   },
 
+
   (error) => {
+
 
     console.error(
       "Firebase error:",
       error
     );
 
+
     el.fbDot.className =
       "status-dot offline";
+
 
     el.fbStatus.textContent =
       "Firebase Error";
@@ -807,12 +1074,17 @@ onValue(
 );
 
 
-// =====================================================
-// FIREBASE CONNECTION STATUS
-// =====================================================
+
+/* =========================================================
+   FIREBASE CONNECTION LISTENER
+   ========================================================= */
+
 
 const connectionRef =
-  ref(db, ".info/connected");
+  ref(
+    db,
+    ".info/connected"
+  );
 
 
 onValue(
@@ -821,22 +1093,28 @@ onValue(
 
   (snapshot) => {
 
+
     const connected =
       snapshot.val() === true;
 
 
     if (connected) {
 
+
       el.fbDot.className =
         "status-dot online";
+
 
       el.fbStatus.textContent =
         "Firebase Connected";
 
+
     } else {
+
 
       el.fbDot.className =
         "status-dot offline";
+
 
       el.fbStatus.textContent =
         "Firebase Disconnected";
@@ -848,9 +1126,11 @@ onValue(
 );
 
 
-// =====================================================
-// CHECK DEVICE ONLINE STATUS
-// =====================================================
+
+/* =========================================================
+   ONLINE CHECK
+   ========================================================= */
+
 
 setInterval(
 
@@ -861,20 +1141,45 @@ setInterval(
 );
 
 
-// Initial status
-
 updateOnlineStatus();
 
 
-// =====================================================
-// CONSOLE
-// =====================================================
+
+/* =========================================================
+   STARTUP MESSAGE
+   ========================================================= */
+
 
 console.log(
-  "SmartFire Guardian started."
+  "===================================="
 );
 
 console.log(
-  "Monitoring:",
+  "SmartFire Guardian started"
+);
+
+console.log(
+  "Device:",
+  DEVICE_ID
+);
+
+console.log(
+  "Firebase path:",
   DATA_PATH
+);
+
+console.log(
+  "Heat threshold:",
+  HEAT_THRESHOLD,
+  "ohms"
+);
+
+console.log(
+  "Gas threshold:",
+  GAS_THRESHOLD,
+  "ADC"
+);
+
+console.log(
+  "===================================="
 );
