@@ -1,249 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0f172a">
-  <meta name="description" content="Smart Fire Guardian - Real-time fire monitoring system">
-  <title>Smart Fire Guardian</title>
+const CACHE_NAME = "smartfire-guardian-v1";
+const SHELL_FILES = [
+  "/",
+  "/index.html",
+  "/style.css",
+  "/app.js",
+  "/manifest.json"
+];
 
-  <!-- Leaflet CSS -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
-  >
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_FILES))
+  );
+  self.skipWaiting();
+});
 
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
-</head>
-<body>
-  <!-- Top Bar -->
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-icon">🔥</div>
-      <div>
-        <div class="brand-title">Smart Fire Guardian</div>
-        <div class="brand-subtitle">Fire Monitoring System</div>
-      </div>
-    </div>
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))
+      )
+    )
+  );
+});
 
-    <div class="device-status">
-      <span id="deviceTopDot" class="status-indicator"></span>
-      <span id="deviceTopStatus">Connecting...</span>
-    </div>
-
-    <div class="last-update">
-      Last update: <span id="lastUpdate">—</span>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="container">
-    <!-- Location -->
-    <section class="location-section">
-      <div class="location-icon">📍</div>
-      <div>
-        <div class="section-label">MONITORING LOCATION</div>
-        <div id="location" class="location-value">—</div>
-      </div>
-    </section>
-
-    <!-- Main Status -->
-    <section id="mainStatus" class="main-status safe">
-      <div id="statusDot" class="status-dot safe"></div>
-      <div class="main-status-content">
-        <div id="statusValue" class="status-value">—</div>
-        <div id="statusText" class="status-text">Connecting to system...</div>
-        <div id="statusDescription" class="status-description">Waiting for sensor data.</div>
-      </div>
-    </section>
-
-    <!-- Map Section -->
-    <section class="section">
-      <div class="section-heading">
-        <div>
-          <div class="section-title">Location Map</div>
-          <div class="section-subtitle">Live position of the monitored device</div>
-        </div>
-      </div>
-
-      <div class="map-card">
-        <div id="map" class="map-container"></div>
-        <div class="map-legend">
-          <span class="map-legend-item">
-            <span class="map-marker-dot safe"></span> Safe / Monitoring
-          </span>
-          <span class="map-legend-item">
-            <span class="map-marker-dot fire"></span> Fire Alert
-          </span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sensor Monitoring -->
-    <section class="section">
-      <div class="section-heading">
-        <div>
-          <div class="section-title">Sensor Monitoring</div>
-          <div class="section-subtitle">Live readings from the fire detection system</div>
-        </div>
-      </div>
-
-      <div class="sensor-grid">
-        <!-- Heat Sensor -->
-        <div id="heatCard" class="sensor-card safe">
-          <div class="sensor-card-header">
-            <div class="sensor-icon">🌡️</div>
-            <div>
-              <div class="sensor-title">Heat Sensor</div>
-              <div class="sensor-subtitle">Thermistor</div>
-            </div>
-          </div>
-          <div class="sensor-reading">
-            <span id="flame" class="reading-value">—</span>
-          </div>
-          <div id="heatState" class="sensor-state">SAFE</div>
-        </div>
-
-        <!-- Gas / Smoke Sensor -->
-        <div id="gasCard" class="sensor-card safe">
-          <div class="sensor-card-header">
-            <div class="sensor-icon">💨</div>
-            <div>
-              <div class="sensor-title">Smoke / Gas</div>
-              <div class="sensor-subtitle">MQ-2 Sensor</div>
-            </div>
-          </div>
-          <div class="sensor-reading">
-            <span id="gas" class="reading-value">—</span>
-            <span class="reading-unit">ADC</span>
-          </div>
-          <div id="gasState" class="sensor-state">SAFE</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Fire Detection Sequence -->
-    <section class="section">
-      <div class="section-heading">
-        <div>
-          <div class="section-title">Fire Detection Sequence</div>
-          <div class="section-subtitle">Heat is checked first, followed by smoke confirmation</div>
-        </div>
-      </div>
-
-      <div class="sequence">
-        <div id="stepHeat" class="sequence-step">
-          <div class="step-number">1</div>
-          <div class="step-content">
-            <div class="step-title">Heat Detection</div>
-            <div id="stepHeatStatus" class="step-status">Waiting</div>
-          </div>
-        </div>
-        <div class="sequence-line"></div>
-
-        <div id="stepSmoke" class="sequence-step">
-          <div class="step-number">2</div>
-          <div class="step-content">
-            <div class="step-title">Smoke / Gas Check</div>
-            <div id="stepSmokeStatus" class="step-status">Waiting for heat</div>
-          </div>
-        </div>
-        <div class="sequence-line"></div>
-
-        <div id="stepFire" class="sequence-step">
-          <div class="step-number">3</div>
-          <div class="step-content">
-            <div class="step-title">Fire Confirmation</div>
-            <div id="stepFireStatus" class="step-status">Not confirmed</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Alarm Status -->
-    <section class="section">
-      <div id="alarm" class="alarm">No alarm</div>
-    </section>
-
-    <!-- Device Information -->
-    <section class="section">
-      <div class="section-heading">
-        <div>
-          <div class="section-title">Device Information</div>
-          <div class="section-subtitle">Connected fire monitoring device</div>
-        </div>
-      </div>
-
-      <div class="info-grid">
-        <div class="info-card">
-          <div class="info-label">Device ID</div>
-          <div id="deviceId" class="info-value">—</div>
-        </div>
-        <div class="info-card">
-          <div class="info-label">Building</div>
-          <div id="building" class="info-value">—</div>
-        </div>
-        <div class="info-card">
-          <div class="info-label">Floor</div>
-          <div id="floor" class="info-value">—</div>
-        </div>
-        <div class="info-card">
-          <div class="info-label">Zone</div>
-          <div id="zone" class="info-value">—</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- System Connection -->
-    <section class="section">
-      <div class="section-heading">
-        <div>
-          <div class="section-title">System Connection</div>
-          <div class="section-subtitle">Firebase and device communication</div>
-        </div>
-      </div>
-
-      <div class="connection-card">
-        <div class="connection-row">
-          <div class="connection-name">
-            <span id="fbDot" class="status-indicator"></span>
-            Firebase
-          </div>
-          <div id="fbStatus" class="connection-value">Connecting...</div>
-        </div>
-
-        <div class="connection-row">
-          <div class="connection-name">
-            <span class="status-indicator"></span>
-            ESP32 Device
-          </div>
-          <div id="deviceConn" class="connection-value">Connecting...</div>
-        </div>
-
-        <div class="connection-row">
-          <div class="connection-name">Database Path</div>
-          <div class="connection-value">/devices/SF-003</div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div>Smart Fire Guardian</div>
-    <div>ESP32 • MQ-2 • Thermistor • Firebase</div>
-  </footer>
-
-  <!-- Leaflet JS -->
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-  ></script>
-
-  <script type="module" src="app.js"></script>
-</body>
-</html>
+// Network-first: live sensor data should never be served stale from cache
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match(event.request))
+  );
+});
