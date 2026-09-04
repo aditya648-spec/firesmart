@@ -1,67 +1,66 @@
-/* =========================================================
+/* ==========================================================
    SMARTFIRE GUARDIAN
-   MAIN STYLESHEET
-   ========================================================= */
+   Modern Monitoring Dashboard
+   ========================================================== */
 
+
+/* ==========================================================
+   GLOBAL
+   ========================================================== */
 
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-
-html {
-  scroll-behavior: smooth;
 }
 
 
 body {
+  margin: 0;
 
   font-family:
     Inter,
-    Arial,
-    Helvetica,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
     sans-serif;
 
-  background: #f4f7fb;
+  background:
+    #f4f7fb;
 
-  color: #172033;
-
-  min-height: 100vh;
-
-  line-height: 1.5;
-
+  color:
+    #172033;
 }
 
 
-/* =========================================================
-   HEADER
-   ========================================================= */
+/* ==========================================================
+   DASHBOARD
+   ========================================================== */
 
+.dashboard {
 
-.top-header {
+  width: min(1180px, 94%);
 
-  background: #ffffff;
-
-  border-bottom:
-    1px solid #e5e9f0;
+  margin: 0 auto;
 
   padding:
-    18px 5%;
+    28px 0 40px;
+}
+
+
+/* ==========================================================
+   HEADER
+   ========================================================== */
+
+.topbar {
 
   display: flex;
 
-  justify-content: space-between;
-
   align-items: center;
 
-  position: sticky;
+  justify-content: space-between;
 
-  top: 0;
+  gap: 20px;
 
-  z-index: 1000;
-
+  margin-bottom: 22px;
 }
 
 
@@ -71,20 +70,15 @@ body {
 
   align-items: center;
 
-  gap: 13px;
-
+  gap: 14px;
 }
 
 
 .brand-icon {
 
-  width: 48px;
+  width: 52px;
 
-  height: 48px;
-
-  border-radius: 13px;
-
-  background: #fff1f1;
+  height: 52px;
 
   display: flex;
 
@@ -92,214 +86,127 @@ body {
 
   justify-content: center;
 
-  font-size: 25px;
+  border-radius: 15px;
 
+  background: #172033;
+
+  font-size: 25px;
 }
 
 
 .brand h1 {
 
-  font-size: 21px;
+  margin: 0;
 
-  font-weight: 750;
+  font-size: 25px;
 
-  color: #172033;
-
+  letter-spacing: -0.5px;
 }
 
 
 .brand p {
 
-  color: #7b8494;
+  margin: 4px 0 0;
+
+  color: #7b8497;
 
   font-size: 13px;
-
-  margin-top: 2px;
-
 }
 
 
-.top-status {
+.connection-area {
+
+  text-align: right;
+}
+
+
+.device-status {
 
   display: flex;
 
   align-items: center;
 
-  gap: 8px;
+  justify-content: flex-end;
+
+  gap: 7px;
 
   font-size: 13px;
 
   font-weight: 700;
-
-  color: #4b5563;
-
 }
 
 
-/* =========================================================
-   STATUS DOTS
-   ========================================================= */
-
-
-.status-dot {
-
-  width: 10px;
-
-  height: 10px;
-
-  border-radius: 50%;
-
-  background: #9ca3af;
-
-  display: inline-block;
-
-}
-
-
-.status-dot.online {
-
-  background: #16a34a;
-
-  box-shadow:
-    0 0 0 4px #dcfce7;
-
-}
-
-
-.status-dot.offline {
-
-  background: #dc2626;
-
-  box-shadow:
-    0 0 0 4px #fee2e2;
-
-}
-
-
-.large-status-dot {
-
-  width: 22px;
-
-  height: 22px;
-
-  border-radius: 50%;
-
-  background: #16a34a;
-
-  display: block;
-
-  box-shadow:
-    0 0 0 7px #dcfce7;
-
-}
-
-
-/* =========================================================
-   MAIN CONTAINER
-   ========================================================= */
-
-
-.container {
-
-  width: 92%;
-
-  max-width: 1150px;
-
-  margin:
-    30px auto 50px;
-
-}
-
-
-/* =========================================================
-   LABELS
-   ========================================================= */
-
-
-.section-label {
-
-  display: block;
-
-  color: #7b8494;
-
-  font-size: 11px;
-
-  font-weight: 800;
-
-  letter-spacing: 1.2px;
-
-}
-
-
-/* =========================================================
-   LOCATION
-   ========================================================= */
-
-
-.location-card {
-
-  background: #ffffff;
-
-  border:
-    1px solid #e5e9f0;
-
-  border-radius: 18px;
-
-  padding: 24px 27px;
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  box-shadow:
-    0 5px 20px rgba(20, 30, 50, 0.04);
-
-}
-
-
-.location-card h2 {
-
-  margin-top: 7px;
-
-  font-size: 25px;
-
-  color: #172033;
-
-}
-
-
-.location-card p {
-
-  color: #697386;
+.last-update {
 
   margin-top: 5px;
 
-  font-size: 14px;
+  color: #8a93a5;
 
+  font-size: 12px;
 }
 
 
-.separator {
+/* ==========================================================
+   DOTS
+   ========================================================== */
 
-  margin:
-    0 7px;
+.dot {
 
-  color: #b0b7c3;
+  display: inline-block;
 
+  width: 9px;
+
+  height: 9px;
+
+  border-radius: 50%;
+}
+
+
+.dot.online,
+.dot.on {
+
+  background: #20a36a;
+
+  box-shadow:
+    0 0 0 4px rgba(32, 163, 106, 0.12);
+}
+
+
+.dot.off {
+
+  background: #aab1bd;
+}
+
+
+/* ==========================================================
+   LOCATION
+   ========================================================== */
+
+.location-card {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 17px 20px;
+
+  margin-bottom: 18px;
+
+  background: white;
+
+  border: 1px solid #e5eaf1;
+
+  border-radius: 14px;
 }
 
 
 .location-icon {
 
-  width: 55px;
+  width: 42px;
 
-  height: 55px;
-
-  border-radius: 15px;
-
-  background: #f3f7ff;
+  height: 42px;
 
   display: flex;
 
@@ -307,171 +214,223 @@ body {
 
   justify-content: center;
 
-  font-size: 27px;
+  background: #f1f4f8;
 
+  border-radius: 11px;
+
+  font-size: 20px;
 }
 
 
-/* =========================================================
+.location-title {
+
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.8px;
+
+  color: #8a93a5;
+
+  font-weight: 700;
+}
+
+
+.location-value {
+
+  margin-top: 3px;
+
+  font-size: 15px;
+
+  font-weight: 650;
+}
+
+
+/* ==========================================================
    MAIN STATUS
-   ========================================================= */
+   ========================================================== */
 
-
-.main-status-card {
-
-  margin-top: 18px;
-
-  padding: 30px;
-
-  border-radius: 20px;
+.main-status {
 
   display: flex;
 
-  justify-content: space-between;
-
   align-items: center;
 
-  border: 1px solid;
+  gap: 22px;
 
-  transition:
-    0.25s ease;
+  padding: 27px;
 
+  margin-bottom: 28px;
+
+  background: white;
+
+  border: 1px solid #e5eaf1;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 25px rgba(30, 42, 65, 0.05);
 }
 
 
-.main-status-card.safe {
+.status-indicator-large {
 
-  background: #f0fdf4;
+  width: 76px;
 
-  border-color: #bbf7d0;
+  height: 76px;
 
+  flex: 0 0 76px;
+
+  border-radius: 50%;
+
+  position: relative;
 }
 
 
-.main-status-card.heat {
+.status-indicator-large.safe {
 
-  background: #fffbeb;
+  background: #e6f7ef;
 
-  border-color: #fde68a;
-
+  border: 10px solid #c8eedc;
 }
 
 
-.main-status-card.alert {
+.status-indicator-large.alert {
 
-  background: #fff1f2;
+  background: #fde9e9;
 
-  border-color: #fecdd3;
+  border: 10px solid #f7caca;
 
+  animation:
+    alertPulse 1.2s infinite;
 }
 
 
-.main-status-card h2 {
+@keyframes alertPulse {
 
-  font-size: 37px;
+  0% {
+    transform: scale(1);
+  }
 
-  margin-top: 5px;
+  50% {
+    transform: scale(1.06);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+.status-label {
+
+  font-size: 11px;
 
   font-weight: 800;
 
+  letter-spacing: 1px;
+
+  color: #8b94a5;
 }
 
 
-.main-status-card p {
+.status-value {
+
+  margin-top: 3px;
+
+  font-size: 30px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.8px;
+}
+
+
+.status-value.safe {
+
+  color: #198754;
+}
+
+
+.status-value.alert {
+
+  color: #d63c3c;
+}
+
+
+.status-value.unknown {
+
+  color: #7c8595;
+}
+
+
+.status-description {
 
   margin-top: 4px;
 
-  color: #687386;
+  color: #737d90;
 
+  font-size: 13px;
 }
 
 
-.main-status-card.safe h2 {
+/* ==========================================================
+   SECTION TITLE
+   ========================================================== */
 
-  color: #15803d;
+.section-title {
 
+  margin: 25px 0 11px;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  color: #7e8798;
 }
 
 
-.main-status-card.heat h2 {
-
-  color: #d97706;
-
-}
-
-
-.main-status-card.alert h2 {
-
-  color: #dc2626;
-
-}
-
-
-.main-status-card.alert
-.large-status-dot {
-
-  background: #dc2626;
-
-  box-shadow:
-    0 0 0 7px #fee2e2;
-
-}
-
-
-/* =========================================================
+/* ==========================================================
    SENSOR GRID
-   ========================================================= */
-
+   ========================================================== */
 
 .sensor-grid {
 
   display: grid;
 
   grid-template-columns:
-    1fr 1fr;
+    repeat(2, minmax(0, 1fr));
 
-  gap: 18px;
-
-  margin-top: 18px;
-
+  gap: 16px;
 }
 
 
 .sensor-card {
 
-  background: #ffffff;
+  background: white;
 
-  border:
-    1px solid #e5e9f0;
+  border: 1px solid #e5eaf1;
 
-  border-radius: 18px;
+  border-radius: 16px;
 
-  padding: 25px;
-
-  box-shadow:
-    0 5px 20px rgba(20, 30, 50, 0.04);
+  padding: 22px;
 
   transition:
-    0.2s ease;
-
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 
-.sensor-card.warn {
+.sensor-card:hover {
 
-  border-color: #fbbf24;
+  transform:
+    translateY(-2px);
 
-  background: #fffbeb;
-
-}
-
-
-.sensor-card.alert {
-
-  border-color: #f87171;
-
-  background: #fff1f2;
-
+  box-shadow:
+    0 8px 24px
+    rgba(30, 42, 65, 0.07);
 }
 
 
@@ -479,44 +438,17 @@ body {
 
   display: flex;
 
-  justify-content: space-between;
-
   align-items: center;
 
-}
-
-
-.sensor-label {
-
-  font-size: 11px;
-
-  color: #7b8494;
-
-  font-weight: 800;
-
-  letter-spacing: 1px;
-
-}
-
-
-.sensor-header h3 {
-
-  margin-top: 5px;
-
-  font-size: 18px;
-
+  gap: 13px;
 }
 
 
 .sensor-icon {
 
-  width: 45px;
+  width: 44px;
 
-  height: 45px;
-
-  border-radius: 12px;
-
-  background: #f5f7fb;
+  height: 44px;
 
   display: flex;
 
@@ -524,134 +456,123 @@ body {
 
   justify-content: center;
 
-  font-size: 23px;
+  border-radius: 12px;
 
+  font-size: 21px;
+}
+
+
+.heat-icon {
+
+  background: #fff2e5;
+}
+
+
+.gas-icon {
+
+  background: #e9f2ff;
+}
+
+
+.sensor-header h2 {
+
+  margin: 0;
+
+  font-size: 16px;
+}
+
+
+.sensor-header p {
+
+  margin: 3px 0 0;
+
+  color: #8a93a5;
+
+  font-size: 12px;
 }
 
 
 .sensor-value {
 
-  margin-top: 25px;
+  margin-top: 23px;
 
-}
-
-
-.sensor-value span {
-
-  font-size: 42px;
+  font-size: 32px;
 
   font-weight: 800;
 
-  letter-spacing: -1px;
-
+  letter-spacing: -0.8px;
 }
 
 
-.sensor-value small {
+.threshold {
 
-  color: #7b8494;
+  margin-top: 7px;
 
-  font-size: 14px;
+  color: #8a93a5;
 
-  font-weight: 600;
+  font-size: 12px;
+}
 
+
+.threshold strong {
+
+  color: #5c6678;
 }
 
 
 .sensor-state {
 
+  margin-top: 17px;
+
   display: inline-block;
 
-  margin-top: 13px;
+  padding: 6px 9px;
 
-  padding:
-    6px 12px;
-
-  border-radius: 30px;
-
-  background: #f1f3f6;
-
-  color: #4b5563;
+  border-radius: 7px;
 
   font-size: 11px;
 
   font-weight: 800;
 
+  letter-spacing: 0.4px;
 }
 
 
-.sensor-card.warn .sensor-state {
+.sensor-state.normal {
 
-  background: #fef3c7;
+  background: #eaf8f1;
 
-  color: #92400e;
-
+  color: #168354;
 }
 
 
-.sensor-card.alert .sensor-state {
+.sensor-state.warn {
 
-  background: #fee2e2;
+  background: #fff0f0;
 
-  color: #991b1b;
-
+  color: #cf3d3d;
 }
 
 
-.sensor-threshold {
-
-  margin-top: 15px;
-
-  color: #7b8494;
-
-  font-size: 13px;
-
-}
-
-
-/* =========================================================
-   SEQUENCE
-   ========================================================= */
-
+/* ==========================================================
+   DETECTION SEQUENCE
+   ========================================================== */
 
 .sequence-card {
 
-  margin-top: 18px;
-
-  background: #ffffff;
-
-  border:
-    1px solid #e5e9f0;
-
-  border-radius: 18px;
-
-  padding: 25px;
-
-  box-shadow:
-    0 5px 20px rgba(20, 30, 50, 0.04);
-
-}
-
-
-.section-heading h2 {
-
-  margin-top: 5px;
-
-  font-size: 22px;
-
-}
-
-
-.sequence {
-
-  margin-top: 25px;
-
   display: flex;
 
-  align-items: center;
+  align-items: stretch;
 
-  gap: 12px;
+  gap: 8px;
 
+  padding: 14px;
+
+  background: white;
+
+  border: 1px solid #e5eaf1;
+
+  border-radius: 16px;
 }
 
 
@@ -659,67 +580,25 @@ body {
 
   flex: 1;
 
-  min-height: 92px;
-
-  border:
-    1px solid #e5e9f0;
-
-  border-radius: 15px;
-
-  padding: 15px;
-
   display: flex;
 
   align-items: center;
 
-  gap: 13px;
+  gap: 10px;
 
-  background: #fafbfc;
+  padding: 13px;
 
-  transition:
-    0.2s ease;
+  background: #f7f9fc;
 
-}
-
-
-.sequence-step.active {
-
-  border-color: #fbbf24;
-
-  background: #fffbeb;
-
-}
-
-
-.sequence-step.confirmed {
-
-  border-color: #86efac;
-
-  background: #f0fdf4;
-
-}
-
-
-.sequence-step.fire {
-
-  border-color: #f87171;
-
-  background: #fff1f2;
-
+  border-radius: 11px;
 }
 
 
 .step-number {
 
-  width: 38px;
+  width: 29px;
 
-  height: 38px;
-
-  min-width: 38px;
-
-  border-radius: 50%;
-
-  background: #e9edf2;
+  height: 29px;
 
   display: flex;
 
@@ -727,40 +606,17 @@ body {
 
   justify-content: center;
 
+  flex: 0 0 29px;
+
+  border-radius: 50%;
+
+  background: #e5eaf1;
+
+  color: #657084;
+
+  font-size: 12px;
+
   font-weight: 800;
-
-  color: #4b5563;
-
-}
-
-
-.sequence-step.active
-.step-number {
-
-  background: #fbbf24;
-
-  color: #78350f;
-
-}
-
-
-.sequence-step.confirmed
-.step-number {
-
-  background: #22c55e;
-
-  color: white;
-
-}
-
-
-.sequence-step.fire
-.step-number {
-
-  background: #dc2626;
-
-  color: white;
-
 }
 
 
@@ -770,253 +626,41 @@ body {
 
   flex-direction: column;
 
-  gap: 4px;
-
+  min-width: 0;
 }
 
 
 .step-content strong {
 
-  font-size: 14px;
-
+  font-size: 12px;
 }
 
 
 .step-content span {
 
-  color: #727c8c;
+  margin-top: 2px;
 
-  font-size: 12px;
+  color: #8b94a5;
 
+  font-size: 10px;
+}
+
+
+.step-status {
+
+  margin-left: auto;
+
+  color: #98a0af;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  white-space: nowrap;
 }
 
 
 .sequence-arrow {
-
-  color: #a1a9b5;
-
-  font-size: 24px;
-
-  font-weight: 700;
-
-}
-
-
-/* =========================================================
-   ALARM
-   ========================================================= */
-
-
-.alarm-card {
-
-  margin-top: 18px;
-
-  background: #ffffff;
-
-  border:
-    1px solid #e5e9f0;
-
-  border-radius: 18px;
-
-  padding: 24px 27px;
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  box-shadow:
-    0 5px 20px rgba(20, 30, 50, 0.04);
-
-}
-
-
-.alarm-card h2 {
-
-  margin-top: 5px;
-
-  font-size: 25px;
-
-}
-
-
-.alarm-icon {
-
-  font-size: 28px;
-
-}
-
-
-/* =========================================================
-   DEVICE INFORMATION
-   ========================================================= */
-
-
-.info-card {
-
-  margin-top: 18px;
-
-  background: #ffffff;
-
-  border:
-    1px solid #e5e9f0;
-
-  border-radius: 18px;
-
-  padding: 25px;
-
-  box-shadow:
-    0 5px 20px rgba(20, 30, 50, 0.04);
-
-}
-
-
-.info-grid {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, 1fr);
-
-  gap: 20px;
-
-  margin-top: 20px;
-
-}
-
-
-.info-grid div {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 5px;
-
-}
-
-
-.info-grid span {
-
-  color: #7b8494;
-
-  font-size: 12px;
-
-}
-
-
-.info-grid strong {
-
-  font-size: 15px;
-
-}
-
-
-/* =========================================================
-   FIREBASE CONNECTION
-   ========================================================= */
-
-
-.connection-card {
-
-  margin-top: 18px;
-
-  background: #ffffff;
-
-  border:
-    1px solid #e5e9f0;
-
-  border-radius: 18px;
-
-  padding: 22px 25px;
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  box-shadow:
-    0 5px 20px rgba(20, 30, 50, 0.04);
-
-}
-
-
-.connection-card h3 {
-
-  margin-top: 4px;
-
-  font-size: 16px;
-
-}
-
-
-.connection-status {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 9px;
-
-  font-size: 13px;
-
-  font-weight: 700;
-
-}
-
-
-/* =========================================================
-   LAST UPDATE
-   ========================================================= */
-
-
-.last-update {
-
-  text-align: center;
-
-  margin:
-    20px 0;
-
-  color: #7b8494;
-
-  font-size: 12px;
-
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-
-footer {
-
-  text-align: center;
-
-  padding:
-    25px 15px;
-
-  color: #9aa3b1;
-
-  font-size: 12px;
-
-}
-
-
-/* =========================================================
-   FIRE ALERT POPUP
-   ========================================================= */
-
-
-.fire-popup {
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 99999;
 
   display: flex;
 
@@ -1024,289 +668,262 @@ footer {
 
   justify-content: center;
 
-  padding: 20px;
+  color: #b3bac5;
 
-  background:
-    rgba(80, 0, 0, 0.78);
-
-  backdrop-filter:
-    blur(5px);
-
+  font-size: 20px;
 }
 
 
-.fire-popup.hidden {
+/* ==========================================================
+   ALARM
+   ========================================================== */
 
-  display: none !important;
+.alarm-card {
 
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-top: 16px;
+
+  padding: 18px 20px;
+
+  background: white;
+
+  border: 1px solid #e5eaf1;
+
+  border-radius: 15px;
 }
 
 
-.fire-popup-box {
+.alarm-left {
 
-  width: 100%;
+  display: flex;
 
-  max-width: 500px;
+  align-items: center;
 
-  background: #ffffff;
-
-  border:
-    5px solid #dc2626;
-
-  border-radius: 24px;
-
-  padding:
-    32px;
-
-  text-align: center;
-
-  box-shadow:
-    0 25px 80px rgba(0, 0, 0, 0.45);
-
-  animation:
-    popupIn 0.3s ease;
-
+  gap: 13px;
 }
 
 
-.fire-icon {
+.alarm-icon {
 
-  font-size: 65px;
+  width: 43px;
 
-  line-height: 1;
+  height: 43px;
 
-  animation:
-    firePulse 0.7s infinite alternate;
+  display: flex;
 
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: #f1f4f8;
+
+  font-size: 19px;
 }
 
 
-.fire-popup-box h1 {
+.alarm-title {
 
-  margin-top: 12px;
+  color: #8992a3;
 
-  color: #dc2626;
+  font-size: 11px;
 
-  font-size: 36px;
+  text-transform: uppercase;
 
-  font-weight: 900;
+  letter-spacing: 0.7px;
 
-  letter-spacing: 1px;
-
+  font-weight: 800;
 }
 
 
-.fire-message {
+.alarm-status {
 
-  margin-top: 8px;
+  margin-top: 3px;
 
-  color: #374151;
+  font-size: 17px;
 
-  font-size: 18px;
-
-  font-weight: 600;
-
+  font-weight: 800;
 }
 
 
-.fire-details {
+.alarm-info {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  gap: 3px;
+
+  color: #8a93a5;
+
+  font-size: 11px;
+}
+
+
+/* ==========================================================
+   DEVICE INFORMATION
+   ========================================================== */
+
+.info-grid {
 
   display: grid;
 
   grid-template-columns:
-    repeat(3, 1fr);
+    repeat(4, minmax(0, 1fr));
 
-  gap: 10px;
-
-  margin-top: 25px;
-
+  gap: 12px;
 }
 
 
-.fire-detail {
+.info-card {
 
-  background: #fff1f2;
+  padding: 16px;
 
-  border-radius: 12px;
+  background: white;
 
-  padding: 14px 8px;
+  border: 1px solid #e5eaf1;
 
+  border-radius: 13px;
 }
 
 
-.fire-detail span {
+.info-card span {
 
   display: block;
 
-  color: #7b8494;
+  color: #8a93a5;
 
   font-size: 10px;
 
+  text-transform: uppercase;
+
+  letter-spacing: 0.6px;
+
   font-weight: 800;
-
-  letter-spacing: 0.5px;
-
-  margin-bottom: 4px;
-
 }
 
 
-.fire-detail strong {
+.info-card strong {
 
-  font-size: 13px;
+  display: block;
 
-  color: #172033;
-
-}
-
-
-.fire-confirmation {
-
-  margin-top: 20px;
-
-  color: #b91c1c;
-
-  font-weight: 800;
+  margin-top: 5px;
 
   font-size: 14px;
 
+  word-break: break-word;
 }
 
 
-.acknowledge-button {
+/* ==========================================================
+   CONNECTION PANEL
+   ========================================================== */
 
-  width: 100%;
+.connection-panel {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 20px;
+
+  padding: 13px 16px;
+
+  background: #edf1f6;
+
+  border-radius: 10px;
+
+  color: #697386;
+
+  font-size: 11px;
+}
+
+
+.connection-panel strong {
+
+  color: #4c5668;
+}
+
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+
+footer {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
 
   margin-top: 24px;
 
-  padding: 15px;
+  padding-top: 18px;
 
-  border: none;
+  border-top: 1px solid #e0e5ec;
 
-  border-radius: 12px;
+  color: #9098a7;
 
-  background: #dc2626;
+  font-size: 10px;
 
-  color: white;
-
-  font-size: 15px;
-
-  font-weight: 800;
-
-  cursor: pointer;
-
-  transition:
-    0.2s ease;
-
+  line-height: 1.5;
 }
 
 
-.acknowledge-button:hover {
+footer strong {
 
-  background: #b91c1c;
-
-  transform: translateY(-1px);
-
+  color: #667083;
 }
 
 
-.acknowledge-button:active {
-
-  transform: scale(0.98);
-
-}
-
-
-/* =========================================================
-   ANIMATIONS
-   ========================================================= */
-
-
-@keyframes popupIn {
-
-  from {
-
-    opacity: 0;
-
-    transform:
-      scale(0.85);
-
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform:
-      scale(1);
-
-  }
-
-}
-
-
-@keyframes firePulse {
-
-  from {
-
-    transform:
-      scale(1);
-
-  }
-
-  to {
-
-    transform:
-      scale(1.18);
-
-  }
-
-}
-
-
-/* =========================================================
+/* ==========================================================
    MOBILE
-   ========================================================= */
-
+   ========================================================== */
 
 @media (max-width: 750px) {
 
+  .dashboard {
 
-  .top-header {
+    width: 92%;
 
-    padding:
-      15px;
-
+    padding-top: 18px;
   }
 
 
-  .container {
+  .topbar {
 
-    width: 94%;
+    align-items: flex-start;
 
-    margin-top: 20px;
-
+    flex-direction: column;
   }
 
 
-  .brand h1 {
+  .connection-area {
 
-    font-size: 18px;
+    width: 100%;
 
+    text-align: left;
   }
 
 
-  .brand p {
+  .device-status {
 
-    font-size: 11px;
-
-  }
-
-
-  .top-status {
-
-    font-size: 11px;
-
+    justify-content: flex-start;
   }
 
 
@@ -1314,30 +931,21 @@ footer {
 
     grid-template-columns:
       1fr;
-
   }
 
 
   .info-grid {
 
     grid-template-columns:
-      1fr 1fr;
-
+      repeat(2, minmax(0, 1fr));
   }
 
 
-  .sequence {
+  .sequence-card {
 
-    flex-direction:
-      column;
+    flex-direction: column;
 
-  }
-
-
-  .sequence-step {
-
-    width: 100%;
-
+    gap: 6px;
   }
 
 
@@ -1346,79 +954,80 @@ footer {
     transform:
       rotate(90deg);
 
+    height: 15px;
   }
 
 
-  .fire-popup-box {
+  .alarm-card {
 
-    padding:
-      27px 20px;
+    align-items: flex-start;
 
+    flex-direction: column;
   }
 
 
-  .fire-icon {
+  .alarm-info {
 
-    font-size: 50px;
-
+    align-items: flex-start;
   }
 
 
-  .fire-popup-box h1 {
+  .connection-panel {
 
-    font-size: 30px;
+    align-items: flex-start;
 
+    flex-direction: column;
   }
-
-
-  .fire-details {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
 }
 
 
+/* ==========================================================
+   SMALL PHONES
+   ========================================================== */
+
 @media (max-width: 430px) {
+
+  .brand h1 {
+
+    font-size: 21px;
+  }
+
+
+  .main-status {
+
+    padding: 20px;
+
+    gap: 15px;
+  }
+
+
+  .status-indicator-large {
+
+    width: 60px;
+
+    height: 60px;
+
+    flex-basis: 60px;
+
+    border-width: 8px;
+  }
+
+
+  .status-value {
+
+    font-size: 24px;
+  }
+
+
+  .sensor-value {
+
+    font-size: 28px;
+  }
 
 
   .info-grid {
 
     grid-template-columns:
       1fr;
-
   }
-
-
-  .location-card {
-
-    padding:
-      20px;
-
-  }
-
-
-  .location-card h2 {
-
-    font-size: 21px;
-
-  }
-
-
-  .main-status-card {
-
-    padding:
-      23px;
-
-  }
-
-
-  .main-status-card h2 {
-
-    font-size: 30px;
-
-  }
-
 }
