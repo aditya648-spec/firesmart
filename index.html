@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -22,8 +23,14 @@
   <title>SmartFire Guardian — Monitoring Dashboard</title>
 
 
-  <!-- GOOGLE FONT -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- =====================================================
+       GOOGLE FONT
+  ====================================================== -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
 
   <link
     rel="preconnect"
@@ -37,28 +44,40 @@
   >
 
 
-  <!-- FONT AWESOME -->
+  <!-- =====================================================
+       FONT AWESOME
+  ====================================================== -->
+
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   >
 
 
-  <!-- LEAFLET -->
+  <!-- =====================================================
+       LEAFLET
+  ====================================================== -->
+
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   >
 
 
-  <!-- YOUR CSS -->
+  <!-- =====================================================
+       YOUR CSS
+  ====================================================== -->
+
   <link
     rel="stylesheet"
     href="style.css"
   >
 
 
-  <!-- PWA -->
+  <!-- =====================================================
+       PWA
+  ====================================================== -->
+
   <link
     rel="manifest"
     href="manifest.json"
@@ -133,6 +152,8 @@
     </div>
 
 
+    <!-- DEVICE CONNECTION -->
+
     <div class="connection-area">
 
       <div class="connection-badge">
@@ -169,7 +190,9 @@
   <section class="location-card">
 
     <div class="location-icon">
+
       <i class="fa-solid fa-location-dot"></i>
+
     </div>
 
 
@@ -190,8 +213,11 @@
 
 
     <div class="location-status">
+
       <i class="fa-solid fa-satellite-dish"></i>
+
       LIVE
+
     </div>
 
   </section>
@@ -211,7 +237,9 @@
       class="status-indicator-large safe"
       id="statusDot"
     >
+
       <i class="fa-solid fa-shield-check"></i>
+
     </div>
 
 
@@ -249,8 +277,11 @@
 
 
     <div class="status-live">
+
       <span class="live-dot"></span>
+
       LIVE MONITORING
+
     </div>
 
   </section>
@@ -278,10 +309,17 @@
   </section>
 
 
+
+  <!-- =====================================================
+       SENSOR GRID
+  ====================================================== -->
+
   <div class="sensor-grid">
 
 
-    <!-- HEAT -->
+    <!-- ===================================================
+         HEAT SENSOR
+    ==================================================== -->
 
     <div
       class="sensor-card"
@@ -293,8 +331,11 @@
         <div class="sensor-header">
 
           <div class="sensor-icon heat-icon">
+
             <i class="fa-solid fa-temperature-half"></i>
+
           </div>
+
 
           <div>
 
@@ -333,34 +374,48 @@
       <div class="sensor-details">
 
         <div class="detail-item">
-          <span>ADC</span>
+
+          <span>
+            ADC
+          </span>
 
           <strong id="heatAdc">
             —
           </strong>
+
         </div>
 
 
         <div class="detail-item">
-          <span>Voltage</span>
+
+          <span>
+            Voltage
+          </span>
 
           <strong id="heatVoltage">
             —
           </strong>
+
         </div>
 
 
         <div class="detail-item">
-          <span>Threshold</span>
+
+          <span>
+            Threshold
+          </span>
 
           <strong id="heatThreshold">
             5.00 kΩ
           </strong>
+
         </div>
 
 
         <div class="detail-icon heat-detail">
+
           <i class="fa-solid fa-fire"></i>
+
         </div>
 
       </div>
@@ -370,15 +425,20 @@
         class="sensor-state normal"
         id="heatState"
       >
+
         <i class="fa-solid fa-circle-check"></i>
+
         NORMAL
+
       </div>
 
     </div>
 
 
 
-    <!-- MQ-2 -->
+    <!-- ===================================================
+         MQ-2 SENSOR
+    ==================================================== -->
 
     <div
       class="sensor-card"
@@ -390,8 +450,11 @@
         <div class="sensor-header">
 
           <div class="sensor-icon gas-icon">
+
             <i class="fa-solid fa-wind"></i>
+
           </div>
+
 
           <div>
 
@@ -436,9 +499,11 @@
           </span>
 
           <strong>
+
             <span id="gasRaw">
               —
             </span>
+
           </strong>
 
         </div>
@@ -471,7 +536,9 @@
 
 
         <div class="detail-icon gas-detail">
+
           <i class="fa-solid fa-cloud"></i>
+
         </div>
 
       </div>
@@ -481,8 +548,11 @@
         class="sensor-state normal"
         id="gasState"
       >
+
         <i class="fa-solid fa-circle-check"></i>
+
         NORMAL
+
       </div>
 
     </div>
@@ -512,7 +582,11 @@
   </section>
 
 
+
   <div class="sequence-card">
+
+
+    <!-- STEP 01 -->
 
     <div
       class="sequence-step"
@@ -523,9 +597,13 @@
         01
       </div>
 
+
       <div class="step-icon">
+
         <i class="fa-solid fa-temperature-high"></i>
+
       </div>
+
 
       <div class="step-content">
 
@@ -539,6 +617,7 @@
 
       </div>
 
+
       <div
         class="step-status"
         id="stepHeatStatus"
@@ -550,9 +629,13 @@
 
 
     <div class="sequence-arrow">
+
       <i class="fa-solid fa-chevron-right"></i>
+
     </div>
 
+
+    <!-- STEP 02 -->
 
     <div
       class="sequence-step"
@@ -563,9 +646,13 @@
         02
       </div>
 
+
       <div class="step-icon">
+
         <i class="fa-solid fa-smog"></i>
+
       </div>
+
 
       <div class="step-content">
 
@@ -579,6 +666,7 @@
 
       </div>
 
+
       <div
         class="step-status"
         id="stepSmokeStatus"
@@ -590,9 +678,13 @@
 
 
     <div class="sequence-arrow">
+
       <i class="fa-solid fa-chevron-right"></i>
+
     </div>
 
+
+    <!-- STEP 03 -->
 
     <div
       class="sequence-step"
@@ -603,9 +695,13 @@
         03
       </div>
 
+
       <div class="step-icon">
+
         <i class="fa-solid fa-fire"></i>
+
       </div>
+
 
       <div class="step-content">
 
@@ -618,6 +714,7 @@
         </span>
 
       </div>
+
 
       <div
         class="step-status"
@@ -641,14 +738,18 @@
     <div class="alarm-left">
 
       <div class="alarm-icon">
+
         <i class="fa-solid fa-bell"></i>
+
       </div>
+
 
       <div>
 
         <div class="alarm-title">
           ALARM STATE
         </div>
+
 
         <div
           class="alarm-status"
@@ -665,13 +766,20 @@
     <div class="alarm-info">
 
       <span>
+
         <i class="fa-solid fa-check"></i>
+
         Heat + Smoke required
+
       </span>
 
+
       <span>
+
         <i class="fa-solid fa-layer-group"></i>
+
         3 consecutive readings
+
       </span>
 
     </div>
@@ -682,7 +790,6 @@
 
   <!-- =====================================================
        EMERGENCY RESPONSE MAP
-       IMPORTANT: REQUIRED BY app.js
   ====================================================== -->
 
   <section class="map-card">
@@ -725,21 +832,18 @@
        RECENT FIRE LOGS
   ====================================================== -->
 
-  <section
-    class="fire-log-section"
-    id="recentFireLogsSection"
-  >
+  <section class="recent-logs-card">
 
     <div class="section-heading">
 
       <div>
 
         <span class="section-eyebrow">
-          HISTORY
+          INCIDENT HISTORY
         </span>
 
         <h2>
-          Recent Fire Events
+          Recent Fire Logs
         </h2>
 
       </div>
@@ -750,7 +854,13 @@
     <div
       id="recentFireLogs"
       class="recent-fire-logs"
-    ></div>
+    >
+
+      <div class="empty-log">
+        No fire incidents recorded.
+      </div>
+
+    </div>
 
   </section>
 
@@ -777,15 +887,21 @@
   </section>
 
 
+
   <div class="info-grid">
+
 
     <div class="info-card">
 
       <div class="info-icon esp-icon">
+
         <i class="fa-solid fa-microchip"></i>
+
       </div>
 
+
       <div>
+
         <span>
           Device ID
         </span>
@@ -793,6 +909,7 @@
         <strong id="deviceId">
           —
         </strong>
+
       </div>
 
     </div>
@@ -801,10 +918,14 @@
     <div class="info-card">
 
       <div class="info-icon building-icon">
+
         <i class="fa-solid fa-building"></i>
+
       </div>
 
+
       <div>
+
         <span>
           Building
         </span>
@@ -812,6 +933,7 @@
         <strong id="building">
           —
         </strong>
+
       </div>
 
     </div>
@@ -820,10 +942,14 @@
     <div class="info-card">
 
       <div class="info-icon floor-icon">
+
         <i class="fa-solid fa-layer-group"></i>
+
       </div>
 
+
       <div>
+
         <span>
           Floor
         </span>
@@ -831,6 +957,7 @@
         <strong id="floor">
           —
         </strong>
+
       </div>
 
     </div>
@@ -839,10 +966,14 @@
     <div class="info-card">
 
       <div class="info-icon room-icon">
+
         <i class="fa-solid fa-door-open"></i>
+
       </div>
 
+
       <div>
+
         <span>
           Zone / Room
         </span>
@@ -850,6 +981,7 @@
         <strong id="zone">
           —
         </strong>
+
       </div>
 
     </div>
@@ -865,8 +997,11 @@
   <section class="system-footer-card">
 
     <div class="system-footer-title">
+
       <i class="fa-solid fa-server"></i>
+
       SYSTEM CONNECTION
+
     </div>
 
 
@@ -876,8 +1011,11 @@
       <div class="connection-item">
 
         <div class="connection-icon firebase-icon">
+
           <i class="fa-solid fa-database"></i>
+
         </div>
+
 
         <div>
 
@@ -891,28 +1029,26 @@
 
         </div>
 
-        <span
-          class="dot off"
-          id="fbDot"
-        ></span>
-
       </div>
 
 
       <div class="connection-item">
 
-        <div class="connection-icon esp32-icon">
+        <div class="connection-icon device-connection-icon">
+
           <i class="fa-solid fa-microchip"></i>
+
         </div>
+
 
         <div>
 
           <span>
-            ESP32 Device
+            Device
           </span>
 
           <strong id="deviceConn">
-            UNKNOWN
+            Connecting...
           </strong>
 
         </div>
@@ -920,11 +1056,14 @@
       </div>
 
 
-      <div class="connection-item database-item">
+      <div class="connection-item">
 
-        <div class="connection-icon database-icon">
-          <i class="fa-solid fa-code-branch"></i>
+        <div class="connection-icon path-icon">
+
+          <i class="fa-solid fa-route"></i>
+
         </div>
+
 
         <div>
 
@@ -947,181 +1086,252 @@
 
 
   <!-- =====================================================
-       FIRE ALERT POPUP
-       ====================================================== -->
-
-  <div
-    class="fire-popup"
-    id="firePopup"
-    aria-hidden="true"
-  >
-
-    <div class="fire-popup-overlay">
-
-      <div class="fire-popup-card">
-
-
-        <div class="fire-popup-icon">
-          <i class="fa-solid fa-fire-flame-curved"></i>
-        </div>
-
-
-        <div class="fire-popup-title">
-          FIRE DETECTED
-        </div>
-
-
-        <div class="fire-popup-subtitle">
-          Heat and smoke conditions confirmed
-        </div>
-
-
-        <div class="fire-popup-details">
-
-
-          <div class="popup-detail">
-
-            <span>
-              Building
-            </span>
-
-            <strong id="popupBuilding">
-              —
-            </strong>
-
-          </div>
-
-
-          <div class="popup-detail">
-
-            <span>
-              Floor
-            </span>
-
-            <strong id="popupFloor">
-              —
-            </strong>
-
-          </div>
-
-
-          <div class="popup-detail">
-
-            <span>
-              Zone
-            </span>
-
-            <strong id="popupZone">
-              —
-            </strong>
-
-          </div>
-
-        </div>
-
-
-        <!-- POPUP MAP -->
-
-        <div
-          class="popup-map"
-          id="popupMap"
-        ></div>
-
-
-        <div class="popup-dispatch-message">
-
-          <div class="popup-dispatch-title">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            EMERGENCY RESPONSE
-          </div>
-
-          <div class="popup-dispatch-item">
-            <i class="fa-solid fa-location-dot"></i>
-            Device location shown on map
-          </div>
-
-          <div class="popup-dispatch-item">
-            <i class="fa-solid fa-building-shield"></i>
-            Police Station marked on map
-          </div>
-
-          <div class="popup-dispatch-item">
-            <i class="fa-solid fa-fire-extinguisher"></i>
-            Fire Station marked on map
-          </div>
-
-        </div>
-
-
-        <button
-          type="button"
-          id="acknowledgeFire"
-          class="acknowledge-button"
-        >
-
-          <i class="fa-solid fa-check"></i>
-
-          Acknowledge
-
-        </button>
-
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-
-  <!-- =====================================================
        FOOTER
   ====================================================== -->
 
-  <footer>
+  <footer class="footer">
 
-    <div class="footer-brand">
-
-      <span class="footer-fire">
-        <i class="fa-solid fa-fire-flame-curved"></i>
-      </span>
-
-      <strong>
-        SmartFire Guardian
-      </strong>
-
-    </div>
-
+    <strong>
+      SmartFire Guardian
+    </strong>
 
     <span>
-      Diploma-level IoT prototype for early hazard indication
-      and remote monitoring.
+      ESP32 IoT Fire Monitoring Prototype
     </span>
 
-
-    <span class="footer-warning">
-
-      <i class="fa-solid fa-triangle-exclamation"></i>
-
-      Not a certified fire alarm system.
-
+    <span>
+      Not a certified life-safety system.
     </span>
 
   </footer>
-
 
 </div>
 
 
 
-<!-- LEAFLET MUST LOAD BEFORE app.js -->
+<!-- =====================================================
+     FIRE ALERT POPUP
+====================================================== -->
+
+<div
+  id="firePopup"
+  class="fire-popup-overlay"
+  aria-hidden="true"
+>
+
+  <div
+    class="fire-popup-card fire-popup-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="firePopupTitle"
+  >
+
+
+    <!-- POPUP HEADER -->
+
+    <div class="fire-popup-header">
+
+      <div class="fire-popup-icon">
+
+        <i class="fa-solid fa-fire"></i>
+
+      </div>
+
+
+      <div>
+
+        <div
+          id="firePopupTitle"
+          class="fire-popup-title"
+        >
+          FIRE DETECTED
+        </div>
+
+        <div class="fire-popup-subtitle">
+          Emergency response required
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- LOCATION INFORMATION -->
+
+    <div class="fire-popup-location">
+
+      <div class="popup-location-row">
+
+        <span>
+          <i class="fa-solid fa-building"></i>
+          Building
+        </span>
+
+        <strong id="popupBuilding">
+          —
+        </strong>
+
+      </div>
+
+
+      <div class="popup-location-row">
+
+        <span>
+          <i class="fa-solid fa-layer-group"></i>
+          Floor
+        </span>
+
+        <strong id="popupFloor">
+          —
+        </strong>
+
+      </div>
+
+
+      <div class="popup-location-row">
+
+        <span>
+          <i class="fa-solid fa-door-open"></i>
+          Zone
+        </span>
+
+        <strong id="popupZone">
+          —
+        </strong>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         EXACT FIRE COORDINATES
+    ================================================== -->
+
+    <div class="fire-coordinate-box">
+
+      <div class="fire-coordinate-title">
+
+        <i class="fa-solid fa-location-crosshairs"></i>
+
+        FIRE LOCATION
+
+      </div>
+
+
+      <div class="fire-coordinate-value">
+
+        <span>
+          15.855911401508786
+        </span>
+
+        <span class="coordinate-separator">
+          ,
+        </span>
+
+        <span>
+          74.57851857002846
+        </span>
+
+      </div>
+
+
+      <div class="fire-coordinate-note">
+
+        Exact registered fire/device coordinates
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         POPUP MAP
+    ================================================== -->
+
+    <div class="popup-map-wrapper">
+
+      <div class="popup-map-title">
+
+        <span>
+
+          <i class="fa-solid fa-map-location-dot"></i>
+
+          Emergency Response Location
+
+        </span>
+
+        <span class="popup-live-indicator">
+
+          <span></span>
+
+          LIVE
+
+        </span>
+
+      </div>
+
+
+      <div
+        class="popup-map"
+        id="popupMap"
+      ></div>
+
+    </div>
+
+
+
+    <!-- EMERGENCY MESSAGE -->
+
+    <div class="fire-popup-message">
+
+      <i class="fa-solid fa-triangle-exclamation"></i>
+
+      <span>
+        Fire has been confirmed by the monitoring system.
+        Emergency response locations are shown on the map.
+      </span>
+
+    </div>
+
+
+
+    <!-- ACKNOWLEDGE -->
+
+    <button
+      id="acknowledgeFire"
+      class="acknowledge-fire"
+      type="button"
+    >
+
+      <i class="fa-solid fa-check"></i>
+
+      Acknowledge Fire Alert
+
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     LEAFLET JS
+====================================================== -->
 
 <script
   src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
 ></script>
 
 
-<!-- app.js -->
+
+<!-- =====================================================
+     FIREBASE + APP
+====================================================== -->
 
 <script
   type="module"
@@ -1130,4 +1340,5 @@
 
 
 </body>
+
 </html>
