@@ -22,10 +22,7 @@
   <title>SmartFire Guardian — Monitoring Dashboard</title>
 
 
-  <!-- =====================================================
-       GOOGLE FONT
-  ====================================================== -->
-
+  <!-- GOOGLE FONT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
 
   <link
@@ -40,41 +37,28 @@
   >
 
 
-  <!-- =====================================================
-       FONT AWESOME
-  ====================================================== -->
-
+  <!-- FONT AWESOME -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   >
 
 
-  <!-- =====================================================
-       LEAFLET
-       Kept available for your existing app.js map functions
-  ====================================================== -->
-
+  <!-- LEAFLET -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   >
 
 
-  <!-- =====================================================
-       YOUR CSS
-  ====================================================== -->
-
+  <!-- YOUR CSS -->
   <link
     rel="stylesheet"
     href="style.css"
   >
 
 
-  <!-- =====================================================
-       PWA
-  ====================================================== -->
-
+  <!-- PWA -->
   <link
     rel="manifest"
     href="manifest.json"
@@ -85,129 +69,260 @@
 
 <body>
 
-  <div class="dashboard">
+<div class="dashboard">
 
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
 
-    <header class="topbar">
+  <header class="topbar">
 
-      <div class="brand">
+    <div class="brand">
 
-        <!-- ANIMATED FIRE LOGO -->
+      <div class="brand-icon">
 
-        <div class="brand-icon">
+        <span class="fire-logo">
+          <i class="fa-solid fa-fire-flame-curved"></i>
+        </span>
 
-          <span class="fire-logo">
+      </div>
 
-            <i class="fa-solid fa-fire-flame-curved"></i>
 
+      <div class="brand-text">
+
+        <div class="brand-title-row">
+
+          <h1>
+            SmartFire Guardian
+          </h1>
+
+          <span class="version-badge">
+            IoT
           </span>
 
         </div>
 
 
-        <!-- BRAND TEXT -->
-
-        <div class="brand-text">
-
-          <div class="brand-title-row">
-
-            <h1>
-              SmartFire Guardian
-            </h1>
-
-            <span class="version-badge">
-              IoT
-            </span>
-
-          </div>
+        <p>
+          Intelligent Fire Detection &amp; Remote Monitoring
+        </p>
 
 
-          <p>
-            Intelligent Fire Detection &amp; Remote Monitoring
-          </p>
+        <div class="project-meta">
 
+          <span>
+            <i class="fa-solid fa-graduation-cap"></i>
+            SIH 2026
+          </span>
 
-          <div class="project-meta">
+          <span>
+            <i class="fa-solid fa-code"></i>
+            PS 26223
+          </span>
 
-            <span>
-              <i class="fa-solid fa-graduation-cap"></i>
-              SIH 2026
-            </span>
-
-            <span>
-              <i class="fa-solid fa-code"></i>
-              PS 26223
-            </span>
-
-            <span>
-              <i class="fa-solid fa-users"></i>
-              Team CODE6
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- DEVICE CONNECTION -->
-
-      <div class="connection-area">
-
-        <div class="connection-badge">
-
-          <span
-            class="dot online"
-            id="deviceTopDot"
-          ></span>
-
-          <span id="deviceTopStatus">
-            ONLINE
+          <span>
+            <i class="fa-solid fa-users"></i>
+            Team CODE6
           </span>
 
         </div>
 
-
-        <div
-          class="last-update"
-          id="lastUpdate"
-        >
-          Last update: —
-        </div>
-
       </div>
 
-    </header>
+    </div>
 
 
+    <div class="connection-area">
 
-    <!-- =====================================================
-         MONITORING LOCATION
-    ====================================================== -->
+      <div class="connection-badge">
 
-    <section class="location-card">
+        <span
+          class="dot online"
+          id="deviceTopDot"
+        ></span>
 
-      <div class="location-icon">
-
-        <i class="fa-solid fa-location-dot"></i>
+        <span id="deviceTopStatus">
+          ONLINE
+        </span>
 
       </div>
 
 
-      <div class="location-content">
+      <div
+        class="last-update"
+        id="lastUpdate"
+      >
+        Last update: —
+      </div>
 
-        <div class="location-title">
-          MONITORING LOCATION
+    </div>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       MONITORING LOCATION
+  ====================================================== -->
+
+  <section class="location-card">
+
+    <div class="location-icon">
+      <i class="fa-solid fa-location-dot"></i>
+    </div>
+
+
+    <div class="location-content">
+
+      <div class="location-title">
+        MONITORING LOCATION
+      </div>
+
+      <div
+        class="location-value"
+        id="location"
+      >
+        —
+      </div>
+
+    </div>
+
+
+    <div class="location-status">
+      <i class="fa-solid fa-satellite-dish"></i>
+      LIVE
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       MAIN SYSTEM STATUS
+  ====================================================== -->
+
+  <section
+    class="main-status safe"
+    id="mainStatus"
+  >
+
+    <div
+      class="status-indicator-large safe"
+      id="statusDot"
+    >
+      <i class="fa-solid fa-shield-check"></i>
+    </div>
+
+
+    <div class="status-content">
+
+      <div class="status-label">
+        SYSTEM STATUS
+      </div>
+
+
+      <div
+        class="status-value safe"
+        id="statusValue"
+      >
+        SAFE
+      </div>
+
+
+      <div
+        class="status-text"
+        id="statusText"
+      >
+        SYSTEM SAFE
+      </div>
+
+
+      <div
+        class="status-description"
+        id="statusDescription"
+      >
+        Monitoring sensors...
+      </div>
+
+    </div>
+
+
+    <div class="status-live">
+      <span class="live-dot"></span>
+      LIVE MONITORING
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       SENSOR MONITORING
+  ====================================================== -->
+
+  <section class="section-heading">
+
+    <div>
+
+      <span class="section-eyebrow">
+        REAL-TIME SENSOR DATA
+      </span>
+
+      <h2>
+        Environmental Monitoring
+      </h2>
+
+    </div>
+
+  </section>
+
+
+  <div class="sensor-grid">
+
+
+    <!-- HEAT -->
+
+    <div
+      class="sensor-card"
+      id="heatCard"
+    >
+
+      <div class="sensor-top">
+
+        <div class="sensor-header">
+
+          <div class="sensor-icon heat-icon">
+            <i class="fa-solid fa-temperature-half"></i>
+          </div>
+
+          <div>
+
+            <h2>
+              Heat Sensor
+            </h2>
+
+            <p>
+              Thermistor Resistance
+            </p>
+
+          </div>
+
         </div>
 
+
+        <span class="sensor-tag">
+          ANALOG
+        </span>
+
+      </div>
+
+
+      <div class="sensor-reading">
+
         <div
-          class="location-value"
-          id="location"
+          class="sensor-value"
+          id="flame"
         >
           —
         </div>
@@ -215,930 +330,639 @@
       </div>
 
 
-      <div class="location-status">
+      <div class="sensor-details">
 
-        <i class="fa-solid fa-satellite-dish"></i>
+        <div class="detail-item">
+          <span>ADC</span>
 
-        LIVE
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         MAIN SYSTEM STATUS
-    ====================================================== -->
-
-    <section
-      class="main-status safe"
-      id="mainStatus"
-    >
-
-      <!-- STATUS ICON -->
-
-      <div
-        class="status-indicator-large safe"
-        id="statusDot"
-      >
-
-        <i class="fa-solid fa-shield-check"></i>
-
-      </div>
-
-
-      <!-- STATUS CONTENT -->
-
-      <div class="status-content">
-
-        <div class="status-label">
-          SYSTEM STATUS
-        </div>
-
-
-        <!-- MAIN VALUE -->
-
-        <div
-          class="status-value safe"
-          id="statusValue"
-        >
-          SAFE
-        </div>
-
-
-        <!-- STATUS TEXT -->
-
-        <div
-          class="status-text"
-          id="statusText"
-        >
-          SYSTEM SAFE
-        </div>
-
-
-        <!-- DESCRIPTION -->
-
-        <div
-          class="status-description"
-          id="statusDescription"
-        >
-          Monitoring sensors...
-        </div>
-
-      </div>
-
-
-      <!-- LIVE BADGE -->
-
-      <div class="status-live">
-
-        <span class="live-dot"></span>
-
-        LIVE MONITORING
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         SENSOR MONITORING
-    ====================================================== -->
-
-    <section class="section-heading">
-
-      <div>
-
-        <span class="section-eyebrow">
-          REAL-TIME SENSOR DATA
-        </span>
-
-        <h2>
-          Environmental Monitoring
-        </h2>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         SENSOR GRID
-    ====================================================== -->
-
-    <div class="sensor-grid">
-
-
-      <!-- ===================================================
-           HEAT SENSOR
-      ==================================================== -->
-
-      <div
-        class="sensor-card"
-        id="heatCard"
-      >
-
-        <!-- SENSOR HEADER -->
-
-        <div class="sensor-top">
-
-          <div class="sensor-header">
-
-            <div class="sensor-icon heat-icon">
-
-              <i class="fa-solid fa-temperature-half"></i>
-
-            </div>
-
-
-            <div>
-
-              <h2>
-                Heat Sensor
-              </h2>
-
-              <p>
-                Thermistor Resistance
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <span class="sensor-tag">
-            ANALOG
-          </span>
-
-        </div>
-
-
-
-        <!-- SENSOR VALUE -->
-
-        <div class="sensor-reading">
-
-          <div
-            class="sensor-value"
-            id="flame"
-          >
+          <strong id="heatAdc">
             —
-          </div>
-
+          </strong>
         </div>
 
 
+        <div class="detail-item">
+          <span>Voltage</span>
 
-        <!-- SENSOR DETAILS -->
-
-        <div class="sensor-details">
-
-
-          <div class="detail-item">
-
-            <span>
-              ADC
-            </span>
-
-            <strong id="heatAdc">
-              —
-            </strong>
-
-          </div>
-
-
-          <div class="detail-item">
-
-            <span>
-              Voltage
-            </span>
-
-            <strong id="heatVoltage">
-              —
-            </strong>
-
-          </div>
-
-
-          <div class="detail-item">
-
-            <span>
-              Threshold
-            </span>
-
-            <strong id="heatThreshold">
-              5.00 kΩ
-            </strong>
-
-          </div>
-
-
-          <div class="detail-icon heat-detail">
-
-            <i class="fa-solid fa-fire"></i>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- HEAT STATUS -->
-
-        <div
-          class="sensor-state normal"
-          id="heatState"
-        >
-
-          <i class="fa-solid fa-circle-check"></i>
-
-          NORMAL
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           MQ-2 SENSOR
-      ==================================================== -->
-
-      <div
-        class="sensor-card"
-        id="gasCard"
-      >
-
-        <!-- SENSOR HEADER -->
-
-        <div class="sensor-top">
-
-          <div class="sensor-header">
-
-            <div class="sensor-icon gas-icon">
-
-              <i class="fa-solid fa-wind"></i>
-
-            </div>
-
-
-            <div>
-
-              <h2>
-                Smoke / Gas Sensor
-              </h2>
-
-              <p>
-                MQ-2 Detection
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <span class="sensor-tag">
-            MQ-2
-          </span>
-
-        </div>
-
-
-
-        <!-- SENSOR VALUE -->
-
-        <div class="sensor-reading">
-
-          <div
-            class="sensor-value"
-            id="gas"
-          >
+          <strong id="heatVoltage">
             —
-          </div>
-
-        </div>
-
-
-
-        <!-- SENSOR DETAILS -->
-
-        <div class="sensor-details">
-
-
-          <div class="detail-item">
-
-            <span>
-              RAW ADC
-            </span>
-
-            <strong>
-              <span id="gasRaw">
-                —
-              </span>
-            </strong>
-
-          </div>
-
-
-          <div class="detail-item">
-
-            <span>
-              Threshold
-            </span>
-
-            <strong id="gasThreshold">
-              1600
-            </strong>
-
-          </div>
-
-
-          <div class="detail-item">
-
-            <span>
-              Detection
-            </span>
-
-            <strong id="gasDetection">
-              Normal
-            </strong>
-
-          </div>
-
-
-          <div class="detail-icon gas-detail">
-
-            <i class="fa-solid fa-cloud"></i>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- GAS STATUS -->
-
-        <div
-          class="sensor-state normal"
-          id="gasState"
-        >
-
-          <i class="fa-solid fa-circle-check"></i>
-
-          NORMAL
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         FIRE DETECTION SEQUENCE
-    ====================================================== -->
-
-    <section class="section-heading sequence-heading">
-
-      <div>
-
-        <span class="section-eyebrow">
-          DECISION LOGIC
-        </span>
-
-        <h2>
-          Fire Detection Sequence
-        </h2>
-
-      </div>
-
-    </section>
-
-
-
-    <div class="sequence-card">
-
-
-      <!-- ===================================================
-           STEP 01 — HEAT
-      ==================================================== -->
-
-      <div
-        class="sequence-step"
-        id="stepHeat"
-      >
-
-        <div class="step-number">
-          01
-        </div>
-
-
-        <div class="step-icon">
-
-          <i class="fa-solid fa-temperature-high"></i>
-
-        </div>
-
-
-        <div class="step-content">
-
-          <strong>
-            HEAT
           </strong>
-
-          <span>
-            Heat sensor check
-          </span>
-
         </div>
 
 
-        <div
-          class="step-status"
-          id="stepHeatStatus"
-        >
-          WAITING
-        </div>
+        <div class="detail-item">
+          <span>Threshold</span>
 
-      </div>
-
-
-
-      <!-- ARROW -->
-
-      <div class="sequence-arrow">
-
-        <i class="fa-solid fa-chevron-right"></i>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           STEP 02 — SMOKE
-      ==================================================== -->
-
-      <div
-        class="sequence-step"
-        id="stepSmoke"
-      >
-
-        <div class="step-number">
-          02
-        </div>
-
-
-        <div class="step-icon">
-
-          <i class="fa-solid fa-smog"></i>
-
-        </div>
-
-
-        <div class="step-content">
-
-          <strong>
-            SMOKE
+          <strong id="heatThreshold">
+            5.00 kΩ
           </strong>
-
-          <span>
-            MQ-2 verification
-          </span>
-
         </div>
 
 
-        <div
-          class="step-status"
-          id="stepSmokeStatus"
-        >
-          WAITING
-        </div>
-
-      </div>
-
-
-
-      <!-- ARROW -->
-
-      <div class="sequence-arrow">
-
-        <i class="fa-solid fa-chevron-right"></i>
-
-      </div>
-
-
-
-      <!-- ===================================================
-           STEP 03 — FIRE
-      ==================================================== -->
-
-      <div
-        class="sequence-step"
-        id="stepFire"
-      >
-
-        <div class="step-number">
-          03
-        </div>
-
-
-        <div class="step-icon">
-
+        <div class="detail-icon heat-detail">
           <i class="fa-solid fa-fire"></i>
-
-        </div>
-
-
-        <div class="step-content">
-
-          <strong>
-            FIRE
-          </strong>
-
-          <span>
-            Confirmation
-          </span>
-
-        </div>
-
-
-        <div
-          class="step-status"
-          id="stepFireStatus"
-        >
-          WAITING
-        </div>
-
-      </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         ALARM STATE
-    ====================================================== -->
-
-    <section class="alarm-card">
-
-      <div class="alarm-left">
-
-        <div class="alarm-icon">
-
-          <i class="fa-solid fa-bell"></i>
-
-        </div>
-
-
-        <div>
-
-          <div class="alarm-title">
-            ALARM STATE
-          </div>
-
-
-          <div
-            class="alarm-status"
-            id="alarm"
-          >
-            OFF
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="alarm-info">
-
-        <span>
-
-          <i class="fa-solid fa-check"></i>
-
-          Heat + Smoke required
-
-        </span>
-
-
-        <span>
-
-          <i class="fa-solid fa-layer-group"></i>
-
-          3 consecutive readings
-
-        </span>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         DEVICE INFORMATION
-    ====================================================== -->
-
-    <section class="section-heading device-heading">
-
-      <div>
-
-        <span class="section-eyebrow">
-          HARDWARE
-        </span>
-
-        <h2>
-          Device Information
-        </h2>
-
-      </div>
-
-    </section>
-
-
-
-    <div class="info-grid">
-
-
-      <!-- DEVICE ID -->
-
-      <div class="info-card">
-
-        <div class="info-icon esp-icon">
-
-          <i class="fa-solid fa-microchip"></i>
-
-        </div>
-
-
-        <div>
-
-          <span>
-            Device ID
-          </span>
-
-          <strong id="deviceId">
-            —
-          </strong>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- BUILDING -->
-
-      <div class="info-card">
-
-        <div class="info-icon building-icon">
-
-          <i class="fa-solid fa-building"></i>
-
-        </div>
-
-
-        <div>
-
-          <span>
-            Building
-          </span>
-
-          <strong id="building">
-            —
-          </strong>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- FLOOR -->
-
-      <div class="info-card">
-
-        <div class="info-icon floor-icon">
-
-          <i class="fa-solid fa-layer-group"></i>
-
-        </div>
-
-
-        <div>
-
-          <span>
-            Floor
-          </span>
-
-          <strong id="floor">
-            —
-          </strong>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- ZONE -->
-
-      <div class="info-card">
-
-        <div class="info-icon room-icon">
-
-          <i class="fa-solid fa-door-open"></i>
-
-        </div>
-
-
-        <div>
-
-          <span>
-            Zone / Room
-          </span>
-
-          <strong id="zone">
-            —
-          </strong>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         SYSTEM CONNECTION
-    ====================================================== -->
-
-    <section class="system-footer-card">
-
-      <div class="system-footer-title">
-
-        <i class="fa-solid fa-server"></i>
-
-        SYSTEM CONNECTION
-
-      </div>
-
-
-
-      <div class="connection-panel">
-
-
-        <!-- FIREBASE -->
-
-        <div class="connection-item">
-
-          <div class="connection-icon firebase-icon">
-
-            <i class="fa-solid fa-database"></i>
-
-          </div>
-
-
-          <div>
-
-            <span>
-              Firebase
-            </span>
-
-            <strong id="fbStatus">
-              Connecting...
-            </strong>
-
-          </div>
-
-
-          <span
-            class="dot off"
-            id="fbDot"
-          ></span>
-
-        </div>
-
-
-
-        <!-- ESP32 -->
-
-        <div class="connection-item">
-
-          <div class="connection-icon esp32-icon">
-
-            <i class="fa-solid fa-microchip"></i>
-
-          </div>
-
-
-          <div>
-
-            <span>
-              ESP32 Device
-            </span>
-
-            <strong id="deviceConn">
-              UNKNOWN
-            </strong>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- DATABASE PATH -->
-
-        <div class="connection-item database-item">
-
-          <div class="connection-icon database-icon">
-
-            <i class="fa-solid fa-code-branch"></i>
-
-          </div>
-
-
-          <div>
-
-            <span>
-              Database Path
-            </span>
-
-            <strong>
-              /devices/SF-003
-            </strong>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         OPTIONAL FIRE LOG AREA
-         Existing app.js can use these IDs.
-         Hidden until logs are rendered by JavaScript.
-    ====================================================== -->
-
-    <section
-      class="fire-log-section"
-      id="recentFireLogsSection"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <span class="section-eyebrow">
-            HISTORY
-          </span>
-
-          <h2>
-            Recent Fire Events
-          </h2>
-
         </div>
 
       </div>
 
 
       <div
-        id="recentFireLogs"
-        class="recent-fire-logs"
-      ></div>
+        class="sensor-state normal"
+        id="heatState"
+      >
+        <i class="fa-solid fa-circle-check"></i>
+        NORMAL
+      </div>
 
-    </section>
+    </div>
 
 
 
-    <!-- =====================================================
-         FIRE ALERT POPUP
-         Existing app.js uses these IDs when fireAlert = true.
-    ====================================================== -->
+    <!-- MQ-2 -->
 
     <div
-      class="fire-popup"
-      id="firePopup"
-      aria-hidden="true"
+      class="sensor-card"
+      id="gasCard"
     >
+
+      <div class="sensor-top">
+
+        <div class="sensor-header">
+
+          <div class="sensor-icon gas-icon">
+            <i class="fa-solid fa-wind"></i>
+          </div>
+
+          <div>
+
+            <h2>
+              Smoke / Gas Sensor
+            </h2>
+
+            <p>
+              MQ-2 Detection
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <span class="sensor-tag">
+          MQ-2
+        </span>
+
+      </div>
+
+
+      <div class="sensor-reading">
+
+        <div
+          class="sensor-value"
+          id="gas"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="sensor-details">
+
+        <div class="detail-item">
+
+          <span>
+            RAW ADC
+          </span>
+
+          <strong>
+            <span id="gasRaw">
+              —
+            </span>
+          </strong>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <span>
+            Threshold
+          </span>
+
+          <strong id="gasThreshold">
+            1600
+          </strong>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <span>
+            Detection
+          </span>
+
+          <strong id="gasDetection">
+            Normal
+          </strong>
+
+        </div>
+
+
+        <div class="detail-icon gas-detail">
+          <i class="fa-solid fa-cloud"></i>
+        </div>
+
+      </div>
+
+
+      <div
+        class="sensor-state normal"
+        id="gasState"
+      >
+        <i class="fa-solid fa-circle-check"></i>
+        NORMAL
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       FIRE DETECTION SEQUENCE
+  ====================================================== -->
+
+  <section class="section-heading sequence-heading">
+
+    <div>
+
+      <span class="section-eyebrow">
+        DECISION LOGIC
+      </span>
+
+      <h2>
+        Fire Detection Sequence
+      </h2>
+
+    </div>
+
+  </section>
+
+
+  <div class="sequence-card">
+
+    <div
+      class="sequence-step"
+      id="stepHeat"
+    >
+
+      <div class="step-number">
+        01
+      </div>
+
+      <div class="step-icon">
+        <i class="fa-solid fa-temperature-high"></i>
+      </div>
+
+      <div class="step-content">
+
+        <strong>
+          HEAT
+        </strong>
+
+        <span>
+          Heat sensor check
+        </span>
+
+      </div>
+
+      <div
+        class="step-status"
+        id="stepHeatStatus"
+      >
+        WAITING
+      </div>
+
+    </div>
+
+
+    <div class="sequence-arrow">
+      <i class="fa-solid fa-chevron-right"></i>
+    </div>
+
+
+    <div
+      class="sequence-step"
+      id="stepSmoke"
+    >
+
+      <div class="step-number">
+        02
+      </div>
+
+      <div class="step-icon">
+        <i class="fa-solid fa-smog"></i>
+      </div>
+
+      <div class="step-content">
+
+        <strong>
+          SMOKE
+        </strong>
+
+        <span>
+          MQ-2 verification
+        </span>
+
+      </div>
+
+      <div
+        class="step-status"
+        id="stepSmokeStatus"
+      >
+        WAITING
+      </div>
+
+    </div>
+
+
+    <div class="sequence-arrow">
+      <i class="fa-solid fa-chevron-right"></i>
+    </div>
+
+
+    <div
+      class="sequence-step"
+      id="stepFire"
+    >
+
+      <div class="step-number">
+        03
+      </div>
+
+      <div class="step-icon">
+        <i class="fa-solid fa-fire"></i>
+      </div>
+
+      <div class="step-content">
+
+        <strong>
+          FIRE
+        </strong>
+
+        <span>
+          Confirmation
+        </span>
+
+      </div>
+
+      <div
+        class="step-status"
+        id="stepFireStatus"
+      >
+        WAITING
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       ALARM STATE
+  ====================================================== -->
+
+  <section class="alarm-card">
+
+    <div class="alarm-left">
+
+      <div class="alarm-icon">
+        <i class="fa-solid fa-bell"></i>
+      </div>
+
+      <div>
+
+        <div class="alarm-title">
+          ALARM STATE
+        </div>
+
+        <div
+          class="alarm-status"
+          id="alarm"
+        >
+          OFF
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="alarm-info">
+
+      <span>
+        <i class="fa-solid fa-check"></i>
+        Heat + Smoke required
+      </span>
+
+      <span>
+        <i class="fa-solid fa-layer-group"></i>
+        3 consecutive readings
+      </span>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       EMERGENCY RESPONSE MAP
+       IMPORTANT: REQUIRED BY app.js
+  ====================================================== -->
+
+  <section class="map-card">
+
+    <div class="map-header">
+
+      <div>
+
+        <div class="section-heading">
+          Emergency Response Map
+        </div>
+
+        <div class="map-subtitle">
+          Device location, Police Station and Fire Station
+        </div>
+
+      </div>
+
+
+      <div
+        class="map-status"
+        id="mapStatus"
+      >
+        LIVE LOCATION
+      </div>
+
+    </div>
+
+
+    <div
+      id="map"
+      class="map-container"
+    ></div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       RECENT FIRE LOGS
+  ====================================================== -->
+
+  <section
+    class="fire-log-section"
+    id="recentFireLogsSection"
+  >
+
+    <div class="section-heading">
+
+      <div>
+
+        <span class="section-eyebrow">
+          HISTORY
+        </span>
+
+        <h2>
+          Recent Fire Events
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="recentFireLogs"
+      class="recent-fire-logs"
+    ></div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       DEVICE INFORMATION
+  ====================================================== -->
+
+  <section class="section-heading device-heading">
+
+    <div>
+
+      <span class="section-eyebrow">
+        HARDWARE
+      </span>
+
+      <h2>
+        Device Information
+      </h2>
+
+    </div>
+
+  </section>
+
+
+  <div class="info-grid">
+
+    <div class="info-card">
+
+      <div class="info-icon esp-icon">
+        <i class="fa-solid fa-microchip"></i>
+      </div>
+
+      <div>
+        <span>
+          Device ID
+        </span>
+
+        <strong id="deviceId">
+          —
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+      <div class="info-icon building-icon">
+        <i class="fa-solid fa-building"></i>
+      </div>
+
+      <div>
+        <span>
+          Building
+        </span>
+
+        <strong id="building">
+          —
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+      <div class="info-icon floor-icon">
+        <i class="fa-solid fa-layer-group"></i>
+      </div>
+
+      <div>
+        <span>
+          Floor
+        </span>
+
+        <strong id="floor">
+          —
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+      <div class="info-icon room-icon">
+        <i class="fa-solid fa-door-open"></i>
+      </div>
+
+      <div>
+        <span>
+          Zone / Room
+        </span>
+
+        <strong id="zone">
+          —
+        </strong>
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       SYSTEM CONNECTION
+  ====================================================== -->
+
+  <section class="system-footer-card">
+
+    <div class="system-footer-title">
+      <i class="fa-solid fa-server"></i>
+      SYSTEM CONNECTION
+    </div>
+
+
+    <div class="connection-panel">
+
+
+      <div class="connection-item">
+
+        <div class="connection-icon firebase-icon">
+          <i class="fa-solid fa-database"></i>
+        </div>
+
+        <div>
+
+          <span>
+            Firebase
+          </span>
+
+          <strong id="fbStatus">
+            Connecting...
+          </strong>
+
+        </div>
+
+        <span
+          class="dot off"
+          id="fbDot"
+        ></span>
+
+      </div>
+
+
+      <div class="connection-item">
+
+        <div class="connection-icon esp32-icon">
+          <i class="fa-solid fa-microchip"></i>
+        </div>
+
+        <div>
+
+          <span>
+            ESP32 Device
+          </span>
+
+          <strong id="deviceConn">
+            UNKNOWN
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="connection-item database-item">
+
+        <div class="connection-icon database-icon">
+          <i class="fa-solid fa-code-branch"></i>
+        </div>
+
+        <div>
+
+          <span>
+            Database Path
+          </span>
+
+          <strong>
+            /devices/SF-003
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       FIRE ALERT POPUP
+       ====================================================== -->
+
+  <div
+    class="fire-popup"
+    id="firePopup"
+    aria-hidden="true"
+  >
+
+    <div class="fire-popup-overlay">
 
       <div class="fire-popup-card">
 
 
         <div class="fire-popup-icon">
-
           <i class="fa-solid fa-fire-flame-curved"></i>
-
         </div>
 
 
@@ -1150,7 +974,6 @@
         <div class="fire-popup-subtitle">
           Heat and smoke conditions confirmed
         </div>
-
 
 
         <div class="fire-popup-details">
@@ -1197,14 +1020,37 @@
         </div>
 
 
-
-        <!-- OPTIONAL POPUP MAP -->
+        <!-- POPUP MAP -->
 
         <div
           class="popup-map"
           id="popupMap"
         ></div>
 
+
+        <div class="popup-dispatch-message">
+
+          <div class="popup-dispatch-title">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            EMERGENCY RESPONSE
+          </div>
+
+          <div class="popup-dispatch-item">
+            <i class="fa-solid fa-location-dot"></i>
+            Device location shown on map
+          </div>
+
+          <div class="popup-dispatch-item">
+            <i class="fa-solid fa-building-shield"></i>
+            Police Station marked on map
+          </div>
+
+          <div class="popup-dispatch-item">
+            <i class="fa-solid fa-fire-extinguisher"></i>
+            Fire Station marked on map
+          </div>
+
+        </div>
 
 
         <button
@@ -1219,78 +1065,69 @@
 
         </button>
 
+
       </div>
 
     </div>
-
-
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
-
-    <footer>
-
-      <div class="footer-brand">
-
-        <span class="footer-fire">
-
-          <i class="fa-solid fa-fire-flame-curved"></i>
-
-        </span>
-
-
-        <strong>
-          SmartFire Guardian
-        </strong>
-
-      </div>
-
-
-      <span>
-        Diploma-level IoT prototype for early hazard indication
-        and remote monitoring.
-      </span>
-
-
-      <span class="footer-warning">
-
-        <i class="fa-solid fa-triangle-exclamation"></i>
-
-        Not a certified fire alarm system.
-
-      </span>
-
-    </footer>
-
 
   </div>
 
 
 
   <!-- =====================================================
-       LEAFLET JAVASCRIPT
-       Required by existing app.js map functions
+       FOOTER
   ====================================================== -->
 
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  ></script>
+  <footer>
+
+    <div class="footer-brand">
+
+      <span class="footer-fire">
+        <i class="fa-solid fa-fire-flame-curved"></i>
+      </span>
+
+      <strong>
+        SmartFire Guardian
+      </strong>
+
+    </div>
+
+
+    <span>
+      Diploma-level IoT prototype for early hazard indication
+      and remote monitoring.
+    </span>
+
+
+    <span class="footer-warning">
+
+      <i class="fa-solid fa-triangle-exclamation"></i>
+
+      Not a certified fire alarm system.
+
+    </span>
+
+  </footer>
+
+
+</div>
 
 
 
-  <!-- =====================================================
-       IMPORTANT:
-       app.js is an ES MODULE and imports firebase-config.js.
-       Do NOT load firebase-config.js separately.
-  ====================================================== -->
+<!-- LEAFLET MUST LOAD BEFORE app.js -->
 
-  <script
-    type="module"
-    src="app.js"
-  ></script>
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+
+<!-- app.js -->
+
+<script
+  type="module"
+  src="app.js"
+></script>
 
 
 </body>
-
 </html>
